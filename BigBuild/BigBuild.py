@@ -1,10 +1,10 @@
-import configparser
+п»їimport configparser
 
 def Main():
     config = configparser.ConfigParser()
     config.read('MW.ini')
     
-    #вытягиваем из конфига настройки для web.config
+    #РїР°СЂСЃРёРј web.config
     connection = config['WEBCONFIG']['connection']
     email = config['WEBCONFIG']['email']
     smtp_server = config['WEBCONFIG']['smtp_server']
