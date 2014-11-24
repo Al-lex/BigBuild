@@ -26,10 +26,7 @@
     <Compile Include="Service.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Settings.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="XML_Parser.py">
+    <Compile Include="DataAdaptor.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
