@@ -1,10 +1,10 @@
-﻿import configparser
+import configparser
 
 def Main():
     config = configparser.ConfigParser()
     config.read('MW.ini')
     
-    #парсим web.config
+    #?????????? ?? ??????? ????????? ??? web.config
     connection = config['WEBCONFIG']['connection']
     email = config['WEBCONFIG']['email']
     smtp_server = config['WEBCONFIG']['smtp_server']
