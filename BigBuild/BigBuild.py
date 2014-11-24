@@ -2,9 +2,10 @@
 from DataAdaptor import XMLAdaptor as XA
 
 def Main():
-    conf=XA("web.config")
+    conf=XA("MW.config")
 
     conf.GetGlobalSettings()
+    conf.GetPlugins()
     #config = configparser.ConfigParser()
     #config.read('MW.ini')
     

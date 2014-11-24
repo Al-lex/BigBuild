@@ -14,7 +14,20 @@ class XMLAdaptor(object):
         """Gets only globals section"""
         #for child in self.GetConfigTree():
         #     print (child.tag, child.attrib)
-        for glob in self.GetConfigTree().findall('global'):
-             print(glob.tag)
+        for branch in self.GetConfigTree().findall("branch"):
+                 name = branch.get('name')
+                 pathToLatest = branch.find('pathToLatest').text
+
+                 pathToLocal=branch.find('pathToLocal').text
+                
+                 print (name, pathToLatest,pathToLocal)
+
+    def GetPlugins(self):
+        for plugin in self.GetConfigTree().findall("Plugins"):
+                 pluginname=plugin.find('plugin').get('name')
+
+                 print(pluginname)
+
+
 
 
