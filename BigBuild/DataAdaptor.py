@@ -15,18 +15,24 @@ class XMLAdaptor(object):
         #for child in self.GetConfigTree():
         #     print (child.tag, child.attrib)
         for branch in self.GetConfigTree().findall("branch"):
-                 name = branch.get('name')
-                 pathToLatest = branch.find('pathToLatest').text
+                 name = branch.get("name")
+                 pathToLatest = branch.find("pathToLatest").text
 
-                 pathToLocal=branch.find('pathToLocal').text
+                 pathToLocal=branch.find("pathToLocal").text
                 
                  print (name, pathToLatest,pathToLocal)
 
     def GetPlugins(self):
-        for plugin in self.GetConfigTree().findall("Plugins"):
-                 pluginname=plugin.find('plugin').get('name')
+        #for plugin in self.GetConfigTree().findall("Plugins"):
+        #         print (plugin.find('plugin').get('getlocal'))
 
-                 print(pluginname)
+       #print (self.GetConfigTree().findall("Plugins")[0].findall("plugin")[0].get("name"))
+       #print (self.GetConfigTree().findall("Plugins")[0].findall("plugin")[1].get("name"))
+       for plugin in self.GetConfigTree().findall("Plugins")[0].findall("plugin"):
+           name=plugin.get("name")
+           getlocal=plugin.get("getlocal")
+           print(name,getlocal)
+               
 
 
 
