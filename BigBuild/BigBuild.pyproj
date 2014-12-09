@@ -23,10 +23,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BigBuild.py" />
-    <Compile Include="Service.py">
+    <Compile Include="DBManager.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DataAdaptor.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IISManager.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

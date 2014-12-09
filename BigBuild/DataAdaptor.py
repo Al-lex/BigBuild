@@ -26,8 +26,21 @@ class XMLAdaptor(object):
                  pathToLatest = branch.find("pathToLatest").text
 
                  pathToLocal=branch.find("pathToLocal").text
-                 files.append((name, pathToLatest,pathToLocal))
-                 print (name, pathToLatest,pathToLocal)
+
+
+                 connectionData={}
+
+        
+                
+                 connectionData["remotedbname"]=branch.find("dbconnection").get("remotedbname")
+                 connectionData["SERVER"]=branch.find("dbconnection").get("SERVER")
+                 connectionData["DATABASE"]=branch.find("dbconnection").get("DATABASE")
+                 connectionData["UserID"]=branch.find("dbconnection").get("UserID")
+                 connectionData["Password"]=branch.find("dbconnection").get("Password")
+
+
+                 files.append((name, pathToLatest,pathToLocal,connectionData))
+        print (name, pathToLatest,pathToLocal,connectionData)
         return files
 
     def GetPlugins(self):
@@ -78,7 +91,7 @@ class FileFactory():
           if(isinstance(SettingsObj,XA)):
              
            # try:
-             for name,src,dst in SettingsObj.GetBuildPaths():
+             for name,src,dst,conn in SettingsObj.GetBuildPaths():
                           if os.path.exists(dst):
                                     shutil.rmtree(dst)
                           os.mkdir(dst)
@@ -107,27 +120,87 @@ class FileFactory():
        @staticmethod
        def UnzipFilesBuild(SettingsObj):
            """Static method to unzip getted files"""
-           for name,src,dst in SettingsObj.GetBuildPaths():
+           for name,src,dst,conn in SettingsObj.GetBuildPaths():
                   lst=os.listdir(dst)
                   zip=zipfile.ZipFile(dst+"//"+lst[0])
                   zip.extractall(dst)
 
 
-           
+class ConfigFactory():
+    """Class to configure configs - web.config sql.ini etc""" 
 
+
+             
+    @staticmethod
+    def ChangeConnectString(SettingsObj,FileType):
+   
+          """Static method to change conn string in ini or web.config file"""
+
+          
+
+
+
+
+
+
+
+          #find pathes to all branches and concatenate
+        
+
+          for name,src,dst,conn in SettingsObj.GetBuildPaths():
+             
+       
+ 
+             
+              if FileType=="sql.ini":
+                  connStringEth=r"remotedbname=IL2009,DRIVER=SQL Server;SERVER=s15\interlook08;DATABASE=IL2009;Trusted_Connection=no;APP=Master-Tour"
+                  connString="remotedbname="+ conn["remotedbname"]+",DRIVER=SQL Server;SERVER="+conn["SERVER"]+";DATABASE="+conn["DATABASE"]+";Trusted_Connection=no;APP=Master-Tour"
+                  
+                  print (connStringEth)
+
+
+
+                  
+              elif FileType=="web.config":
+
+                  connStringEth="Initial Catalog"
+                  connString="add key=\"connectionString\" value=\"Data Source="+conn["SERVER"]+"; Initial Catalog="+conn["DATABASE"]+";User Id="+conn["UserID"]+";Password="+ conn["Password"]
+                  print (connStringEth)
+
+
+
+                
+
+              the_file=open(dst+"\\"+FileType,"r+",encoding='UTF8')
+
+
+              the_file2=open(dst+"\\"+FileType+".new","w",encoding='UTF8')
+              for line in the_file.readlines(): 
+                   print (line.replace(connStringEth,connString),end="",file=the_file2)
+
+  
+
+ 
+              the_file.close()
+              the_file2.close()
+
+              os.remove(dst+"\\"+FileType);
+              os.rename(dst+"\\"+FileType+".new",dst+"\\"+FileType)
 
                
 if __name__ == "__main__":
     from DataAdaptor import XMLAdaptor as XA
     conf=XA("MW.config")
-    #print(isinstance(conf,XA))
-    conf.GetBuildPaths()
-    conf.GetPlugins()
-    conf.GetServices()
-    conf.GetFiles()
-    FileFactory.CopyFilesBuild(conf)
-    FileFactory.UnzipFilesBuild(conf)
+ 
+    #conf.GetBuildPaths()
+    #conf.GetPlugins()
+    #conf.GetServices()
+    #conf.GetFiles()
+    #FileFactory.CopyFilesBuild(conf)
+    #FileFactory.UnzipFilesBuild(conf)
 
+    
+    ConfigFactory.ChangeConnectString(conf,"web.config")
 
 
 
