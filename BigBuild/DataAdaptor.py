@@ -42,15 +42,15 @@ class XMLAdaptor(object):
 
                  #add plugins from global plugin list - mast be set getLocal=true 
         #print (name, pathToLatest,pathToLocal,connectionData)
-                 pathesToPlugins=[]
+                 Plugins=[]
                  
                  for pluginName in self.GetPlugins():
-                      pathesToPlugins.append(pathToLatest+self.GetLastBuildNumber(pathToLatest)+pluginName)
-                      print (pathToLatest+self.GetLastBuildNumber(pathToLatest)+pluginName)
+                      Plugins.append(pluginName)
+                      #print (pathToLatest+self.GetLastBuildNumber(pathToLatest)+pluginName)
 
 
 
-                 files.append((name, pathToLatest,pathToLocal,connectionData))
+                 files.append((name, pathToLatest,pathToLocal,connectionData, Plugins))
 
 
 
@@ -82,7 +82,7 @@ class XMLAdaptor(object):
            files.append((fl.get("name"),fl.get("getlocal")))
            name=fl.get("name")
            getlocal=fl.get("getlocal")
-           print(name,getlocal) 
+           #print(name,getlocal) 
        return files
     def GetLastBuildNumber(self,path):
        """Method to find name of the last zip build in the branch specified"""
@@ -103,7 +103,7 @@ class FileFactory():
           #if(isinstance(SettingsObj,XA)):
              
            # try:
-          for name,src,dst,conn in SettingsObj.GetBuildPaths():
+          for name,src,dst,conn,plugs in SettingsObj.GetBuildPaths():
                           if os.path.exists(dst):
                                     shutil.rmtree(dst)
                           os.mkdir(dst)
@@ -132,14 +132,21 @@ class FileFactory():
        @staticmethod
        def UnzipFilesBuild(SettingsObj):
            """Static method to unzip getted files"""
-           for name,src,dst,conn in SettingsObj.GetBuildPaths():
+           for name,src,dst,conn,plugs in SettingsObj.GetBuildPaths():
                   lst=os.listdir(dst)
                   zip=zipfile.ZipFile(dst+"//"+lst[0])
                   zip.extractall(dst)
 
        @staticmethod
        def CopyFilesPlugins(SettingsObj):
-           pass
+           for name,src,dst,conn,plugs in SettingsObj.GetBuildPaths():
+                    buildNum=SettingsObj.GetLastBuildNumber(src)
+                    for plug in plugs:
+                  #find zip
+                       plugSrcZip=src+"\\"+buildNum+"\\Release\\Full\\_Zips\\mw-"+plug+"-"+buildNum[9:]+".zip"
+                       zip=zipfile.ZipFile(plugSrcZip)
+                       zip.extractall(dst)
+                  #unzip zip in dst
 
 
 
@@ -164,7 +171,7 @@ class ConfigFactory():
           #find pathes to all branches and concatenate
         
 
-          for name,src,dst,conn in SettingsObj.GetBuildPaths():
+          for name,src,dst,conn,plugs in SettingsObj.GetBuildPaths():
              
        
  
@@ -211,7 +218,7 @@ if __name__ == "__main__":
     from DataAdaptor import XMLAdaptor as XA
     conf=XA("MW.config")
  
-    conf.GetBuildPaths()
+    FileFactory.CopyFilesPlugins(conf)
 
   
 

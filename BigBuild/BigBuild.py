@@ -17,7 +17,14 @@ def Go():
 
     logging.info('Begin update web.config')
     ConfigFactory.ChangeConnectString(conf,"web.config")
+
+    
+    logging.info('Get plugins')
+    FileFactory.CopyFilesPlugins(conf)
+
     logging.info('Finished')
+
+
 
 
 
