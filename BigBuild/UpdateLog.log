@@ -1,3 +1,6 @@
-INFO:root:Begin update process
-INFO:root:Begin update process
-2014-12-09 14:23:15,660 Begin update process
+
+2014-12-09 18:04:28,283 Begin update process
+2014-12-09 18:04:28,283 Begin copy files
+2014-12-09 18:04:39,377 Begin unzip files
+2014-12-09 18:05:10,281 Begin update web.config
+2014-12-09 18:05:10,312 Finished

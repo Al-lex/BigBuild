@@ -27,7 +27,7 @@ class XMLAdaptor(object):
 
                  pathToLocal=branch.find("pathToLocal").text
 
-
+#add connections for the branch
                  connectionData={}
 
         
@@ -39,20 +39,32 @@ class XMLAdaptor(object):
                  connectionData["Password"]=branch.find("dbconnection").get("Password")
 
 
+
+                 #add plugins from global plugin list - mast be set getLocal=true 
+        #print (name, pathToLatest,pathToLocal,connectionData)
+                 pathesToPlugins=[]
+                 
+                 for pluginName in self.GetPlugins():
+                      pathesToPlugins.append(pathToLatest+self.GetLastBuildNumber(pathToLatest)+pluginName)
+                      print (pathToLatest+self.GetLastBuildNumber(pathToLatest)+pluginName)
+
+
+
                  files.append((name, pathToLatest,pathToLocal,connectionData))
-        print (name, pathToLatest,pathToLocal,connectionData)
+
+
+
         return files
 
     def GetPlugins(self):
-       """Gets plugins list from MW.config"""
+       """Gets plugins list from MW.config. Added only those with True for GetLocal"""
        files=[]
-       #print (self.GetConfigTree().findall("Plugins")[0].findall("plugin")[0].get("name"))
-       #print (self.GetConfigTree().findall("Plugins")[0].findall("plugin")[1].get("name"))
        for plugin in self.GetConfigTree().findall("Plugins")[0].findall("plugin"):
-           files.append((plugin.get("name"),plugin.get("getlocal")))
-           name=plugin.get("name")
-           getlocal=plugin.get("getlocal")
-           print(name,getlocal)
+
+           if (plugin.get("getlocal")):
+
+            files.append(plugin.get("name"))
+           
        return files
     def GetServices(self):
        """Gets services list from MW.config"""
@@ -88,10 +100,10 @@ class FileFactory():
        @staticmethod
        def CopyFilesBuild(SettingsObj):
           """Static method to get incremental update from last release to last build"""
-          if(isinstance(SettingsObj,XA)):
+          #if(isinstance(SettingsObj,XA)):
              
            # try:
-             for name,src,dst,conn in SettingsObj.GetBuildPaths():
+          for name,src,dst,conn in SettingsObj.GetBuildPaths():
                           if os.path.exists(dst):
                                     shutil.rmtree(dst)
                           os.mkdir(dst)
@@ -111,8 +123,8 @@ class FileFactory():
             #except:
                 #print("Problem with copy, check "+src+"  if file in place")
                           
-          else:
-              raise Exception("Not valid config object")
+          #else:
+             # raise Exception("Not valid config object")
        @staticmethod
        def CopyFilesRelease(SettingsObj):
            """Static method to get in case of need files from release"""
@@ -124,6 +136,11 @@ class FileFactory():
                   lst=os.listdir(dst)
                   zip=zipfile.ZipFile(dst+"//"+lst[0])
                   zip.extractall(dst)
+
+       @staticmethod
+       def CopyFilesPlugins(SettingsObj):
+           pass
+
 
 
 class ConfigFactory():
@@ -163,9 +180,9 @@ class ConfigFactory():
                   
               elif FileType=="web.config":
 
-                  connStringEth="Initial Catalog"
-                  connString="add key=\"connectionString\" value=\"Data Source="+conn["SERVER"]+"; Initial Catalog="+conn["DATABASE"]+";User Id="+conn["UserID"]+";Password="+ conn["Password"]
-                  print (connStringEth)
+                  connStringEth="Data Source=ip-адрес сервера; Initial Catalog=название базы;User Id=логин пользователя;Password=пароль"
+                  connString="Data Source="+conn["SERVER"]+"; Initial Catalog="+conn["DATABASE"]+";User Id="+conn["UserID"]+";Password="+ conn["Password"]
+                 
 
 
 
@@ -175,6 +192,8 @@ class ConfigFactory():
 
 
               the_file2=open(dst+"\\"+FileType+".new","w",encoding='UTF8')
+            
+
               for line in the_file.readlines(): 
                    print (line.replace(connStringEth,connString),end="",file=the_file2)
 
@@ -192,15 +211,9 @@ if __name__ == "__main__":
     from DataAdaptor import XMLAdaptor as XA
     conf=XA("MW.config")
  
-    #conf.GetBuildPaths()
-    #conf.GetPlugins()
-    #conf.GetServices()
-    #conf.GetFiles()
-    #FileFactory.CopyFilesBuild(conf)
-    #FileFactory.UnzipFilesBuild(conf)
+    conf.GetBuildPaths()
 
-    
-    ConfigFactory.ChangeConnectString(conf,"web.config")
+  
 
 
 
