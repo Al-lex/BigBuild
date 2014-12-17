@@ -3,6 +3,7 @@ logging.basicConfig(format='%(asctime)s %(message)s',filename='UpdateLog.log',le
 from DataAdaptor import XMLAdaptor as XA
 from DataAdaptor import FileFactory
 from DataAdaptor import ConfigFactory
+from IISManager import IISManager
 
 
 
@@ -22,6 +23,9 @@ def Go():
     logging.info('Get plugins')
     FileFactory.CopyFilesPlugins(conf)
 
+    logging.info('Set up site on IIS')
+
+    IISManager.CreateSite(conf)
     logging.info('Finished')
 
 

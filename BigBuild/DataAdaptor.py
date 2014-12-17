@@ -40,6 +40,10 @@ class XMLAdaptor(object):
 
 
 
+
+
+
+
                  #add plugins from global plugin list - mast be set getLocal=true 
         #print (name, pathToLatest,pathToLocal,connectionData)
                  Plugins=[]
@@ -48,11 +52,23 @@ class XMLAdaptor(object):
                       Plugins.append(pluginName)
                       #print (pathToLatest+self.GetLastBuildNumber(pathToLatest)+pluginName)
 
+                 iisData={}
+                 iisData["appName"]=branch.find("iisAppSettings").get("appName")
+                 iisData["appPool"]=branch.find("iisAppSettings").get("appPool")
+
+                 MTData={}
+                 MTData["MTpathToLatest"]=branch.find("MT").get("MTpathToLatest")
+                 MTData["MTpathToLocal"]=branch.find("MT").get("MTpathToLocal")
+                 MTData["saPassword"]=branch.find("MT").get("saPassword")
+                 MTData["MTUserID"]=branch.find("MT").get("MTUserID")
+                 MTData["MTPassword"]=branch.find("MT").get("MTPassword")
 
 
-                 files.append((name, pathToLatest,pathToLocal,connectionData, Plugins))
 
 
+                 files.append((name, pathToLatest,pathToLocal,connectionData, Plugins, iisData,MTData))
+
+               
 
         return files
 
@@ -103,7 +119,7 @@ class FileFactory():
           #if(isinstance(SettingsObj,XA)):
              
            # try:
-          for name,src,dst,conn,plugs in SettingsObj.GetBuildPaths():
+          for name,src,dst,conn,plugs,iis,mtdata in SettingsObj.GetBuildPaths():
                           if os.path.exists(dst):
                                     shutil.rmtree(dst)
                           os.mkdir(dst)
@@ -132,14 +148,14 @@ class FileFactory():
        @staticmethod
        def UnzipFilesBuild(SettingsObj):
            """Static method to unzip getted files"""
-           for name,src,dst,conn,plugs in SettingsObj.GetBuildPaths():
+           for name,src,dst,conn,plugs,iis,mtdata in SettingsObj.GetBuildPaths():
                   lst=os.listdir(dst)
                   zip=zipfile.ZipFile(dst+"//"+lst[0])
                   zip.extractall(dst)
 
        @staticmethod
        def CopyFilesPlugins(SettingsObj):
-           for name,src,dst,conn,plugs in SettingsObj.GetBuildPaths():
+           for name,src,dst,conn,plugs,iis,mtdata in SettingsObj.GetBuildPaths():
                     buildNum=SettingsObj.GetLastBuildNumber(src)
                     for plug in plugs:
                   #find zip
@@ -171,7 +187,7 @@ class ConfigFactory():
           #find pathes to all branches and concatenate
         
 
-          for name,src,dst,conn,plugs in SettingsObj.GetBuildPaths():
+          for name,src,dst,conn,plugs,iis in SettingsObj.GetBuildPaths():
              
        
  

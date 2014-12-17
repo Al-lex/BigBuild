@@ -5,17 +5,34 @@ from os.path import join as joinpath
 import shutil
 
 import zipfile
+import pymssql
 
 
 class DBUpdater(object):
     """Class to update db up to the chosen version"""
-    def CreateScriptsForDBUpdateServicePack(self,pathbase,pathtempscripts):
-                    """???????? ?? ?????? ??????? ????? ?????? ?????? ??? ?????????? ???????????
+    @staticmethod
+    def GetCurrentDBVersion():
+        
+        conn = pymssql.connect(host='localhost', user='sa', password='sa', database='avalon')
+        cursor = conn.cursor()
+        sql = "select st_version from setting"
+        cursor.execute(sql)
+        results = cursor.fetchall()
+                     
+        return results[0]
+      
+
+
+
+    @staticmethod
+    def CreateScriptsForDBUpdateServicePack(pathbase,foldername,server,database,userid,password):
+                    """Method to update local DB with scripts from servicepack 
                      -pathbase -path to the branch
-                     -pathtempscripts - path to the local folder for scripts"""
+                     -pathtempscripts - path to the local folder for scripts
+                     returns path to the bat file with update"""
                    # pathbase = r"\\bg\Builds\Master-Tour\Release"
-              
-                   #?????????? ?????????? ? ????? ???? ?????? ????? ? ??????? ?????????
+                    
+                   #search 
                     l=listdir(pathbase)
                     l2=[]
                     for i in l:
@@ -46,7 +63,7 @@ class DBUpdater(object):
 
                     #unzip ? ???????? ?????
                     #tempscrpts='E:\TEMPSCRPTS'
-                  
+                    pathtempscripts=os.getcwd()+"\\"+foldername+"scripts"
 
                     if os.path.exists( pathtempscripts):
                      shutil.rmtree(pathtempscripts)
@@ -56,14 +73,14 @@ class DBUpdater(object):
 
 
 
-                    zip=zipfile.ZipFile( fullpathtozip)
-                    zip.extractall(tempscrpts)
+                    zip=zipfile.ZipFile(fullpathtozip)
+                    zip.extractall(pathtempscripts)
 
-                    #??????? ???? ??? ???????
+                    #??????? ????
 
        
 
-                    l4=[ln1 for ln1 in listdir(tempscrpts) if "ReleaseScript2009.2.20." in ln1]
+                    l4=[ln1 for ln1 in listdir(pathtempscripts) if "ReleaseScript2009.2.20." in ln1]
 
 
 
@@ -82,37 +99,48 @@ class DBUpdater(object):
                     l6=[ln2 for ln2 in l5 if ln2[-6:-4]>"21"]
 
           
+                    print(l6)
 
 
 
-
-                    #??????? ???????? ?????? ? ??????? ??????????
-                    tempfolder=os.getcwd()+"\temp"
+                    #Create temp bat file
+                    tempfolder=os.getcwd()+"\\"+foldername
                     if os.path.exists(tempfolder):
-                     shutil.rmtree(tempfolder)
+                      shutil.rmtree(tempfolder)
 
 
                     os.mkdir(tempfolder)
 
-                    #? ??????? ?????????? ?????? ???? ???? ??????? ??????? myTemplate.txt ?? ????????? Placeholder ???? ?????? ???? ? ??????
-                    template=open(os.getcwd()+"myTemplate.txt","r")
-                    updatestring=template.read()
-                    template.close()
-                    updatestringsplitted=updatestring.split("Placeholder")
+                    ##
+                    updstring1="\"C:\\Program Files (x86)\\Microsoft SQL Server\\100\\Tools\\Binn\S\QLCMD.EXE\" -S "+server+" -d "+database+" -U "+userid+" -P "+password+" -i "+os.getcwd()+"\\"+foldername+"scripts\\"
+                    upddstring2=" -o \""+os.getcwd()+"\\"+foldername+"\\resultrestor.txt\""
 
 
                     l7=[]
-                    for i4 in l6:
-                       l7.append(updatestringsplitted[0]+i4+updatestringsplitted[1]+i4+updatestringsplitted[2])
-                    #??????? ????????? ??????? -??????? ???? ready.bat ? ????? ? ????
-                    #print(l5)
-                    finalfile=open(os.getcwd()+"\temp\ready.bat","w")
+                    for line in l6:
+                       l7.append(updstring1+line+upddstring2)
+                    ##
+                    ##print(l5)
+                    finalfile=open(os.getcwd()+"\\"+foldername+"\\ready.bat","w")
                     for line in l7:
-                             finalfile.writelines(line)
+                            finalfile.writelines(line)
+                            finalfile.writelines("\n")
+                            finalfile.writelines("timeout 3")
+                            finalfile.writelines("\n")
+
+
 
                     finalfile.close() 
-                   #?????????? ???? ? ?????????? ????? ? ?????????? ???
-                    return os.getcwd()+"\temp\ready.bat"      
-
+                   #returns path to executable for update of sql
+                    return os.getcwd()+"\\"+foldername+"\\ready.bat"      
+    @staticmethod
+    def execUpdateFilesForBranches(SettingsObj):
          
+         for name,src,dst,conn,plugs,iis,mtdata in SettingsObj.GetBuildPaths():
+                       print(src)
+                       os.system(DBUpdater.CreateScriptsForDBUpdateServicePack(mtdata["MTpathToLatest"],name,conn["SERVER"],conn["DATABASE"],"sa",mtdata["saPassword"]))
 
+if __name__ == "__main__":
+    from DataAdaptor import XMLAdaptor as XA
+    conf=XA("MW.config")
+    DBUpdater.execUpdateFilesForBranches(conf)
