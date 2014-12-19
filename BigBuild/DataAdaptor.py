@@ -66,7 +66,9 @@ class XMLAdaptor(object):
 
 
 
-                 files.append((name, pathToLatest,pathToLocal,connectionData, Plugins, iisData,MTData))
+                 isLastBuild = branch.find("isLastBuild").text
+
+                 files.append((name, pathToLatest,pathToLocal,connectionData, Plugins, iisData,MTData,isLastBuild))
 
                
 
@@ -105,6 +107,8 @@ class XMLAdaptor(object):
        l=listdir(path)
        l.sort(reverse=True)
        return (l[0])
+
+   
           
             
            
@@ -148,14 +152,14 @@ class FileFactory():
        @staticmethod
        def UnzipFilesBuild(SettingsObj):
            """Static method to unzip getted files"""
-           for name,src,dst,conn,plugs,iis,mtdata in SettingsObj.GetBuildPaths():
+           for name,src,dst,conn,plugs,iis,mtdata,isLastBuild in SettingsObj.GetBuildPaths():
                   lst=os.listdir(dst)
                   zip=zipfile.ZipFile(dst+"//"+lst[0])
                   zip.extractall(dst)
 
        @staticmethod
        def CopyFilesPlugins(SettingsObj):
-           for name,src,dst,conn,plugs,iis,mtdata in SettingsObj.GetBuildPaths():
+           for name,src,dst,conn,plugs,iis,mtdata,isLastBuild in SettingsObj.GetBuildPaths():
                     buildNum=SettingsObj.GetLastBuildNumber(src)
                     for plug in plugs:
                   #find zip
@@ -187,7 +191,7 @@ class ConfigFactory():
           #find pathes to all branches and concatenate
         
 
-          for name,src,dst,conn,plugs,iis in SettingsObj.GetBuildPaths():
+          for name,src,dst,conn,plugs,iis,mtdata,isLastBuild  in SettingsObj.GetBuildPaths():
              
        
  

@@ -11,21 +11,39 @@ import pymssql
 class DBUpdater(object):
     """Class to update db up to the chosen version"""
     @staticmethod
-    def GetCurrentDBVersion():
-        
-        conn = pymssql.connect(host='localhost', user='sa', password='sa', database='avalon')
+   
+    def GetCurrentDBVersion(host,user,password,database):
+        """Method to return version of db from config - it runs dynamic script on db"""   
+        conn = pymssql.connect(host=host, user=user, password=password, database=database)
         cursor = conn.cursor()
         sql = "select st_version from setting"
         cursor.execute(sql)
         results = cursor.fetchall()
-                     
-        return results[0]
+        version=""
+        if (results[0][0][-2]=="."):
+            version=results[0][0][0:-2]+".0"+results[0][0][-1]
+        else:
+            version=results[0][0]
+              
+        return version
+
+    #@staticmethod
+    #def UpdateLast(SettingsObj):
+    #    """Updates db on last build script"""
+    #    lastBuildScripts={}
+    #    for name,src,dst,conn,plugs,iis,mtdata in SettingsObj.GetBuildPaths():
+    #       pathToLastBuildScript="\\\\bg\\builds\\Master-Tour\\"+branchname+"_MasterTour\\LastBuild\\Scripts\\ReleaseScript.sql"
+    #       lastBuildScripts[name]=pathToLastBuildScript
+    #    retu
+
+        
+
       
 
 
 
     @staticmethod
-    def CreateScriptsForDBUpdateServicePack(pathbase,foldername,server,database,userid,password):
+    def CreateScriptsForDBUpdateServicePack(pathbase,foldername,server,database,userid,password,isupdatelast):
                     """Method to update local DB with scripts from servicepack 
                      -pathbase -path to the branch
                      -pathtempscripts - path to the local folder for scripts
@@ -71,10 +89,17 @@ class DBUpdater(object):
 
                     os.mkdir(pathtempscripts)
 
-
+                    
+                 
 
                     zip=zipfile.ZipFile(fullpathtozip)
                     zip.extractall(pathtempscripts)
+
+
+                
+                       
+                       
+                  
 
                     #??????? ????
 
@@ -96,11 +121,24 @@ class DBUpdater(object):
                             l5.append(ln2)  
 
 
-                    l6=[ln2 for ln2 in l5 if ln2[-6:-4]>"21"]
+                    #l6=[ln2 for ln2 in l5 if ln2[-6:-4]>"21"]#take only scripts to update from current db
+                    currentServicePackVersion=DBUpdater.GetCurrentDBVersion(server,userid,password,database)[-2:]
+                    print(currentServicePackVersion)
+                    l6=[ln2 for ln2 in l5 if int(ln2[-6:-4])>int(currentServicePackVersion)]
+                    l6.sort(reverse=False)
 
-          
-                    print(l6)
+                    #print(l6)
+                    #return
+                    #l6sorted=[]
+                    #numbr=l6.count
+                    #while numbr!=0:
+                    #    l6sorted.append(( numbr,str(numbr)))
+                    #    numbr=numbr-1
+                  
 
+                    
+                   
+                    
 
 
                     #Create temp bat file
@@ -112,23 +150,27 @@ class DBUpdater(object):
                     os.mkdir(tempfolder)
 
                     ##
-                    updstring1="\"C:\\Program Files (x86)\\Microsoft SQL Server\\100\\Tools\\Binn\S\QLCMD.EXE\" -S "+server+" -d "+database+" -U "+userid+" -P "+password+" -i "+os.getcwd()+"\\"+foldername+"scripts\\"
+                    updstring1="\"C:\\Program Files (x86)\\Microsoft SQL Server\\100\\Tools\\Binn\SQLCMD.EXE\" -S "+server+" -d "+database+" -U "+userid+" -P "+password+" -i "+os.getcwd()+"\\"+foldername+"scripts\\"
                     upddstring2=" -o \""+os.getcwd()+"\\"+foldername+"\\resultrestor.txt\""
 
 
                     l7=[]
                     for line in l6:
                        l7.append(updstring1+line+upddstring2)
+
                     ##
                     ##print(l5)
                     finalfile=open(os.getcwd()+"\\"+foldername+"\\ready.bat","w")
+                    
                     for line in l7:
                             finalfile.writelines(line)
                             finalfile.writelines("\n")
                             finalfile.writelines("timeout 3")
                             finalfile.writelines("\n")
-
-
+                    if (isupdatelast):
+                      line2="\\\\bg\\builds\\Master-Tour\\"+foldername+"_MasterTour\\LastBuild\\Scripts\\ReleaseScript.sql"
+                      
+                      finalfile.writelines( updstring1+line2+upddstring2)
 
                     finalfile.close() 
                    #returns path to executable for update of sql
@@ -136,11 +178,15 @@ class DBUpdater(object):
     @staticmethod
     def execUpdateFilesForBranches(SettingsObj):
          
-         for name,src,dst,conn,plugs,iis,mtdata in SettingsObj.GetBuildPaths():
+         for name,src,dst,conn,plugs,iis,mtdata,isLastBuild  in SettingsObj.GetBuildPaths():
                        print(src)
-                       os.system(DBUpdater.CreateScriptsForDBUpdateServicePack(mtdata["MTpathToLatest"],name,conn["SERVER"],conn["DATABASE"],"sa",mtdata["saPassword"]))
+                       os.system(DBUpdater.CreateScriptsForDBUpdateServicePack(mtdata["MTpathToLatest"],name,conn["SERVER"],conn["DATABASE"],"sa",mtdata["saPassword"],isLastBuild))
 
 if __name__ == "__main__":
     from DataAdaptor import XMLAdaptor as XA
     conf=XA("MW.config")
+    
     DBUpdater.execUpdateFilesForBranches(conf)
+     
+
+    #DBUpdater.GetCurrentDBVersion('localhost','sa','sa','avalon')
