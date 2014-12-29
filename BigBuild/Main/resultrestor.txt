@@ -1,0 +1,520 @@
+Msg 50000, Level 16, State 1, Server DEV1-19, Line 196
+Вы запустили некорректный скрипт (обновление с 9.2.20.21 до 9.2.21.0). Версия Вашей базы — 2009.2.20.03
+Msg 2715, Level 16, State 3, Server DEV1-19, Procedure mwCheckingQuotaForDay, Line 2
+Column, parameter, or variable #1: Cannot find data type CheckQuotasSourceTable.
+Msg 2715, Level 16, State 3, Server DEV1-19, Procedure mwCheckingQuotaForDay, Line 2
+Column, parameter, or variable #4: Cannot find data type CheckQuotasSourceTable.
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckingQuotaForDay, Line 26
+Must declare the table variable "@tmpQuotasOnDay".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckingQuotaForDay, Line 30
+Must declare the table variable "@tmpQuotas".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckingQuotaForDay, Line 46
+Must declare the table variable "@tmpQuotasOnDay".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckingQuotaForDay, Line 51
+Must declare the table variable "@tmpQuotas".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckingQuotaForDay, Line 60
+Must declare the table variable "@tmpQuotas".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckingQuotaForDay, Line 77
+Must declare the table variable "@tmpQuotas".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckingQuotaForDay, Line 84
+Must declare the table variable "@tmpQuotas".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckingQuotaForDay, Line 91
+Must declare the table variable "@tmpQuotas".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckingQuotaForDay, Line 98
+Must declare the table variable "@tmpQuotasOnDay".
+Parameter or variable '@tmpQuotas' has an invalid data type.
+Parameter or variable '@tmpQuotasOnDay' has an invalid data type.
+Msg 2715, Level 16, State 3, Server DEV1-19, Procedure mwCheckQuotasHotels, Line 2
+Column, parameter, or variable #14: Cannot find data type CheckQuotasSourceTable.
+Msg 2715, Level 16, State 3, Server DEV1-19, Procedure mwCheckQuotasHotels, Line 2
+Column, parameter, or variable #15: Cannot find data type CheckQuotasSourceTable.
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotels, Line 42
+Must declare the table variable "@quotasSourceTable".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotels, Line 98
+Must declare the table variable "@quotasSourceTable".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotels, Line 107
+Must declare the table variable "@quotasSourceTable".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotels, Line 117
+Must declare the table variable "@quotasTableWithStops".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotels, Line 119
+Must declare the table variable "@quotasSourceTable".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotels, Line 125
+Must declare the table variable "@quotasTableWithStops".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotels, Line 134
+Must declare the table variable "@quotasTableWithStops".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotels, Line 136
+Must declare the table variable "@quotasTableWithStops".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotels, Line 137
+Must declare the table variable "@quotasTableWithStops".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotels, Line 138
+Must declare the table variable "@quotasTableWithStops".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotels, Line 150
+Must declare the table variable "@quotasTableWithStops".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotels, Line 152
+Must declare the table variable "@quotasTableWithStops".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotels, Line 153
+Must declare the table variable "@quotasTableWithStops".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotels, Line 154
+Must declare the table variable "@quotasTableWithStops".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotels, Line 166
+Must declare the table variable "@quotasTableWithStops".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotels, Line 176
+Must declare the table variable "@quotasTableWithStops".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotels, Line 178
+Must declare the table variable "@quotasTableWithStops".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotels, Line 179
+Must declare the table variable "@quotasTableWithStops".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotels, Line 180
+Must declare the table variable "@quotasTableWithStops".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotels, Line 190
+Must declare the table variable "@quotasTableWithStops".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotels, Line 194
+Must declare the table variable "@quotasTableWithStops".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotels, Line 204
+Must declare the table variable "@quotasTableWithStops".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotels, Line 206
+Must declare the table variable "@quotasTableWithStops".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotels, Line 210
+Must declare the table variable "@quotasTableWithStops".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotels, Line 220
+Must declare the table variable "@quotasTableWithStops".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotels, Line 233
+Must declare the table variable "@quotasTableWithStops".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotels, Line 239
+Must declare the table variable "@quotasTableWithStops".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotels, Line 251
+Must declare the table variable "@quotasTableWithStops".
+Parameter or variable '@quotasSourceTable' has an invalid data type.
+Parameter or variable '@quotasTableWithStops' has an invalid data type.
+Msg 2715, Level 16, State 3, Server DEV1-19, Procedure mwCheckQuotasHotelsOnPeriod, Line 2
+Column, parameter, or variable #19: Cannot find data type CheckQuotasSourceTable.
+Msg 2715, Level 16, State 3, Server DEV1-19, Procedure mwCheckQuotasHotelsOnPeriod, Line 2
+Column, parameter, or variable #62: Cannot find data type CheckQuotasSourceTable.
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotelsOnPeriod, Line 67
+Must declare the table variable "@tmpQuotas".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotelsOnPeriod, Line 132
+Must declare the table variable "@tmpQuotas".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotelsOnPeriod, Line 154
+Must declare the table variable "@tmpQuotas".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotelsOnPeriod, Line 206
+Must declare the table variable "@tmpQuotas".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotelsOnPeriod, Line 251
+Must declare the table variable "@tmpQuotas".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotelsOnPeriod, Line 272
+Must declare the table variable "@tmpQuotas".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotelsOnPeriod, Line 299
+Must declare the table variable "@tmpQuotasOnDay".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotelsOnPeriod, Line 303
+Must declare the table variable "@tmpQuotas".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotelsOnPeriod, Line 307
+Must declare the table variable "@tmpQuotasOnDay".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotelsOnPeriod, Line 310
+Must declare the table variable "@tmpQuotas".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotelsOnPeriod, Line 318
+Must declare the table variable "@tmpQuotasOnDay".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotelsOnPeriod, Line 328
+Must declare the table variable "@tmpQuotasOnDay".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotelsOnPeriod, Line 334
+Must declare the table variable "@tmpQuotasOnDay".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotelsOnPeriod, Line 334
+Must declare the table variable "@tmpQuotas".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotelsOnPeriod, Line 344
+Must declare the table variable "@tmpQuotasOnDay".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotelsOnPeriod, Line 349
+Must declare the table variable "@tmpQuotasOnDay".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotelsOnPeriod, Line 361
+Must declare the table variable "@tmpQuotasOnDay".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotelsOnPeriod, Line 377
+Must declare the table variable "@tmpQuotasOnDay".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotelsOnPeriod, Line 403
+Must declare the table variable "@tmpQuotasOnDay".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotelsOnPeriod, Line 410
+Must declare the table variable "@tmpQuotasOnDay".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotasHotelsOnPeriod, Line 438
+Must declare the table variable "@tmpQuotas".
+Parameter or variable '@tmpQuotas' has an invalid data type.
+Parameter or variable '@tmpQuotasOnDay' has an invalid data type.
+Msg 2715, Level 16, State 3, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 2
+Column, parameter, or variable #19: Cannot find data type ListSysNameValue.
+Msg 2715, Level 16, State 3, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 2
+Column, parameter, or variable #30: Cannot find data type ListSysNameValue.
+Msg 2715, Level 16, State 3, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 2
+Column, parameter, or variable #34: Cannot find data type CheckQuotasSourceTable.
+Msg 2715, Level 16, State 3, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 2
+Column, parameter, or variable #35: Cannot find data type CheckQuotasSourceTable.
+Msg 2715, Level 16, State 3, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 2
+Column, parameter, or variable #43: Cannot find data type CheckQuotasSourceTable.
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 82
+Must declare the table variable "@airlineCodes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 83
+Must declare the table variable "@airlineCodesList".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 83
+Must declare the table variable "@airlineCodes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 85
+Must declare the table variable "@airlineCodesList".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 104
+Must declare the table variable "@airlineCodesList".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 151
+Must declare the table variable "@quotasSourceTable".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 202
+Must declare the table variable "@quotasSourceTable".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 211
+Must declare the table variable "@quotasSourceTable".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 221
+Must declare the table variable "@quotasTableWithStops".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 223
+Must declare the table variable "@quotasSourceTable".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 229
+Must declare the table variable "@quotasTableWithStops".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 253
+Must declare the table variable "@quotasTableWithStops".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 258
+Must declare the table variable "@quotasTableWithStops".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 267
+Must declare the table variable "@quotasTableWithStops".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 293
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 295
+Must declare the table variable "@quotasTableWithStops".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 298
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 309
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 324
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 326
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 327
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 328
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 333
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 335
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 336
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 337
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 342
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 357
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 359
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 360
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 361
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 363
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 367
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 382
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 384
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 388
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 401
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 416
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 422
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 430
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 441
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 448
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 454
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 463
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 468
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 491
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 498
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 502
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 506
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 512
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 516
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 521
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 531
+Must declare the table variable "@tmpQuotes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesFlights, Line 542
+Must declare the table variable "@tmpQuotes".
+Parameter or variable '@airlineCodes' has an invalid data type.
+Parameter or variable '@airlineCodesList' has an invalid data type.
+Parameter or variable '@quotasSourceTable' has an invalid data type.
+Parameter or variable '@quotasTableWithStops' has an invalid data type.
+Parameter or variable '@tmpQuotes' has an invalid data type.
+Msg 2715, Level 16, State 3, Server DEV1-19, Procedure mwCheckQuotesEx2, Line 2
+Column, parameter, or variable #22: Cannot find data type ListSysNameValue.
+Parameter or variable '@airlineCodes' has an invalid data type.
+Msg 8144, Level 16, State 3, Server DEV1-19, Procedure mwCheckQuotesEx, Line 58
+Procedure or function dbo.mwCheckQuotesEx2 has too many arguments specified.
+Msg 2715, Level 16, State 3, Server DEV1-19, Procedure mwCheckFlightGroupsQuotesWithInnerFlights, Line 2
+Column, parameter, or variable #17: Cannot find data type ListSysNameValue.
+Parameter or variable '@airlineCodes' has an invalid data type.
+Msg 2715, Level 16, State 3, Server DEV1-19, Procedure mwCheckFlightGroupsQuotes, Line 2
+Column, parameter, or variable #21: Cannot find data type ListSysNameValue.
+Msg 2715, Level 16, State 3, Server DEV1-19, Procedure mwCheckFlightGroupsQuotes, Line 2
+Column, parameter, or variable #50: Cannot find data type ListSysNameValue.
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckFlightGroupsQuotes, Line 140
+Must declare the table variable "@airlineCodes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckFlightGroupsQuotes, Line 141
+Must declare the table variable "@airlineCodesList".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckFlightGroupsQuotes, Line 141
+Must declare the table variable "@airlineCodes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckFlightGroupsQuotes, Line 143
+Must declare the table variable "@airlineCodesList".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckFlightGroupsQuotes, Line 164
+Must declare the table variable "@airlineCodesList".
+Parameter or variable '@airlineCodes' has an invalid data type.
+Parameter or variable '@airlineCodesList' has an invalid data type.
+Msg 207, Level 16, State 1, Server DEV1-19, Procedure T_AddCostsChange, Line 11
+Invalid column name 'ChangeId'.
+Msg 207, Level 16, State 1, Server DEV1-19, Procedure T_AddCostsChange, Line 16
+Invalid column name 'ChangeId'.
+Msg 207, Level 16, State 1, Server DEV1-19, Procedure T_CostOffersChange, Line 11
+Invalid column name 'ChangeId'.
+Msg 207, Level 16, State 1, Server DEV1-19, Procedure T_CostOffersChange, Line 14
+Invalid column name 'ChangeId'.
+Msg 207, Level 16, State 1, Server DEV1-19, Procedure T_TourMarginChange, Line 9
+Invalid column name 'ChangeId'.
+Msg 207, Level 16, State 1, Server DEV1-19, Procedure T_TourMarginChange, Line 12
+Invalid column name 'ChangeId'.
+Msg 207, Level 16, State 1, Server DEV1-19, Procedure GetPartnerCommission, Line 115
+Invalid column name 'DS_FILIAL'.
+Msg 207, Level 16, State 1, Server DEV1-19, Procedure GetPartnerCommission, Line 115
+Invalid column name 'DS_FILIAL'.
+Msg 207, Level 16, State 1, Server DEV1-19, Procedure GetPartnerCommission, Line 127
+Invalid column name 'DS_Filial'.
+Msg 2715, Level 16, State 3, Server DEV1-19, Procedure RecreateDependentObjects, Line 2
+Column, parameter, or variable #2: Cannot find data type ListNvarcharValue.
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure RecreateDependentObjects, Line 30
+Must declare the table variable "@ColumnNames".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure RecreateDependentObjects, Line 38
+Must declare the table variable "@ColumnNames".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure RecreateDependentObjects, Line 74
+Must declare the table variable "@ColumnNames".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure RecreateDependentObjects, Line 85
+Must declare the table variable "@ColumnNames".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure RecreateDependentObjects, Line 109
+Must declare the table variable "@ColumnNames".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure RecreateDependentObjects, Line 127
+Must declare the table variable "@ColumnNames".
+Parameter or variable '@ColumnNames' has an invalid data type.
+Msg 2715, Level 16, State 3, Server DEV1-19, Line 99
+Column, parameter, or variable #5: Cannot find data type ListNvarcharValue.
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 65
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 95
+Must declare the table variable "@columns".
+Parameter or variable '@columns' has an invalid data type.
+Msg 2715, Level 16, State 3, Server DEV1-19, Line 69
+Column, parameter, or variable #2: Cannot find data type ListNvarcharValue.
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 28
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 65
+Must declare the table variable "@columns".
+Parameter or variable '@columns' has an invalid data type.
+Msg 2715, Level 16, State 3, Server DEV1-19, Line 95
+Column, parameter, or variable #3: Cannot find data type ListNvarcharValue.
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 42
+Must declare the table variable "@pricekeyColumns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 43
+Must declare the table variable "@pricekeyColumns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 58
+Must declare the table variable "@pricekeyColumns".
+Parameter or variable '@pricekeyColumns' has an invalid data type.
+Msg 2715, Level 16, State 3, Server DEV1-19, Line 50
+Column, parameter, or variable #2: Cannot find data type ListNvarcharValue.
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 29
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 46
+Must declare the table variable "@columns".
+Parameter or variable '@columns' has an invalid data type.
+Msg 2715, Level 16, State 3, Server DEV1-19, Line 60
+Column, parameter, or variable #2: Cannot find data type ListNvarcharValue.
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 28
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 45
+Must declare the table variable "@columns".
+Parameter or variable '@columns' has an invalid data type.
+Msg 2715, Level 16, State 3, Server DEV1-19, Procedure ReCalculate_MigrateToPrice, Line 2
+Column, parameter, or variable #2: Cannot find data type dbo.ListBigIntValue.
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure ReCalculate_MigrateToPrice, Line 55
+Must declare the table variable "@tpKeys".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure ReCalculate_MigrateToPrice, Line 61
+Must declare the table variable "@tpKeys".
+Parameter or variable '@tpKeys' has an invalid data type.
+Msg 207, Level 16, State 1, Server DEV1-19, Procedure mwCacheQuotaSearch, Line 43
+Invalid column name 'cq_airlineCodes'.
+Msg 207, Level 16, State 1, Server DEV1-19, Procedure mwCacheQuotaSearch, Line 44
+Invalid column name 'cq_nmen'.
+Msg 207, Level 16, State 1, Server DEV1-19, Procedure mwCacheQuotaInsert, Line 29
+Invalid column name 'cq_airlineCodes'.
+Msg 207, Level 16, State 1, Server DEV1-19, Procedure mwCacheQuotaInsert, Line 29
+Invalid column name 'cq_nmen'.
+Msg 207, Level 16, State 1, Server DEV1-19, Procedure mwCleaner, Line 22
+Invalid column name 'rdp_date'.
+Msg 207, Level 16, State 1, Server DEV1-19, Procedure mwDeleteTour, Line 12
+Invalid column name 'rq_cnkey'.
+Msg 207, Level 16, State 1, Server DEV1-19, Procedure mwDeleteTour, Line 12
+Invalid column name 'rq_ctkeyfrom'.
+Msg 2715, Level 16, State 3, Server DEV1-19, Procedure mwCheckQuotesCycle, Line 2
+Column, parameter, or variable #17: Cannot find data type ListSysNameValue.
+Msg 2715, Level 16, State 3, Server DEV1-19, Procedure mwCheckQuotesCycle, Line 2
+Column, parameter, or variable #76: Cannot find data type ListSysNameValue.
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesCycle, Line 84
+Must declare the table variable "@sortedAirlineCodes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesCycle, Line 84
+Must declare the table variable "@airlineCodes".
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure mwCheckQuotesCycle, Line 87
+Must declare the table variable "@sortedAirlineCodes".
+Parameter or variable '@airlineCodes' has an invalid data type.
+Parameter or variable '@sortedAirlineCodes' has an invalid data type.
+Msg 2715, Level 16, State 3, Server DEV1-19, Procedure Paging, Line 4
+Column, parameter, or variable #25: Cannot find data type ListSysNameValue.
+Parameter or variable '@airlineCodes' has an invalid data type.
+Msg 2715, Level 16, State 3, Server DEV1-19, Line 161
+Column, parameter, or variable #1: Cannot find data type ListNvarcharValue.
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 37
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 38
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 39
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 40
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 41
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 42
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 43
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 44
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 45
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 46
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 47
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 48
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 49
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 50
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 51
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 52
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 53
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 54
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 55
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 56
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 57
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 58
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 59
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 60
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 61
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 62
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 63
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 64
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 67
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 74
+Must declare the table variable "@columns".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 86
+Must declare the table variable "@columns".
+Parameter or variable '@columns' has an invalid data type.
+Msg 2715, Level 16, State 3, Server DEV1-19, Line 36
+Column, parameter, or variable #1: Cannot find data type ListNvarcharValue.
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 18
+Must declare the table variable "@colName".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 25
+Must declare the table variable "@colName".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 26
+Must declare the table variable "@colName".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 33
+Must declare the table variable "@colName".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 34
+Must declare the table variable "@colName".
+Parameter or variable '@colName' has an invalid data type.
+Msg 2715, Level 16, State 3, Server DEV1-19, Line 36
+Column, parameter, or variable #1: Cannot find data type ListNvarcharValue.
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 18
+Must declare the table variable "@colName".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 25
+Must declare the table variable "@colName".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 26
+Must declare the table variable "@colName".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 33
+Must declare the table variable "@colName".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 34
+Must declare the table variable "@colName".
+Parameter or variable '@colName' has an invalid data type.
+Msg 2715, Level 16, State 3, Server DEV1-19, Line 36
+Column, parameter, or variable #1: Cannot find data type ListNvarcharValue.
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 18
+Must declare the table variable "@colName".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 25
+Must declare the table variable "@colName".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 26
+Must declare the table variable "@colName".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 33
+Must declare the table variable "@colName".
+Msg 1087, Level 16, State 1, Server DEV1-19, Line 34
+Must declare the table variable "@colName".
+Parameter or variable '@colName' has an invalid data type.
+Msg 2715, Level 16, State 3, Server DEV1-19, Procedure ExportToDCTables, Line 4
+Column, parameter, or variable #1: Cannot find data type dbo.StructToExportAllDCTables.
+Msg 1087, Level 16, State 1, Server DEV1-19, Procedure ExportToDCTables, Line 173
+Must declare the table variable "@exportList".
+Parameter or variable '@exportList' has an invalid data type.
+Msg 207, Level 16, State 1, Server DEV1-19, Procedure GetTourMargin, Line 34
+Invalid column name 'TM_DeleteDate'.
+Msg 207, Level 16, State 1, Server DEV1-19, Procedure GetTourMargin, Line 53
+Invalid column name 'TM_DeleteDate'.
+Msg 207, Level 16, State 1, Server DEV1-19, Procedure ImportExchangeQuotaStops_Bulk, Line 20
+Invalid column name 'EQS_IsProcessed'.
+Msg 207, Level 16, State 1, Server DEV1-19, Procedure mwReplProcessQueueDivide, Line 35
+Invalid column name 'rq_cnkey'.
+Msg 207, Level 16, State 1, Server DEV1-19, Procedure mwReplProcessQueueDivide, Line 43
+Invalid column name 'rq_cnkey'.
+Msg 207, Level 16, State 1, Server DEV1-19, Procedure mwInsertTour, Line 33
+Invalid column name 'rq_cnkey'.
+Msg 207, Level 16, State 1, Server DEV1-19, Procedure mwInsertTour, Line 33
+Invalid column name 'rq_ctkeyfrom'.
+Msg 207, Level 16, State 1, Server DEV1-19, Procedure mwInsertTour, Line 38
+Invalid column name 'rq_cnkey'.
+Msg 207, Level 16, State 1, Server DEV1-19, Procedure mwInsertTour, Line 38
+Invalid column name 'rq_ctkeyfrom'.
+Msg 207, Level 16, State 1, Server DEV1-19, Procedure mwInsertTour, Line 43
+Invalid column name 'rq_cnkey'.
+Msg 207, Level 16, State 1, Server DEV1-19, Procedure mwInsertTour, Line 43
+Invalid column name 'rq_ctkeyfrom'.

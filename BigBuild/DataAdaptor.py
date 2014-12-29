@@ -123,7 +123,7 @@ class FileFactory():
           #if(isinstance(SettingsObj,XA)):
              
            # try:
-          for name,src,dst,conn,plugs,iis,mtdata in SettingsObj.GetBuildPaths():
+          for name,src,dst,conn,plugs,iis,mtdata,isLastBuild in SettingsObj.GetBuildPaths():
                           if os.path.exists(dst):
                                     shutil.rmtree(dst)
                           os.mkdir(dst)

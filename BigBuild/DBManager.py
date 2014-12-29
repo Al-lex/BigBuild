@@ -22,8 +22,10 @@ class DBUpdater(object):
         version=""
         if (results[0][0][-2]=="."):
             version=results[0][0][0:-2]+".0"+results[0][0][-1]
+            print(version)
         else:
             version=results[0][0]
+            print(version)
               
         return version
 
@@ -123,9 +125,11 @@ class DBUpdater(object):
 
                     #l6=[ln2 for ln2 in l5 if ln2[-6:-4]>"21"]#take only scripts to update from current db
                     currentServicePackVersion=DBUpdater.GetCurrentDBVersion(server,userid,password,database)[-2:]
-                    print(currentServicePackVersion)
+                    #print(currentServicePackVersion)
+                    #insert only version numbers higher then current
                     l6=[ln2 for ln2 in l5 if int(ln2[-6:-4])>int(currentServicePackVersion)]
                     l6.sort(reverse=False)
+                    print (l6)
 
                     #print(l6)
                     #return
@@ -150,7 +154,7 @@ class DBUpdater(object):
                     os.mkdir(tempfolder)
 
                     ##
-                    updstring1="\"C:\\Program Files (x86)\\Microsoft SQL Server\\100\\Tools\\Binn\SQLCMD.EXE\" -S "+server+" -d "+database+" -U "+userid+" -P "+password+" -i "+os.getcwd()+"\\"+foldername+"scripts\\"
+                    updstring1="\"C:\\Program Files\\Microsoft SQL Server\\110\\Tools\\Binn\SQLCMD.EXE\" -S "+server+" -d "+database+" -U "+userid+" -P "+password+" -i "+os.getcwd()+"\\"+foldername+"scripts\\"
                     upddstring2=" -o \""+os.getcwd()+"\\"+foldername+"\\resultrestor.txt\""
 
 
@@ -169,8 +173,9 @@ class DBUpdater(object):
                             finalfile.writelines("\n")
                     if (isupdatelast):
                       line2="\\\\bg\\builds\\Master-Tour\\"+foldername+"_MasterTour\\LastBuild\\Scripts\\ReleaseScript.sql"
+                      updstring3="\"C:\\Program Files\\Microsoft SQL Server\\110\\Tools\\Binn\SQLCMD.EXE\" -S "+server+" -d "+database+" -U "+userid+" -P "+password+" -i "
                       
-                      finalfile.writelines( updstring1+line2+upddstring2)
+                      finalfile.writelines( updstring3+line2+upddstring2)
 
                     finalfile.close() 
                    #returns path to executable for update of sql

@@ -81,3 +81,21 @@
 2014-12-16 17:31:54,672 Get plugins
 2014-12-16 17:31:54,828 Set up site on IIS
 2014-12-16 17:31:57,895 Finished
+2014-12-29 12:21:31,792 Begin update process
+2014-12-29 12:21:31,823 Begin update DB
+2014-12-29 12:22:38,238 DB update finished - see details in log.txt
+2014-12-29 12:22:38,238 Begin file copy
+2014-12-29 13:38:31,164 Begin update process
+2014-12-29 13:38:31,164 Begin update DB
+2014-12-29 13:38:54,437 Begin update process
+2014-12-29 13:38:54,452 Begin update DB
+2014-12-29 13:40:01,150 DB update finished - see details in log.txt
+2014-12-29 13:40:01,150 Begin file copy
+2014-12-29 13:40:03,103 Begin unzip files
+2014-12-29 13:55:56,238 Begin update process
+2014-12-29 13:55:56,238 Begin update DB
+2014-12-29 13:56:12,127 Begin update process
+2014-12-29 13:56:12,127 Begin update DB
+2014-12-29 13:57:21,430 DB update finished - see details in log.txt
+2014-12-29 13:57:21,430 Begin file copy
+2014-12-29 13:57:21,430 Begin unzip files
