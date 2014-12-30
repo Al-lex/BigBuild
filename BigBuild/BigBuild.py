@@ -31,6 +31,11 @@ def Go():
     FileFactory.CopyFilesPlugins(conf)
     logging.info('Finish get plugins')
 
+
+    logging.info('Begin get extra files')
+    FileFactory.CopyFilesExtraForMW(conf)
+    logging.info('Finish get extra files')
+
     logging.info('Set up site on IIS')
 
     
@@ -38,6 +43,8 @@ def Go():
     logging.info('Finish set up site on IIS')
 
     logging.info('Finished all')
+
+    print("All is finished!!!")
 
 
 

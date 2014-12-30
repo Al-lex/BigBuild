@@ -99,3 +99,51 @@
 2014-12-29 13:57:21,430 DB update finished - see details in log.txt
 2014-12-29 13:57:21,430 Begin file copy
 2014-12-29 13:57:21,430 Begin unzip files
+2014-12-30 11:54:56,508 Begin update process
+2014-12-30 11:54:56,523 Begin update DB
+2014-12-30 11:55:00,246 DB update finished - see details in log.txt
+2014-12-30 11:55:00,246 Begin file copy
+2014-12-30 11:55:01,246 Begin unzip files
+2014-12-30 11:55:20,141 Begin update web.config
+2014-12-30 11:55:20,157 Finish update web.config
+2014-12-30 11:55:20,157 Begin get plugins
+2014-12-30 11:55:20,351 Finish get plugins
+2014-12-30 11:55:20,351 Set up site on IIS
+2014-12-30 11:56:11,529 Begin update process
+2014-12-30 11:56:11,529 Begin update DB
+2014-12-30 11:56:15,231 DB update finished - see details in log.txt
+2014-12-30 11:56:15,231 Begin file copy
+2014-12-30 11:56:17,028 Begin unzip files
+2014-12-30 11:56:27,572 Begin update web.config
+2014-12-30 11:56:27,588 Finish update web.config
+2014-12-30 11:56:27,588 Begin get plugins
+2014-12-30 11:56:27,713 Finish get plugins
+2014-12-30 11:56:27,713 Set up site on IIS
+2014-12-30 11:56:34,400 Finish set up site on IIS
+2014-12-30 11:56:34,400 Finished all
+2014-12-30 11:58:48,017 Begin update process
+2014-12-30 11:58:48,017 Begin update DB
+2014-12-30 11:58:51,433 DB update finished - see details in log.txt
+2014-12-30 11:58:51,433 Begin file copy
+2014-12-30 11:58:53,042 Begin unzip files
+2014-12-30 11:59:05,079 Begin update web.config
+2014-12-30 11:59:05,095 Finish update web.config
+2014-12-30 11:59:05,095 Begin get plugins
+2014-12-30 11:59:05,189 Finish get plugins
+2014-12-30 11:59:05,189 Set up site on IIS
+2014-12-30 11:59:09,220 Finish set up site on IIS
+2014-12-30 11:59:09,220 Finished all
+2014-12-30 14:10:53,854 Begin update process
+2014-12-30 14:10:53,854 Begin update DB
+2014-12-30 14:10:57,639 DB update finished - see details in log.txt
+2014-12-30 14:10:57,639 Begin file copy
+2014-12-30 14:10:58,213 Begin unzip files
+2014-12-30 14:11:11,288 Begin update web.config
+2014-12-30 14:11:11,294 Finish update web.config
+2014-12-30 14:11:11,295 Begin get plugins
+2014-12-30 14:11:11,449 Finish get plugins
+2014-12-30 14:11:11,449 Begin get extra files
+2014-12-30 14:11:11,453 Finish get extra files
+2014-12-30 14:11:11,453 Set up site on IIS
+2014-12-30 14:11:18,018 Finish set up site on IIS
+2014-12-30 14:11:18,018 Finished all

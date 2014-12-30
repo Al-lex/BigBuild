@@ -45,7 +45,7 @@ class DBUpdater(object):
 
 
     @staticmethod
-    def CreateScriptsForDBUpdateServicePack(pathbase,foldername,server,database,userid,password,isupdatelast):
+    def CreateScriptsForDBUpdateServicePack(pathbase,foldername,server,database,userid,password,release,isupdatelast):
                     """Method to update local DB with scripts from servicepack 
                      -pathbase -path to the branch
                      -pathtempscripts - path to the local folder for scripts
@@ -107,7 +107,7 @@ class DBUpdater(object):
 
        
 
-                    l4=[ln1 for ln1 in listdir(pathtempscripts) if "ReleaseScript2009.2.20." in ln1]
+                    l4=[ln1 for ln1 in listdir(pathtempscripts) if "ReleaseScript"+release+"." in ln1]#2009.2.20
 
 
 
@@ -129,7 +129,7 @@ class DBUpdater(object):
                     #insert only version numbers higher then current
                     l6=[ln2 for ln2 in l5 if int(ln2[-6:-4])>int(currentServicePackVersion)]
                     l6.sort(reverse=False)
-                    print (l6)
+                    #print (l6)
 
                     #print(l6)
                     #return
@@ -155,12 +155,18 @@ class DBUpdater(object):
 
                     ##
                     updstring1="\"C:\\Program Files\\Microsoft SQL Server\\110\\Tools\\Binn\SQLCMD.EXE\" -S "+server+" -d "+database+" -U "+userid+" -P "+password+" -i "+os.getcwd()+"\\"+foldername+"scripts\\"
-                    upddstring2=" -o \""+os.getcwd()+"\\"+foldername+"\\resultrestor.txt\""
+                    upddstring2=" >> \""+os.getcwd()+"\\"+foldername+"\\resultrestor.txt\""
 
 
                     l7=[]
                     for line in l6:
-                       l7.append(updstring1+line+upddstring2)
+                       #if release script number ends on 01 02 03 etc then change 1 2 3 etc 
+                       if (line[-6]=="0"):
+                           line2=line[0:-6]+line[-5:]
+                           #print(line2)
+                           l7.append(updstring1+line2+upddstring2)
+                       else:
+                           l7.append(updstring1+line+upddstring2)
 
                     ##
                     ##print(l5)
@@ -185,7 +191,7 @@ class DBUpdater(object):
          
          for name,src,dst,conn,plugs,iis,mtdata,isLastBuild  in SettingsObj.GetBuildPaths():
                        print(src)
-                       os.system(DBUpdater.CreateScriptsForDBUpdateServicePack(mtdata["MTpathToLatest"],name,conn["SERVER"],conn["DATABASE"],"sa",mtdata["saPassword"],isLastBuild))
+                       os.system(DBUpdater.CreateScriptsForDBUpdateServicePack(mtdata["MTpathToLatest"],name,conn["SERVER"],conn["DATABASE"],"sa",mtdata["saPassword"],mtdata["Release"],isLastBuild))
 
 if __name__ == "__main__":
     from DataAdaptor import XMLAdaptor as XA

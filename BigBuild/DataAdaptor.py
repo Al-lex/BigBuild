@@ -63,12 +63,20 @@ class XMLAdaptor(object):
                  MTData["MTUserID"]=branch.find("MT").get("MTUserID")
                  MTData["MTPassword"]=branch.find("MT").get("MTPassword")
 
+                 MTData["Release"]=branch.find("MT").get("Release")
+
 
 
 
                  isLastBuild = branch.find("isLastBuild").text
 
+
+
+
+
                  files.append((name, pathToLatest,pathToLocal,connectionData, Plugins, iisData,MTData,isLastBuild))
+
+                 
 
                
 
@@ -98,8 +106,8 @@ class XMLAdaptor(object):
        files=[]
        for fl in self.GetConfigTree().findall("Files")[0].findall("file"):
            files.append((fl.get("name"),fl.get("getlocal")))
-           name=fl.get("name")
-           getlocal=fl.get("getlocal")
+           #name=fl.get("name")
+           #getlocal=fl.get("getlocal")
            #print(name,getlocal) 
        return files
     def GetLastBuildNumber(self,path):
@@ -139,7 +147,7 @@ class FileFactory():
                               print("Success!")
                           else:
                              print ("Problem with copy, check "+src+"  if file in place")
-                             continue
+                             break
             #except:
                 #print("Problem with copy, check "+src+"  if file in place")
                           
@@ -167,6 +175,13 @@ class FileFactory():
                        zip=zipfile.ZipFile(plugSrcZip)
                        zip.extractall(dst)
                   #unzip zip in dst
+       @staticmethod
+       def CopyFilesExtraForMW(SettingsObj):
+          for name,src,dst,conn,plugs,iis,mtdata,isLastBuild in SettingsObj.GetBuildPaths():
+              if(SettingsObj.GetFiles()[0][1]=="true"):
+                  filename=SettingsObj.GetFiles()[0][0]
+                  shutil.copy2(os.getcwd()+"\\Extra\\"+filename,dst)
+                    
 
 
 
