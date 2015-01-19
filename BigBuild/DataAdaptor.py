@@ -136,18 +136,26 @@ class FileFactory():
                                     shutil.rmtree(dst)
                           os.mkdir(dst)
                           print("Branch named "+name+" will be copyed")
-                          Zipname=SettingsObj.GetLastBuildNumber(src)
+                          dirname=SettingsObj.GetLastBuildNumber(src)
                          
-                          src=src+"\\"+Zipname+"\\Release\\Full\\_Zips\\mw-"+Zipname[9:]+".zip"
+                          src2=src+"\\"+dirname+"\\Release\\Full\\_Zips\\mw-"+dirname[9:]+".zip"
                          # dst=dst+"\\"+"mw-"+Zipname[9:]+".zip"
                           #print(src)
                           #dir_util.copy_tree(src,dst)
-                          if (os.path.exists(src)):
-                              shutil.copy2(src,dst)
-                              print("Success!")
+                          if (os.path.exists(src2)):
+                              shutil.copy2(src2,dst)
+                              print("Success with copy of "+dirname+"!")
                           else:
-                             print ("Problem with copy, check "+src+"  if file in place")
-                             break
+                             print ("Problem with copy last build from, "+src+"  it will be taken last good build")
+                             relFolders=os.listdir(src)
+                             relFolders.sort()
+                             for dirname in relFolders:
+                                 if (os.path.exists(src+"\\"+dirname+"\\Release")):
+
+                                   
+                                      src2=src+"\\"+dirname+"\\Release\\Full\\_Zips\\mw-"+dirname[9:]+".zip"
+                                      print("Success with last good(not latest)-it was"+dirname+"!")
+                                      break
             #except:
                 #print("Problem with copy, check "+src+"  if file in place")
                           

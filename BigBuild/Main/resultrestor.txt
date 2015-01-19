@@ -1,2 +1,15 @@
-Msg 50000, Level 16, State 1, Server S15\MASTERTOUR08, Line 196
-'‘< úøõ‘?‘?‘'ñ>ñ ?çó?‘?‘?çó‘'?‘<ü ‘?ó‘?ñõ‘' (?+???>ç?ñç ‘? 9.2.20.21 ?? 9.2.21.0). 'ç‘?‘?ñ‘? 'ø‘?çü +øú‘< ¢?" 9.2.20.9
+Caution: Changing any part of an object name could break scripts and stored procedures.
+The module 'AllowChangeService' depends on the missing object 'FIN_AllowChangeSVPartner'. The module will still be created; however, it cannot run successfully until the object exists.
+Msg 8152, Level 16, State 14, Server S15\MASTERTOUR08, Line 17
+String or binary data would be truncated.
+The statement has been terminated.
+Msg 8152, Level 16, State 14, Server S15\MASTERTOUR08, Line 8
+String or binary data would be truncated.
+The statement has been terminated.
+Msg 8152, Level 16, State 14, Server S15\MASTERTOUR08, Line 8
+String or binary data would be truncated.
+The statement has been terminated.
+Msg 50000, Level 16, State 1, Server S15\MASTERTOUR08, Procedure RecreateDependentObjects, Line 193
+SELECT failed because the following SET options have incorrect settings: 'QUOTED_IDENTIFIER'. Verify that SET options are correct for use with indexed views and/or indexes on computed columns and/or filtered indexes and/or query notifications and/or XML data type methods and/or spatial index operations.
+Msg 50000, Level 16, State 1, Server S15\MASTERTOUR08, Procedure RecreateDependentObjects, Line 193
+SELECT failed because the following SET options have incorrect settings: 'QUOTED_IDENTIFIER'. Verify that SET options are correct for use with indexed views and/or indexes on computed columns and/or filtered indexes and/or query notifications and/or XML data type methods and/or spatial index operations.

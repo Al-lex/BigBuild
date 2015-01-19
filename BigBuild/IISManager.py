@@ -1,5 +1,6 @@
 
 import os
+import subprocess
 class IISManager(object):
     """Class to manage sites on IIS"""
     @staticmethod
@@ -11,19 +12,45 @@ class IISManager(object):
         #os.system(r"C:\\Windows\\WinSxS\\amd64_microsoft-windows-iis-sharedlibraries_31bf3856ad364e35_6.3.9600.17088_none_01abb77d88c5e548\\appcmd.exe add app site.name:\"Default Web Site\" path:test_app physicalPath:E:\\MW_develop")
         #PS C:\WINDOWS\system32> New-Item 'IIS:\Sites\Default Web Site\DemoApp' -physicalPath e:\mw_main -type Application
         #DefaultAppPool
-                    
-                 try:
-                   os.system(r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe Remove-WebApplication -Name "+iis["appName"]+" -Site 'Default Web Site'")
-                 except:
-                  print("Remove impossible")
+                 appcmd="C:\\Windows\\System32\\inetsrv\\appcmd.exe"   
+             
+                 comm=r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe Remove-WebApplication -Name "+iis["appName"]+" -Site 'Default Web Site'"
+                 retcode=subprocess.call(comm, shell=True)
+                 if retcode == 0:
+                        print ("successfuly removed web-site")
+                 else:
+                        print ("failure with web site remove -lets try app cmd:")
+                        comm=appcmd+" delete app /site.name:\"Default Web Site\""+"\\"+iis["appName"]
+                        print("execute:"+comm)
+                        retcode=subprocess.call(comm, shell=True)
+                        if retcode == 0:
+                               print ("at last successfuly removed web-site")
+                        else:
+                               print ("well - it seems to be impossible")
+
                   
 
-                 try:
-                    comm=r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe New-WebApplication -Name "+iis["appName"]+" -Site 'Default Web Site' -PhysicalPath "+dst+" -ApplicationPool "+iis["appPool"]
+               
+                 comm=r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe New-WebApplication -Name "+iis["appName"]+" -Site 'Default Web Site' -PhysicalPath "+dst+" -ApplicationPool "+iis["appPool"]
                   #print(comm)
-                    os.system(comm)
-                 except:
-                    print("Create site"+iis["appName"]+" impossible - try to do it manually")
+                    #os.system(comm)
+                   
+                 retcode=subprocess.call(comm, shell=True)
+                 if retcode == 0:
+                        print ("successfuly installed web-site")
+                 else:
+                        print ("failure with web site install -lets try app cmd:")
+                        comm=appcmd+" add app /site.name:\"Default Web Site\""+" /path:/"+iis["appName"]+" /physicalPath:"+dst
+                        print("execute:"+comm)
+                        retcode=subprocess.call(comm, shell=True)
+                        if retcode == 0:
+                               print ("at last successfuly add web-site")
+                        else:
+                               print ("well - it seems add impossible")
+
+               
 
 if __name__ == "__main__":
-    IISManager.CreateSite()
+    from DataAdaptor import XMLAdaptor as XA
+    conf=XA("MW.config")
+    IISManager.CreateSite(conf)

@@ -25,7 +25,7 @@ class DBUpdater(object):
             print(version)
         else:
             version=results[0][0]
-            print(version)
+            print("Current db version is "+version)
               
         return version
 
@@ -170,6 +170,8 @@ class DBUpdater(object):
 
                     ##
                     ##print(l5)
+                    print("following servicepack scripts will be included in update:")
+                    print(l7)
                     finalfile=open(os.getcwd()+"\\"+foldername+"\\ready.bat","w")
                     
                     for line in l7:
@@ -190,8 +192,9 @@ class DBUpdater(object):
     def execUpdateFilesForBranches(SettingsObj):
          
          for name,src,dst,conn,plugs,iis,mtdata,isLastBuild  in SettingsObj.GetBuildPaths():
-                       print(src)
+                       #print(src)
                        os.system(DBUpdater.CreateScriptsForDBUpdateServicePack(mtdata["MTpathToLatest"],name,conn["SERVER"],conn["DATABASE"],"sa",mtdata["saPassword"],mtdata["Release"],isLastBuild))
+                       print("See details on dbupdate in "+os.getcwd()+"\\"+name+"\\"+"resultrestor.txt")
 
 if __name__ == "__main__":
     from DataAdaptor import XMLAdaptor as XA
