@@ -4,6 +4,7 @@ from os import listdir
 import shutil 
 import os
 import zipfile
+import subprocess
 #https://docs.python.org/2/library/xml.etree.elementtree.html
 class XMLAdaptor(object):
     """Class is used as middle layer for working with external config"""
@@ -110,6 +111,17 @@ class XMLAdaptor(object):
            #getlocal=fl.get("getlocal")
            #print(name,getlocal) 
        return files
+    def GetDirectories(self):
+       """Gets static directories -may be used for temporary pathches using permanent location of files- for example Release folder"""
+       directories=[]
+       for dr in self.GetConfigTree().findall("Directories")[0].findall("directory"):
+           directories.append((dr.get("path"),dr.get("getlocal")))
+           #name=fl.get("name")
+           #getlocal=fl.get("getlocal")
+           #print(name,getlocal) 
+       return directories
+
+
     def GetLastBuildNumber(self,path):
        """Method to find name of the last zip build in the branch specified"""
        l=listdir(path)
@@ -125,11 +137,25 @@ class XMLAdaptor(object):
 class FileFactory():
        """Class for copy operations with different objects of XA type"""
        from DataAdaptor import XMLAdaptor as XA
+       #@staticmethod     
+       #def GetFilesToTempSubfolder(SettingsObj):
+       #    """Static method to get web service files from static location """
+       #    for name,src,dst,conn,plugs,iis,mtdata,isLastBuild in SettingsObj.GetBuildPaths():
+       #      # if(SettingsObj.GetDirectories[0][1]=="true"):
+       #           dirpath=SettingsObj.GetDirectories()[0][0]
+       #           #create tempdir in branch
+       #           tempdir=dst+"\\Tmp"
+       #           if not os.path.exists(tempdir):
+       #              os.mkdir(tempdir)
+       #           shutil.copy2(dirpath,tempdir)
+
+
        @staticmethod
        def CopyFilesBuild(SettingsObj):
           """Static method to get incremental update from last release to last build"""
           #if(isinstance(SettingsObj,XA)):
-             
+          
+          
            # try:
           for name,src,dst,conn,plugs,iis,mtdata,isLastBuild in SettingsObj.GetBuildPaths():
                           if os.path.exists(dst):
@@ -144,7 +170,9 @@ class FileFactory():
                           #dir_util.copy_tree(src,dst)
                           if (os.path.exists(src2)):
                               shutil.copy2(src2,dst)
+                              
                               print("Success with copy of "+dirname+"!")
+                              return False
                           else:
                              print ("Problem with copy last build from, "+src+"  it will be taken last good build")
                              relFolders=os.listdir(src)
@@ -154,13 +182,46 @@ class FileFactory():
 
                                    
                                       src2=src+"\\"+dirname+"\\Release\\Full\\_Zips\\mw-"+dirname[9:]+".zip"
+                                      if (os.path.exists(src2)):
+                                         shutil.copy2(src2,dst)
+
+
                                       print("Success with last good(not latest)-it was"+dirname+"!")
-                                      break
+                                      return True
+#if getstatic turned true in config get in Tmp folder static files
+                         # if(SettingsObj.GetDirectories[0][1]=="true"):
+                       
             #except:
                 #print("Problem with copy, check "+src+"  if file in place")
                           
           #else:
              # raise Exception("Not valid config object")
+       @staticmethod
+       def CopyStaticDir(SettingsObj):
+              pathtofilestatic=SettingsObj.GetDirectories()[0][0] 
+              for name,src,dst,conn,plugs,iis,mtdata,isLastBuild in SettingsObj.GetBuildPaths():
+                  if(SettingsObj.GetDirectories()[0][1]=="true"):
+                    tmp=dst+"\\Tmp"
+                    os.mkdir(tmp)
+                    shutil.copy2(pathtofilestatic,tmp)
+                    lst=os.listdir(tmp)
+                    zip=zipfile.ZipFile(tmp+"//"+lst[0])
+                    zip.extractall(tmp)
+
+                     
+                    ConfigFactory.ChangeConnectString(conf,"Megatec.PaymentSignatureServiceHost.exe.config")
+                    #Check if service exists
+                    comm2=r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe get-service \"Служба подписи путевок и платежей\">1.txt"
+                    #Install service
+                    comm2=tmp+"\\_Install.bat"
+                    retcode=subprocess.call(comm2, shell=True)
+                    if retcode == 0:
+                            print ("successfuly installed auth service")
+                    else:
+                            print ("failure with auth service")
+      
+
+
        @staticmethod
        def CopyFilesRelease(SettingsObj):
            """Static method to get in case of need files from release"""
@@ -232,7 +293,9 @@ class ConfigFactory():
 
                   connStringEth="Data Source=ip-адрес сервера; Initial Catalog=название базы;User Id=логин пользователя;Password=пароль"
                   connString="Data Source="+conn["SERVER"]+"; Initial Catalog="+conn["DATABASE"]+";User Id="+conn["UserID"]+";Password="+ conn["Password"]
-                 
+              elif FileType=="Megatec.PaymentSignatureServiceHost.exe.config":
+                  connStringEth="Data Source=DataSource; Initial Catalog=InitialCatalog;User Id=UserId;Password=Password"
+                  connString="Data Source="+conn["SERVER"]+"; Initial Catalog="+conn["DATABASE"]+";User Id="+conn["UserID"]+";Password="+ conn["Password"]
 
 
 
@@ -261,7 +324,7 @@ if __name__ == "__main__":
     from DataAdaptor import XMLAdaptor as XA
     conf=XA("MW.config")
  
-    FileFactory.CopyFilesPlugins(conf)
+    FileFactory.GetFilesToTempSubfolder(conf)
 
   
 

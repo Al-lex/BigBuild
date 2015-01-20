@@ -16,12 +16,16 @@ def Go():
     logging.info('Begin update DB')
     DBUpdater.execUpdateFilesForBranches(conf)
     logging.info('DB update finished - see details in log.txt')
-
+   
 
     logging.info('Begin file copy')
     FileFactory.CopyFilesBuild(conf)
     logging.info('Begin unzip files')
     FileFactory.UnzipFilesBuild(conf)
+   
+    FileFactory.CopyStaticDir(conf)
+
+
 
     logging.info('Begin update web.config')
     ConfigFactory.ChangeConnectString(conf,"web.config")
