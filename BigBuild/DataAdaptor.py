@@ -196,29 +196,95 @@ class FileFactory():
                           
           #else:
              # raise Exception("Not valid config object")
+      
+       @staticmethod 
+       def StopPaymentService():    
+             comm1=r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe get-service \"Служба подписи путевок и платежей\">tmp.txt"
+             retcode=subprocess.call(comm1, shell=True)
+             if retcode == 0:
+                            path=os.getcwd()+"\\tmp.txt"
+                            #print (path)
+                            file=open(path,"r")
+
+                            
+
+                           
+                            #print(file.readlines())
+                            #if any(word.find("Running") for word in file.readlines()):
+                            for line in file.readlines():
+                                print(line)
+                                if line.find("Running"):
+                         
+                                    print ("check service - payment service is Running -try to stop to update catalog")
+                                    #stop service to remove catalog)
+                                    comm2=(r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe stop-service \"Служба подписи путевок и платежей\">tmp.txt")
+                                    retcode=subprocess.call(comm2, shell=True)
+                                    if retcode == 0:
+                                               print ("Successfuly stopped payment service")
+                                    else:
+                                               print ("Failure with stop payment service")
+                                    file.close()
+                                    os.remove(os.getcwd()+"\\tmp.txt")
+                                    return True
+                                elif line.find("Stopped"):
+                               #any(word.find("Stopped") for word in file.readlines()):
+                                     print ("service is already stopped")
+                                     file.close()
+                                     os.remove(os.getcwd()+"\\tmp.txt")
+                                     return True
+
+                                else:
+                                    print("Payment service is not running - will be tried install")
+                                    file.close()
+                                    os.remove(os.getcwd()+"\\tmp.txt")
+                                    return False
+                            
+             else:
+                  print("Somthing wrong with check service running")
+       @staticmethod
+       def StartPaymentService():
+            comm=(r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe start-service \"Служба подписи путевок и платежей\"")
+            retcode=subprocess.call(comm, shell=True)
+            if retcode == 0:
+                       print ("successfuly start payment service")
+            else:
+                       print ("failure with start payment service")           
+            
+       
+       @staticmethod
+       def InstallPaymentService(SettingsObj):
+           for name,src,dst,conn,plugs,iis,mtdata,isLastBuild in SettingsObj.GetBuildPaths():
+                  if(SettingsObj.GetDirectories()[0][1]=="true"):
+                                 tmp=dst+"\\Tmp"
+                                 comm3=tmp+"\\_Install.bat"
+                                 retcode=subprocess.call(comm3, shell=True)
+                                 if retcode == 0:
+                                    print ("successfuly installed payment service")
+                                 else:
+                                    print ("failure with payment service")                 
+                       
        @staticmethod
        def CopyStaticDir(SettingsObj):
               pathtofilestatic=SettingsObj.GetDirectories()[0][0] 
               for name,src,dst,conn,plugs,iis,mtdata,isLastBuild in SettingsObj.GetBuildPaths():
                   if(SettingsObj.GetDirectories()[0][1]=="true"):
-                    tmp=dst+"\\Tmp"
-                    os.mkdir(tmp)
-                    shutil.copy2(pathtofilestatic,tmp)
-                    lst=os.listdir(tmp)
-                    zip=zipfile.ZipFile(tmp+"//"+lst[0])
-                    zip.extractall(tmp)
+                                 tmp=dst+"\\Tmp"
+                                 os.mkdir(tmp)
+                                 shutil.copy2(pathtofilestatic,tmp)
+                                 lst=os.listdir(tmp)
+                                 zip=zipfile.ZipFile(tmp+"//"+lst[0])
+                                 zip.extractall(tmp)
+                                 print("Copy payments service from static location finished")
+                               
 
-                     
-                    ConfigFactory.ChangeConnectString(conf,"Megatec.PaymentSignatureServiceHost.exe.config")
-                    #Check if service exists
-                    comm2=r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe get-service \"Служба подписи путевок и платежей\">1.txt"
-                    #Install service
-                    comm2=tmp+"\\_Install.bat"
-                    retcode=subprocess.call(comm2, shell=True)
-                    if retcode == 0:
-                            print ("successfuly installed auth service")
-                    else:
-                            print ("failure with auth service")
+                   
+                           
+
+
+
+
+
+                
       
 
 
@@ -277,34 +343,39 @@ class ConfigFactory():
 
           for name,src,dst,conn,plugs,iis,mtdata,isLastBuild  in SettingsObj.GetBuildPaths():
              
-       
+              
  
              
               if FileType=="sql.ini":
                   connStringEth=r"remotedbname=IL2009,DRIVER=SQL Server;SERVER=s15\interlook08;DATABASE=IL2009;Trusted_Connection=no;APP=Master-Tour"
-                  connString="remotedbname="+ conn["remotedbname"]+",DRIVER=SQL Server;SERVER="+conn["SERVER"]+";DATABASE="+conn["DATABASE"]+";Trusted_Connection=no;APP=Master-Tour"
+                  connString="remotedbname="+ conn["remotedbname"]+",DRIVER=SQL Server;SERVER="+conn["SERVER"]+";DATABASE="+conn["DATABASE"]+";Trusted_Connection=no;APP=Master-Tour" 
+                  filepath=   dst+"\\MT\\"+FileType                                
+                  the_file=open(filepath,"r+",encoding='UTF8')
+                  the_file2=open(dst+filepath+".new","w",encoding='UTF8') 
                   
-                  print (connStringEth)
-
-
-
+                     
                   
+                           
               elif FileType=="web.config":
-
                   connStringEth="Data Source=ip-адрес сервера; Initial Catalog=название базы;User Id=логин пользователя;Password=пароль"
                   connString="Data Source="+conn["SERVER"]+"; Initial Catalog="+conn["DATABASE"]+";User Id="+conn["UserID"]+";Password="+ conn["Password"]
+                  filepath=dst+"\\"+FileType
+                  the_file=open(filepath,"r+",encoding='UTF8')
+                  the_file2=open(filepath+".new","w",encoding='UTF8')
+
               elif FileType=="Megatec.PaymentSignatureServiceHost.exe.config":
                   connStringEth="Data Source=DataSource; Initial Catalog=InitialCatalog;User Id=UserId;Password=Password"
                   connString="Data Source="+conn["SERVER"]+"; Initial Catalog="+conn["DATABASE"]+";User Id="+conn["UserID"]+";Password="+ conn["Password"]
+                  #different path -needs add Tmp subfolder
+                  filepath=dst+"\\Tmp\\"+FileType
+                  the_file=open(filepath,"r+",encoding='UTF8')
+                  the_file2=open(filepath+".new","w",encoding='UTF8')
 
 
 
                 
 
-              the_file=open(dst+"\\"+FileType,"r+",encoding='UTF8')
-
-
-              the_file2=open(dst+"\\"+FileType+".new","w",encoding='UTF8')
+              
             
 
               for line in the_file.readlines(): 
@@ -316,8 +387,8 @@ class ConfigFactory():
               the_file.close()
               the_file2.close()
 
-              os.remove(dst+"\\"+FileType);
-              os.rename(dst+"\\"+FileType+".new",dst+"\\"+FileType)
+              os.remove(filepath);
+              os.rename(filepath+".new",filepath)
 
                
 if __name__ == "__main__":

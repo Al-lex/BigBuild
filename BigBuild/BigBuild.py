@@ -19,13 +19,25 @@ def Go():
    
 
     logging.info('Begin file copy')
+    #some temporary nail in the ass - need refactoring after payment service will be in build
+
+    is_stop=FileFactory.StopPaymentService()
+
     FileFactory.CopyFilesBuild(conf)
     logging.info('Begin unzip files')
     FileFactory.UnzipFilesBuild(conf)
    
     FileFactory.CopyStaticDir(conf)
+    ConfigFactory.ChangeConnectString(conf,"Megatec.PaymentSignatureServiceHost.exe.config")
+    #another temp nail in the ass - need refactoring after payment service will be in build
+    if not(is_stop):       
+        FileFactory.InstallPaymentService(conf)
+    else:
+        FileFactory.StartPaymentService()
+    
+    
 
-
+    
 
     logging.info('Begin update web.config')
     ConfigFactory.ChangeConnectString(conf,"web.config")

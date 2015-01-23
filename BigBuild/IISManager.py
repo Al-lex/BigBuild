@@ -22,7 +22,9 @@ class IISManager(object):
                         print ("successfuly removed web-site")
                  else:
                         print ("failure with web site remove -lets try app cmd:")
-                        comm=appcmd+" delete app /site.name:\"Default Web Site\""+"\\"+iis["appName"]
+                        #comm=appcmd+" delete app /site.name:\"Default Web Site\""+"\\"+iis["appName"]
+                        #C:\Windows\System32\inetsrv\appcmd.exe delete app "Default Web Site/test1"    delete app "Default Web Site/
+                        comm=appcmd+" delete app \"Default Web Site/"+iis["appName"]+"\""
                         print("execute:"+comm)
                         retcode=subprocess.call(comm, shell=True)
                         if retcode == 0:
