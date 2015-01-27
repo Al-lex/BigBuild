@@ -1,1 +1,1 @@
-"C:\Program Files\Microsoft SQL Server\110\Tools\Binn\SQLCMD.EXE" -S s15\mastertour08 -d main_del -U sa -P sa -i \\bg\builds\Master-Tour\Main_MasterTour\LastBuild\Scripts\ReleaseScript.sql >> "E:\PyProjects\BigBuild\BigBuild\Main\resultrestor.txt"
+"C:\Program Files\Microsoft SQL Server\110\Tools\Binn\SQLCMD.EXE" -S s15\mastertour08 -d main_del -U sa -P sa -i \\bg\builds\Master-Tour\Main_MasterTour\LastBuild\Scripts\ReleaseScript.sql -I -R >> "E:\PyProjects\BigBuild\BigBuild\Main\resultrestor.txt" -f i:65001

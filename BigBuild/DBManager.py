@@ -155,7 +155,7 @@ class DBUpdater(object):
 
                     ##
                     updstring1="\"C:\\Program Files\\Microsoft SQL Server\\110\\Tools\\Binn\SQLCMD.EXE\" -S "+server+" -d "+database+" -U "+userid+" -P "+password+" -i "+os.getcwd()+"\\"+foldername+"scripts\\"
-                    upddstring2=" >> \""+os.getcwd()+"\\"+foldername+"\\resultrestor.txt\""
+                    upddstring2=" -I -R >> \""+os.getcwd()+"\\"+foldername+"\\resultrestor.txt\" -f i:65001"
 
 
                     l7=[]
