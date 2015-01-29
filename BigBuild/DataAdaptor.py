@@ -4,9 +4,10 @@ from os import listdir
 import shutil 
 import os
 import zipfile
+import glob
 import subprocess
 #https://docs.python.org/2/library/xml.etree.elementtree.html
-class XMLAdaptor(object):
+class Model(object):
     """Class is used as middle layer for working with external config"""
     pathToFile=""
 
@@ -22,6 +23,22 @@ class XMLAdaptor(object):
         #     print (child.tag, child.attrib)
         files=[]
         for branch in self.GetConfigTree().findall("branch"):
+
+
+                 servicedetails=[]
+
+                 brservices=branch.findall("Services")
+                 for services in brservices:
+                              #print(services.findall("Service")[0].get("name"))
+                              for service in services.findall("Service"):
+                                  servicedetails.append([service.get("name"),service.get("apppool"),service.get("getlocal")])
+                 #print(servicedetails)
+
+
+
+
+
+
                 
                  name = branch.get("name")
                  pathToLatest = branch.find("pathToLatest").text
@@ -30,8 +47,6 @@ class XMLAdaptor(object):
 
 #add connections for the branch
                  connectionData={}
-
-        
                 
                  connectionData["remotedbname"]=branch.find("dbconnection").get("remotedbname")
                  connectionData["SERVER"]=branch.find("dbconnection").get("SERVER")
@@ -71,11 +86,11 @@ class XMLAdaptor(object):
 
                  isLastBuild = branch.find("isLastBuild").text
 
+              
 
 
 
-
-                 files.append((name, pathToLatest,pathToLocal,connectionData, Plugins, iisData,MTData,isLastBuild))
+                 files.append((name, pathToLatest,pathToLocal,connectionData, Plugins, iisData,MTData,isLastBuild,servicedetails))
 
                  
 
@@ -95,13 +110,16 @@ class XMLAdaptor(object):
        return files
     def GetServices(self):
        """Gets services list from MW.config"""
-       files=[]
-       for service in self.GetConfigTree().findall("Services")[0].findall("service"):
-           files.append((service.get("name"),service.get("getlocal")))
+       services=[]
+       for service in self.GetConfigTree().findall("branch").findall("Services").findall("Service"):
+           services.append((service.get("name"),service.get("apppool"), service.get("getlocal")))
            name=service.get("name")
+           apppool=service.get("apppool")
            getlocal=service.get("getlocal")
-           print(name,getlocal) 
-       return files     
+           print(name,apppool,getlocal) 
+       return services  
+   
+     
     def GetFiles(self):
        """Gets files list-i.e. MTData sql.ini etc- from MW.config"""
        files=[]
@@ -134,9 +152,9 @@ class XMLAdaptor(object):
            
            
            
-class FileFactory():
+class Controller():
        """Class for copy operations with different objects of XA type"""
-       from DataAdaptor import XMLAdaptor as XA
+       from DataAdaptor import Model as XA
        #@staticmethod     
        #def GetFilesToTempSubfolder(SettingsObj):
        #    """Static method to get web service files from static location """
@@ -157,7 +175,7 @@ class FileFactory():
           
           
            # try:
-          for name,src,dst,conn,plugs,iis,mtdata,isLastBuild in SettingsObj.GetBuildPaths():
+          for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails in SettingsObj.GetBuildPaths():
                           if os.path.exists(dst):
                                     shutil.rmtree(dst)
                           os.mkdir(dst)
@@ -165,9 +183,7 @@ class FileFactory():
                           dirname=SettingsObj.GetLastBuildNumber(src)
                          
                           src2=src+"\\"+dirname+"\\Release\\Full\\_Zips\\mw-"+dirname[9:]+".zip"
-                         # dst=dst+"\\"+"mw-"+Zipname[9:]+".zip"
-                          #print(src)
-                          #dir_util.copy_tree(src,dst)
+
                           if (os.path.exists(src2)):
                               shutil.copy2(src2,dst)
                               
@@ -266,7 +282,7 @@ class FileFactory():
        @staticmethod
        def CopyStaticDir(SettingsObj):
               pathtofilestatic=SettingsObj.GetDirectories()[0][0] 
-              for name,src,dst,conn,plugs,iis,mtdata,isLastBuild in SettingsObj.GetBuildPaths():
+              for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails in SettingsObj.GetBuildPaths():
                   if(SettingsObj.GetDirectories()[0][1]=="true"):
                                  tmp=dst+"\\Tmp"
                                  os.mkdir(tmp)
@@ -295,14 +311,14 @@ class FileFactory():
        @staticmethod
        def UnzipFilesBuild(SettingsObj):
            """Static method to unzip getted files"""
-           for name,src,dst,conn,plugs,iis,mtdata,isLastBuild in SettingsObj.GetBuildPaths():
+           for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails in SettingsObj.GetBuildPaths():
                   lst=os.listdir(dst)
                   zip=zipfile.ZipFile(dst+"//"+lst[0])
                   zip.extractall(dst)
 
        @staticmethod
        def CopyFilesPlugins(SettingsObj):
-           for name,src,dst,conn,plugs,iis,mtdata,isLastBuild in SettingsObj.GetBuildPaths():
+           for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails in SettingsObj.GetBuildPaths():
                     buildNum=SettingsObj.GetLastBuildNumber(src)
                     for plug in plugs:
                   #find zip
@@ -312,11 +328,49 @@ class FileFactory():
                   #unzip zip in dst
        @staticmethod
        def CopyFilesExtraForMW(SettingsObj):
-          for name,src,dst,conn,plugs,iis,mtdata,isLastBuild in SettingsObj.GetBuildPaths():
+          for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails in SettingsObj.GetBuildPaths():
               if(SettingsObj.GetFiles()[0][1]=="true"):
                   filename=SettingsObj.GetFiles()[0][0]
                   shutil.copy2(os.getcwd()+"\\Extra\\"+filename,dst)
-                    
+       @staticmethod
+       def ProcessFilesServices(SettingsObj):
+          for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails in SettingsObj.GetBuildPaths():
+              
+              buildNum=SettingsObj.GetLastBuildNumber(src)
+            
+              services=[]
+              src=src+"\\"+buildNum+"\\Release\\Full\\_Zips\\"
+              srcfull=src+"\\"+buildNum+"\\Release\\Full\\_Zips\\mw-"+buildNum[9:]+".zip"
+              #if build is not made then we search last goo and take its number
+              if not(os.path.exists(srcfull)):
+                  relFolders=os.listdir(src)
+                  relFolders.sort()
+                  for dirname in relFolders:
+                                 
+                             if (os.path.exists(srcfull)):
+                                               buildNum=dirname
+                                               print("Build was broken - it will be found last good build")
+                                               break
+
+        
+              for root, dirs, files in os.walk(src):
+                      for file in files:
+                          for service in servicedetails: 
+                              if (service[2]):
+                                  if service[0] in file:
+                                      print (service[0])
+                                      src2=src+file
+                                      zip=zipfile.ZipFile(src2)
+                                      dst2=dst+"\\"+service[0]
+                                      if not (os.path.exists(dst2)):
+                                                       os.mkdir(dst2)
+                                      zip.extractall(dst2)
+                                      servicePool=service[1]
+                                      services.append([dst2,servicePool])
+
+           
+              print(services) 
+              return services
 
 
 
@@ -341,7 +395,7 @@ class ConfigFactory():
           #find pathes to all branches and concatenate
         
 
-          for name,src,dst,conn,plugs,iis,mtdata,isLastBuild  in SettingsObj.GetBuildPaths():
+          for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails  in SettingsObj.GetBuildPaths():
              
               
  
@@ -392,11 +446,10 @@ class ConfigFactory():
 
                
 if __name__ == "__main__":
-    from DataAdaptor import XMLAdaptor as XA
+    from DataAdaptor import Model as XA
     conf=XA("MW.config")
  
-    FileFactory.GetFilesToTempSubfolder(conf)
-
+    Controller.ProcessFilesServices(conf)
   
 
 

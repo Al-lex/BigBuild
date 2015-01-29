@@ -191,13 +191,13 @@ class DBUpdater(object):
     @staticmethod
     def execUpdateFilesForBranches(SettingsObj):
          
-         for name,src,dst,conn,plugs,iis,mtdata,isLastBuild  in SettingsObj.GetBuildPaths():
+         for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails  in SettingsObj.GetBuildPaths():
                        #print(src)
                        os.system(DBUpdater.CreateScriptsForDBUpdateServicePack(mtdata["MTpathToLatest"],name,conn["SERVER"],conn["DATABASE"],"sa",mtdata["saPassword"],mtdata["Release"],isLastBuild))
                        print("See details on dbupdate in "+os.getcwd()+"\\"+name+"\\"+"resultrestor.txt")
 
 if __name__ == "__main__":
-    from DataAdaptor import XMLAdaptor as XA
+    from DataAdaptor import Model as XA
     conf=XA("MW.config")
     
     DBUpdater.execUpdateFilesForBranches(conf)
