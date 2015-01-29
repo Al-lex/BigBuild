@@ -186,6 +186,11 @@ class Controller():
 
                           if (os.path.exists(src2)):
                               shutil.copy2(src2,dst)
+
+                              lst=os.listdir(dst)
+                              zip=zipfile.ZipFile(dst+"//"+lst[0])
+                              zip.extractall(dst)
+
                               
                               print("Success with copy of "+dirname+"!")
                               return False
@@ -200,6 +205,9 @@ class Controller():
                                       src2=src+"\\"+dirname+"\\Release\\Full\\_Zips\\mw-"+dirname[9:]+".zip"
                                       if (os.path.exists(src2)):
                                          shutil.copy2(src2,dst)
+                                      lst=os.listdir(dst)
+                                      zip=zipfile.ZipFile(dst+"//"+lst[0])
+                                      zip.extractall(dst)
 
 
                                       print("Success with last good(not latest)-it was"+dirname+"!")
@@ -293,17 +301,6 @@ class Controller():
                                  print("Copy payments service from static location finished")
                                
 
-                   
-                           
-
-
-
-
-
-                
-      
-
-
        @staticmethod
        def CopyFilesRelease(SettingsObj):
            """Static method to get in case of need files from release"""
@@ -380,69 +377,59 @@ class ConfigFactory():
 
              
     @staticmethod
-    def ChangeConnectString(SettingsObj,FileType):
+    def ChangeConnectString(SettingsObj,FileType,IsService):
    
           """Static method to change conn string in ini or web.config file"""
-
-          
-
-
-
-
-
-
 
           #find pathes to all branches and concatenate
         
 
           for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails  in SettingsObj.GetBuildPaths():
              
+             if not (IsService): 
               
- 
-             
-              if FileType=="sql.ini":
-                  connStringEth=r"remotedbname=IL2009,DRIVER=SQL Server;SERVER=s15\interlook08;DATABASE=IL2009;Trusted_Connection=no;APP=Master-Tour"
-                  connString="remotedbname="+ conn["remotedbname"]+",DRIVER=SQL Server;SERVER="+conn["SERVER"]+";DATABASE="+conn["DATABASE"]+";Trusted_Connection=no;APP=Master-Tour" 
-                  filepath=   dst+"\\MT\\"+FileType                                
-                  the_file=open(filepath,"r+",encoding='UTF8')
-                  the_file2=open(dst+filepath+".new","w",encoding='UTF8') 
+                  if FileType=="sql.ini":
+                      connStringEth=r"remotedbname=IL2009,DRIVER=SQL Server;SERVER=s15\interlook08;DATABASE=IL2009;Trusted_Connection=no;APP=Master-Tour"
+                      connString="remotedbname="+ conn["remotedbname"]+",DRIVER=SQL Server;SERVER="+conn["SERVER"]+";DATABASE="+conn["DATABASE"]+";Trusted_Connection=no;APP=Master-Tour" 
+                      filepath=   dst+"\\MT\\"+FileType                                
+                      the_file=open(filepath,"r+",encoding='UTF8')
+                      the_file2=open(dst+filepath+".new","w",encoding='UTF8') 
                   
-                     
-                  
-                           
-              elif FileType=="web.config":
-                  connStringEth="Data Source=ip-адрес сервера; Initial Catalog=название базы;User Id=логин пользователя;Password=пароль"
-                  connString="Data Source="+conn["SERVER"]+"; Initial Catalog="+conn["DATABASE"]+";User Id="+conn["UserID"]+";Password="+ conn["Password"]
-                  filepath=dst+"\\"+FileType
-                  the_file=open(filepath,"r+",encoding='UTF8')
-                  the_file2=open(filepath+".new","w",encoding='UTF8')
-
-              elif FileType=="Megatec.PaymentSignatureServiceHost.exe.config":
-                  connStringEth="Data Source=DataSource; Initial Catalog=InitialCatalog;User Id=UserId;Password=Password"
-                  connString="Data Source="+conn["SERVER"]+"; Initial Catalog="+conn["DATABASE"]+";User Id="+conn["UserID"]+";Password="+ conn["Password"]
-                  #different path -needs add Tmp subfolder
-                  filepath=dst+"\\Tmp\\"+FileType
-                  the_file=open(filepath,"r+",encoding='UTF8')
-                  the_file2=open(filepath+".new","w",encoding='UTF8')
-
-
-
+                                               
+                  elif FileType=="web.config":
+                      connStringEth="Data Source=ip-адрес сервера; Initial Catalog=название базы;User Id=логин пользователя;Password=пароль"
+                      connString="Data Source="+conn["SERVER"]+"; Initial Catalog="+conn["DATABASE"]+";User Id="+conn["UserID"]+";Password="+ conn["Password"]
                 
+                      filepath=dst+"\\"+FileType
+                      the_file=open(filepath,"r+",encoding='UTF8')
+                      the_file2=open(filepath+".new","w",encoding='UTF8')
+                 
 
-              
-            
-
-              for line in the_file.readlines(): 
-                   print (line.replace(connStringEth,connString),end="",file=the_file2)
+                  elif FileType=="Megatec.PaymentSignatureServiceHost.exe.config":
+                      connStringEth="Data Source=DataSource; Initial Catalog=InitialCatalog;User Id=UserId;Password=Password"
+                      connString="Data Source="+conn["SERVER"]+"; Initial Catalog="+conn["DATABASE"]+";User Id="+conn["UserID"]+";Password="+ conn["Password"]
+                      #different path -needs add Tmp subfolder
+                      filepath=dst+"\\Tmp\\"+FileType
+                      the_file=open(filepath,"r+",encoding='UTF8')
+                      the_file2=open(filepath+".new","w",encoding='UTF8')
+    
+                  for line in the_file.readlines(): 
+                       print (line.replace(connStringEth,connString),end="",file=the_file2)
 
   
-
- 
-              the_file.close()
-              the_file2.close()
-
-              os.remove(filepath);
-              os.rename(filepath+".new",filepath)
+                  the_file.close()
+                  the_file2.close()
+                  os.remove(filepath);
+                  os.rename(filepath+".new",filepath)
+             else:
+                      for service in servicedetails:
+                           filepath=dst+"\\"+service[0]+"\\"+FileType
+                           the_file=open(filepath,"r+",encoding='UTF8')
+                           the_file2=open(filepath+".new","w",encoding='UTF8')
+                           the_file.close()
+                           the_file2.close()
+                           os.remove(filepath);
+                           os.rename(filepath+".new",filepath)
 
                
 if __name__ == "__main__":
