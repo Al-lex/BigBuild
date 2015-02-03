@@ -41,19 +41,19 @@ class DBUpdater(object):
         
 
       
-    @staticmethod
-    def RestoreDB(host,sapassword,dbname,bakuppath):
-        """Method to restor db from bak"""
+    #@staticmethod
+    #def RestoreDB(host,sapassword,dbname,bakuppath):
+    #    """Method to restor db from bak"""
     
         
        
-        sql="\"C:\\Program Files\\Microsoft SQL Server\\110\\Tools\\Binn\SQLCMD.EXE\" -S "+host+" -d master -U sa -P "+sapassword+ " -q \""+"RESTORE DATABASE ["+dbname+"] FROM  DISK = N\'"+bakuppath+"\' WITH  FILE = 1,  NOUNLOAD,  STATS = 5\""
-        print(sql)
+    #    sql="\"C:\\Program Files\\Microsoft SQL Server\\110\\Tools\\Binn\\SQLCMD.EXE\" -S "+host+" -d master -U sa -P "+sapassword+ " -q \""+"RESTORE DATABASE ["+dbname+"] FROM  DISK = N\'"+bakuppath+"\' WITH  FILE = 1,  NOUNLOAD,  STATS = 5\""
+    #    print(sql)
 
-        os.system(sql)
-
+       # os.system(sql)
+       
     @staticmethod
-    def CreateScriptsForDBUpdateServicePack(pathbase,foldername,server,database,userid,password,release,isupdatelast):
+    def CreateScriptsForDBUpdateServicePack(pathbase,foldername,server,database,sauserid,sapassword,pathToBak,isRestore,release,isupdatelast):
                     """Method to update local DB with scripts from servicepack 
                      -pathbase -path to the branch
                      -pathtempscripts - path to the local folder for scripts
@@ -120,7 +120,7 @@ class DBUpdater(object):
 
 
                     #l6=[ln2 for ln2 in l5 if ln2[-6:-4]>"21"]#take only scripts to update from current db
-                    currentServicePackVersion=DBUpdater.GetCurrentDBVersion(server,userid,password,database)[-2:]
+                    currentServicePackVersion=DBUpdater.GetCurrentDBVersion(server,sauserid,sapassword,database)[-2:]
                     #print(currentServicePackVersion)
                     #insert only version numbers higher then current
                     l6=[ln2 for ln2 in l5 if int(ln2[-6:-4])>int(currentServicePackVersion)]
@@ -133,13 +133,16 @@ class DBUpdater(object):
 
 
                     os.mkdir(tempfolder)
-
+                   
                     ##
-                    updstring1="\"C:\\Program Files\\Microsoft SQL Server\\110\\Tools\\Binn\SQLCMD.EXE\" -S "+server+" -d "+database+" -U "+userid+" -P "+password+" -i "+os.getcwd()+"\\"+foldername+"scripts\\"
+                    updstring1="\"C:\\Program Files\\Microsoft SQL Server\\110\\Tools\\Binn\SQLCMD.EXE\" -S "+server+" -d "+database+" -U "+sauserid+" -P "+sapassword+" -i "+os.getcwd()+"\\"+foldername+"scripts\\"
                     upddstring2=" -I -R >> \""+os.getcwd()+"\\"+foldername+"\\resultrestor.txt\" -f i:65001"
 
 
                     l7=[]
+                    if(isRestore):
+                        updstring0="\"C:\\Program Files\\Microsoft SQL Server\\110\\Tools\\Binn\\SQLCMD.EXE\" -S "+server+" -d master -U sa -P "+sapassword+ " -Q \""+"RESTORE DATABASE ["+database+"] FROM  DISK = N\'"+pathToBak+"\' WITH  FILE = 1,  NOUNLOAD,  STATS = 5\"" #-I -R >> \""+os.getcwd()+"\\"+foldername+"\\resultrestor.txt\" -f i:65001"
+                        l7.append(updstring0)
                     for line in l6:
                        #if release script number ends on 01 02 03 etc then change 1 2 3 etc 
                        if (line[-6]=="0"):
@@ -152,7 +155,10 @@ class DBUpdater(object):
                     ##
                     ##print(l5)
                     print("following servicepack scripts will be included in update:")
-                    print(l7)
+                    if(isRestore):
+                        print(l7[1:])
+                    else:
+                        print(l7)
                     finalfile=open(os.getcwd()+"\\"+foldername+"\\ready.bat","w")
                     
                     for line in l7:
@@ -162,7 +168,7 @@ class DBUpdater(object):
                             finalfile.writelines("\n")
                     if (isupdatelast):
                       line2="\\\\bg\\builds\\Master-Tour\\"+foldername+"_MasterTour\\LastBuild\\Scripts\\ReleaseScript.sql"
-                      updstring3="\"C:\\Program Files\\Microsoft SQL Server\\110\\Tools\\Binn\SQLCMD.EXE\" -S "+server+" -d "+database+" -U "+userid+" -P "+password+" -i "
+                      updstring3="\"C:\\Program Files\\Microsoft SQL Server\\110\\Tools\\Binn\SQLCMD.EXE\" -S "+server+" -d "+database+" -U "+sauserid+" -P "+sapassword+" -i "
                       
                       finalfile.writelines( updstring3+line2+upddstring2)
 
@@ -174,10 +180,10 @@ class DBUpdater(object):
          
          for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails  in SettingsObj.GetBuildPaths():
                        #print(src)
-                       if (conn["isRestore"]):
-                           DBUpdater.RestoreDB(conn["SERVER"],conn["sapassword"],conn["DATABASE"],conn["pathToBak"])
-                       os.system(DBUpdater.CreateScriptsForDBUpdateServicePack(mtdata["MTpathToLatest"],name,conn["SERVER"],conn["DATABASE"],"sa",mtdata["saPassword"],mtdata["Release"],isLastBuild))
-                       
+                       #if (conn["isRestore"]):
+                       #    DBUpdater.RestoreDB(conn["SERVER"],conn["sapassword"],conn["DATABASE"],conn["pathToBak"])
+                       os.system(DBUpdater.CreateScriptsForDBUpdateServicePack(mtdata["MTpathToLatest"],name,conn["SERVER"],conn["DATABASE"],"sa",mtdata["saPassword"],conn["pathToBak"],conn["isRestore"],mtdata["Release"],isLastBuild))
+                    
                        print("See details on dbupdate in "+os.getcwd()+"\\"+name+"\\"+"resultrestor.txt")
 
 if __name__ == "__main__":

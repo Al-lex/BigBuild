@@ -43,8 +43,7 @@ class Model(object):
                  connectionData["SERVER"]=branch.find("dbconnection").get("SERVER")
                  connectionData["DATABASE"]=branch.find("dbconnection").get("DATABASE")
                  connectionData["UserID"]=branch.find("dbconnection").get("UserID")
-                 connectionData["Password"]=branch.find("dbconnection").get("Password")
-                 connectionData["sapassword"]=branch.find("dbconnection").get("sapassword")
+                 connectionData["Password"]=branch.find("dbconnection").get("Password")                 #connectionData["sapassword"]=branch.find("dbconnection").get("sapassword")
                  connectionData["pathToBak"]=branch.find("dbconnection").get("pathToBak")
                  connectionData["isRestore"]=branch.find("dbconnection").get("isRestore")
 

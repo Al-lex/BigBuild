@@ -914,3 +914,113 @@
 2015-02-02 18:33:13,105 Begin update DB
 2015-02-02 18:33:39,635 Begin update process
 2015-02-02 18:33:39,635 Begin update DB
+2015-02-03 11:45:47,178 Begin update process
+2015-02-03 11:45:47,179 Begin update DB
+2015-02-03 11:46:03,128 DB update finished - see details in log.txt
+2015-02-03 11:46:03,129 Begin file copy
+2015-02-03 11:46:26,884 Begin update web.config
+2015-02-03 11:46:26,896 Finish update web.config
+2015-02-03 11:46:26,896 Begin get plugins
+2015-02-03 11:46:27,044 Finish get plugins
+2015-02-03 11:46:27,044 Begin get extra files
+2015-02-03 11:46:27,047 Finish get extra files
+2015-02-03 11:46:27,047 Set up site on IIS
+2015-02-03 11:46:29,417 Finish set up site on IIS
+2015-02-03 11:46:29,417 Set up web-services
+2015-02-03 11:46:36,941 Finished web services
+2015-02-03 11:46:36,941 Finished all
+2015-02-03 11:47:22,426 Begin update process
+2015-02-03 11:47:22,426 Begin update DB
+2015-02-03 11:47:32,477 DB update finished - see details in log.txt
+2015-02-03 11:47:32,477 Begin file copy
+2015-02-03 11:54:11,420 Begin update process
+2015-02-03 11:54:11,420 Begin update DB
+2015-02-03 11:54:13,956 Begin update process
+2015-02-03 11:54:13,956 Begin update DB
+2015-02-03 11:54:28,351 DB update finished - see details in log.txt
+2015-02-03 11:54:28,352 Begin file copy
+2015-02-03 11:54:42,965 Begin update web.config
+2015-02-03 11:54:42,973 Finish update web.config
+2015-02-03 11:54:42,973 Begin get plugins
+2015-02-03 11:54:43,218 Finish get plugins
+2015-02-03 11:54:43,218 Begin get extra files
+2015-02-03 11:54:43,226 Finish get extra files
+2015-02-03 11:54:43,226 Set up site on IIS
+2015-02-03 11:54:45,468 Finish set up site on IIS
+2015-02-03 11:54:45,468 Set up web-services
+2015-02-03 11:54:52,390 Finished web services
+2015-02-03 11:54:52,391 Finished all
+2015-02-03 12:21:29,628 Begin update process
+2015-02-03 12:21:29,629 Begin update DB
+2015-02-03 12:22:34,693 Begin update process
+2015-02-03 12:22:34,694 Begin update DB
+2015-02-03 14:31:40,568 Begin update process
+2015-02-03 14:31:40,569 Begin update DB
+2015-02-03 14:34:37,313 Begin update process
+2015-02-03 14:34:37,313 Begin update DB
+2015-02-03 14:34:40,520 Begin update process
+2015-02-03 14:34:40,521 Begin update DB
+2015-02-03 14:41:39,872 Begin update process
+2015-02-03 14:41:39,872 Begin update DB
+2015-02-03 14:41:43,215 Begin update process
+2015-02-03 14:41:43,215 Begin update DB
+2015-02-03 14:42:35,534 Begin update process
+2015-02-03 14:42:35,534 Begin update DB
+2015-02-03 14:45:10,702 Begin update process
+2015-02-03 14:45:10,702 Begin update DB
+2015-02-03 14:45:41,792 Begin update process
+2015-02-03 14:45:41,792 Begin update DB
+2015-02-03 14:46:24,928 Begin update process
+2015-02-03 14:46:24,928 Begin update DB
+2015-02-03 14:46:28,160 Begin update process
+2015-02-03 14:46:28,160 Begin update DB
+2015-02-03 14:47:22,520 Begin update process
+2015-02-03 14:47:22,520 Begin update DB
+2015-02-03 14:48:13,930 Begin update process
+2015-02-03 14:48:13,930 Begin update DB
+2015-02-03 14:52:30,601 Begin update process
+2015-02-03 14:52:30,602 Begin update DB
+2015-02-03 15:03:30,474 Begin update process
+2015-02-03 15:03:30,474 Begin update DB
+2015-02-03 15:03:32,454 Begin update process
+2015-02-03 15:03:32,454 Begin update DB
+2015-02-03 15:03:50,728 DB update finished - see details in log.txt
+2015-02-03 15:03:50,729 Begin file copy
+2015-02-03 15:04:51,807 Begin update process
+2015-02-03 15:04:51,807 Begin update DB
+2015-02-03 15:05:13,277 DB update finished - see details in log.txt
+2015-02-03 15:05:13,278 Begin file copy
+2015-02-03 15:05:30,451 Begin update web.config
+2015-02-03 15:05:30,459 Finish update web.config
+2015-02-03 15:05:30,459 Begin get plugins
+2015-02-03 15:05:30,594 Finish get plugins
+2015-02-03 15:05:30,594 Begin get extra files
+2015-02-03 15:05:30,598 Finish get extra files
+2015-02-03 15:05:30,598 Set up site on IIS
+2015-02-03 15:05:32,931 Finish set up site on IIS
+2015-02-03 15:05:32,931 Set up web-services
+2015-02-03 15:05:41,533 Finished web services
+2015-02-03 15:05:41,534 Finished all
+2015-02-03 15:08:13,131 Begin update process
+2015-02-03 15:08:13,131 Begin update DB
+2015-02-03 15:08:16,082 Begin update process
+2015-02-03 15:08:16,082 Begin update DB
+2015-02-03 15:08:29,104 Begin update process
+2015-02-03 15:08:29,105 Begin update DB
+2015-02-03 15:09:03,252 DB update finished - see details in log.txt
+2015-02-03 15:09:03,252 Begin file copy
+2015-02-03 16:01:47,684 Begin update process
+2015-02-03 16:01:47,684 Begin update DB
+2015-02-03 16:02:12,919 DB update finished - see details in log.txt
+2015-02-03 16:02:12,919 Begin file copy
+2015-02-03 16:02:27,876 Begin update web.config
+2015-02-03 16:02:27,892 Finish update web.config
+2015-02-03 16:02:27,892 Begin get plugins
+2015-02-03 16:02:27,986 Finish get plugins
+2015-02-03 16:02:27,986 Begin get extra files
+2015-02-03 16:02:27,986 Finish get extra files
+2015-02-03 16:02:27,986 Set up site on IIS
+2015-02-03 16:02:30,001 Finish set up site on IIS
+2015-02-03 16:02:30,001 Set up web-services
+2015-02-03 16:02:37,923 Finished web services
+2015-02-03 16:02:37,923 Finished all

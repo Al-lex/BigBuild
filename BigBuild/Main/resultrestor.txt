@@ -1,2 +1,11 @@
 Caution: Changing any part of an object name could break scripts and stored procedures.
+Caution: Changing any part of an object name could break scripts and stored procedures.
+Caution: Changing any part of an object name could break scripts and stored procedures.
+Caution: Changing any part of an object name could break scripts and stored procedures.
+Caution: Changing any part of an object name could break scripts and stored procedures.
+Caution: Changing any part of an object name could break scripts and stored procedures.
+Caution: Changing any part of an object name could break scripts and stored procedures.
+Caution: Changing any part of an object name could break scripts and stored procedures.
+Caution: Changing any part of an object name could break scripts and stored procedures.
 The module 'AllowChangeService' depends on the missing object 'FIN_AllowChangeSVPartner'. The module will still be created; however, it cannot run successfully until the object exists.
+Удаляем колонки, пересоздаем индексы на таблице mwPriceDataTable.
