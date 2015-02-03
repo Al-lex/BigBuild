@@ -41,8 +41,16 @@ class DBUpdater(object):
         
 
       
+    @staticmethod
+    def RestoreDB(host,sapassword,dbname,bakuppath):
+        """Method to restor db from bak"""
+    
+        
+       
+        sql="\"C:\\Program Files\\Microsoft SQL Server\\110\\Tools\\Binn\SQLCMD.EXE\" -S "+host+" -d master -U sa -P "+sapassword+ " -q \""+"RESTORE DATABASE ["+dbname+"] FROM  DISK = N\'"+bakuppath+"\' WITH  FILE = 1,  NOUNLOAD,  STATS = 5\""
+        print(sql)
 
-
+        os.system(sql)
 
     @staticmethod
     def CreateScriptsForDBUpdateServicePack(pathbase,foldername,server,database,userid,password,release,isupdatelast):
@@ -66,8 +74,6 @@ class DBUpdater(object):
 
                     l2.sort()
 
-
-                    #??????????? ? ?????????? ? ?????????? ???? ? ?????? 
                     for i2 in l:
                         if l2[-1] in i2:
                            # pathtozips=r'\\bg\\Builds\\Master-Tour\\Release\\'+i2
@@ -97,16 +103,6 @@ class DBUpdater(object):
                     zip=zipfile.ZipFile(fullpathtozip)
                     zip.extractall(pathtempscripts)
 
-
-                
-                       
-                       
-                  
-
-                    #??????? ????
-
-       
-
                     l4=[ln1 for ln1 in listdir(pathtempscripts) if "ReleaseScript"+release+"." in ln1]#2009.2.20
 
 
@@ -129,22 +125,7 @@ class DBUpdater(object):
                     #insert only version numbers higher then current
                     l6=[ln2 for ln2 in l5 if int(ln2[-6:-4])>int(currentServicePackVersion)]
                     l6.sort(reverse=False)
-                    #print (l6)
-
-                    #print(l6)
-                    #return
-                    #l6sorted=[]
-                    #numbr=l6.count
-                    #while numbr!=0:
-                    #    l6sorted.append(( numbr,str(numbr)))
-                    #    numbr=numbr-1
-                  
-
-                    
-                   
-                    
-
-
+                     
                     #Create temp bat file
                     tempfolder=os.getcwd()+"\\"+foldername
                     if os.path.exists(tempfolder):
@@ -193,14 +174,17 @@ class DBUpdater(object):
          
          for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails  in SettingsObj.GetBuildPaths():
                        #print(src)
+                       if (conn["isRestore"]):
+                           DBUpdater.RestoreDB(conn["SERVER"],conn["sapassword"],conn["DATABASE"],conn["pathToBak"])
                        os.system(DBUpdater.CreateScriptsForDBUpdateServicePack(mtdata["MTpathToLatest"],name,conn["SERVER"],conn["DATABASE"],"sa",mtdata["saPassword"],mtdata["Release"],isLastBuild))
+                       
                        print("See details on dbupdate in "+os.getcwd()+"\\"+name+"\\"+"resultrestor.txt")
 
 if __name__ == "__main__":
     from DataAdaptor import Model as XA
     conf=XA("MW.config")
     
-    DBUpdater.execUpdateFilesForBranches(conf)
+    
      
 
     #DBUpdater.GetCurrentDBVersion('localhost','sa','sa','avalon')

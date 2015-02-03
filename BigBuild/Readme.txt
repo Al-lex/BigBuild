@@ -13,3 +13,6 @@
 
 
 \\bg\Builds\Master-Web\main_MasterWeb\main_MasterWeb\MasterWeb9.2.21.59668\Release\Full\_Zips\mw-ws-aviasearch-9.2.21.59668.zip  название и пул приложений
+
+
+short conn string 

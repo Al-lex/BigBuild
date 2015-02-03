@@ -6,6 +6,7 @@ import os
 import zipfile
 import glob
 import subprocess
+import re
 #https://docs.python.org/2/library/xml.etree.elementtree.html
 class Model(object):
     """Class is used as middle layer for working with external config"""
@@ -23,23 +24,13 @@ class Model(object):
         #     print (child.tag, child.attrib)
         files=[]
         for branch in self.GetConfigTree().findall("branch"):
-
-
                  servicedetails=[]
-
                  brservices=branch.findall("Services")
                  for services in brservices:
                               #print(services.findall("Service")[0].get("name"))
                               for service in services.findall("Service"):
                                   servicedetails.append([service.get("name"),service.get("apppool"),service.get("getlocal")])
-                 #print(servicedetails)
-
-
-
-
-
-
-                
+                 #print(servicedetails)              
                  name = branch.get("name")
                  pathToLatest = branch.find("pathToLatest").text
 
@@ -53,12 +44,9 @@ class Model(object):
                  connectionData["DATABASE"]=branch.find("dbconnection").get("DATABASE")
                  connectionData["UserID"]=branch.find("dbconnection").get("UserID")
                  connectionData["Password"]=branch.find("dbconnection").get("Password")
-
-
-
-
-
-
+                 connectionData["sapassword"]=branch.find("dbconnection").get("sapassword")
+                 connectionData["pathToBak"]=branch.find("dbconnection").get("pathToBak")
+                 connectionData["isRestore"]=branch.find("dbconnection").get("isRestore")
 
                  #add plugins from global plugin list - mast be set getLocal=true 
         #print (name, pathToLatest,pathToLocal,connectionData)
@@ -80,15 +68,9 @@ class Model(object):
                  MTData["MTPassword"]=branch.find("MT").get("MTPassword")
 
                  MTData["Release"]=branch.find("MT").get("Release")
-
-
-
-
                  isLastBuild = branch.find("isLastBuild").text
 
-              
-
-
+               
 
                  files.append((name, pathToLatest,pathToLocal,connectionData, Plugins, iisData,MTData,isLastBuild,servicedetails))
 
@@ -305,13 +287,13 @@ class Controller():
        def CopyFilesRelease(SettingsObj):
            """Static method to get in case of need files from release"""
            pass
-       @staticmethod
-       def UnzipFilesBuild(SettingsObj):
-           """Static method to unzip getted files"""
-           for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails in SettingsObj.GetBuildPaths():
-                  lst=os.listdir(dst)
-                  zip=zipfile.ZipFile(dst+"//"+lst[0])
-                  zip.extractall(dst)
+       #@staticmethod
+       #def UnzipFilesBuild(SettingsObj):
+       #    """Static method to unzip getted files"""
+       #    for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails in SettingsObj.GetBuildPaths():
+       #           lst=os.listdir(dst)
+       #           zip=zipfile.ZipFile(dst+"//"+lst[0])
+       #           zip.extractall(dst)
 
        @staticmethod
        def CopyFilesPlugins(SettingsObj):
@@ -373,8 +355,6 @@ class Controller():
 
 class ConfigFactory():
     """Class to configure configs - web.config sql.ini etc""" 
-
-
              
     @staticmethod
     def ChangeConnectString(SettingsObj,FileType,IsService):
@@ -389,31 +369,39 @@ class ConfigFactory():
              if not (IsService): 
               
                   if FileType=="sql.ini":
-                      connStringEth=r"remotedbname=IL2009,DRIVER=SQL Server;SERVER=s15\interlook08;DATABASE=IL2009;Trusted_Connection=no;APP=Master-Tour"
+                      #connStringEth=r"remotedbname=IL2009,DRIVER=SQL Server;SERVER=s15\interlook08;DATABASE=IL2009;Trusted_Connection=no;APP=Master-Tour"
                       connString="remotedbname="+ conn["remotedbname"]+",DRIVER=SQL Server;SERVER="+conn["SERVER"]+";DATABASE="+conn["DATABASE"]+";Trusted_Connection=no;APP=Master-Tour" 
                       filepath=   dst+"\\MT\\"+FileType                                
                       the_file=open(filepath,"r+",encoding='UTF8')
                       the_file2=open(dst+filepath+".new","w",encoding='UTF8') 
-                  
-                                               
+                                                                 
                   elif FileType=="web.config":
-                      connStringEth="Data Source=ip-адрес сервера; Initial Catalog=название базы;User Id=логин пользователя;Password=пароль"
-                      connString="Data Source="+conn["SERVER"]+"; Initial Catalog="+conn["DATABASE"]+";User Id="+conn["UserID"]+";Password="+ conn["Password"]
+                      #connStringEth="Data Source=ip-адрес сервера; Initial Catalog=название базы;User Id=логин пользователя;Password=пароль"
+                      connString="Data Source="+conn["SERVER"]+"; Initial Catalog="+conn["DATABASE"]+";User Id="+conn["UserID"]+";Password="+ conn["Password"]+"\" />"
                 
                       filepath=dst+"\\"+FileType
                       the_file=open(filepath,"r+",encoding='UTF8')
                       the_file2=open(filepath+".new","w",encoding='UTF8')
                  
-
                   elif FileType=="Megatec.PaymentSignatureServiceHost.exe.config":
-                      connStringEth="Data Source=DataSource; Initial Catalog=InitialCatalog;User Id=UserId;Password=Password"
-                      connString="Data Source="+conn["SERVER"]+"; Initial Catalog="+conn["DATABASE"]+";User Id="+conn["UserID"]+";Password="+ conn["Password"]
+                      #connStringEth="Data Source=DataSource; Initial Catalog=InitialCatalog;User Id=UserId;Password=Password"
+                      connString="Data Source="+conn["SERVER"]+"; Initial Catalog="+conn["DATABASE"]+";User Id="+conn["UserID"]+";Password="+ conn["Password"]+"\" />"
                       #different path -needs add Tmp subfolder
                       filepath=dst+"\\Tmp\\"+FileType
                       the_file=open(filepath,"r+",encoding='UTF8')
                       the_file2=open(filepath+".new","w",encoding='UTF8')
+
+                  the_file1=open(filepath,"r",encoding='UTF8')
+                  for line1 in the_file1.readlines():
+                        connStringEth=re.search("Data Source=(.*)/>",line1)
+                        if not (connStringEth==None):
+                                  connStringEth=connStringEth.group(0)
+                                  #print(connStringEth)
+                                  break
+                  the_file1.close()
+
     
-                  for line in the_file.readlines(): 
+                  for line in the_file.readlines():
                        print (line.replace(connStringEth,connString),end="",file=the_file2)
 
   
@@ -423,9 +411,27 @@ class ConfigFactory():
                   os.rename(filepath+".new",filepath)
              else:
                       for service in servicedetails:
+                           #connStringEth="Data Source=DataSource; Initial Catalog=InitialCatalog;User Id=UserId;Password=Password"
+                           connString="Data Source="+conn["SERVER"]+"; Initial Catalog="+conn["DATABASE"]+";User Id="+conn["UserID"]+";Password="+ conn["Password"]+"\" />"
                            filepath=dst+"\\"+service[0]+"\\"+FileType
+
+                           the_file1=open(filepath,"r",encoding='UTF8')
+                           for line1 in the_file1.readlines():
+                               connStringEth=re.search("Data Source=(.*)/>",line1)
+                               if not (connStringEth==None):
+                                  connStringEth=connStringEth.group(0)
+                                  #print(connStringEth)
+                                  break
+                           the_file1.close()
+
+
+
                            the_file=open(filepath,"r+",encoding='UTF8')
                            the_file2=open(filepath+".new","w",encoding='UTF8')
+                                                          
+                           for line in the_file.readlines():  
+                                                            
+                               print (line.replace(connStringEth,connString),end="",file=the_file2)                 
                            the_file.close()
                            the_file2.close()
                            os.remove(filepath);
@@ -436,7 +442,7 @@ if __name__ == "__main__":
     from DataAdaptor import Model as XA
     conf=XA("MW.config")
  
-    Controller.ProcessFilesServices(conf)
+    ConfigFactory.ChangeConnectString(conf,"web.config",True)
   
 
 
