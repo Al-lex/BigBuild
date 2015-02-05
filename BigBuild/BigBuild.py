@@ -43,8 +43,6 @@ class View():
         else:
             Controller.StartPaymentService()
     
-    
-
         print("Begin work with config for web")
 
         #logging.info('Begin update web.config')

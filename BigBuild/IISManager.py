@@ -1,4 +1,3 @@
-
 import os
 import subprocess
 class IISManager(object):
@@ -7,17 +6,17 @@ class IISManager(object):
        def CreateWebServices(SettingsObj):    
              for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails in SettingsObj.GetBuildPaths():
                  for service in servicedetails:
-                     if (service[2]):
+                     if (service[3]):
                          optype="webservice"
                          #del
-                         commcmd=" delete app \"Default Web Site/"+service[0]+"\""
-                         commps=" Remove-WebApplication -Name "+service[0]+" -Site 'Default Web Site'"
+                         commcmd=" delete app \"Default Web Site/"+service[1]+"\""
+                         commps=" Remove-WebApplication -Name "+service[1]+" -Site 'Default Web Site'"
             
                          IISManager.ProcessSite(commcmd,commps,optype)
                          #create
                          ##TBD first of all need to add poolname!!!!!!!!!!!!!!!!
-                         commcmd=" add app /site.name:\"Default Web Site\""+" /path:/"+service[0]+" /physicalPath:"+dst+"\\"+service[0]
-                         commps=" New-WebApplication -Name "+service[0]+" -Site 'Default Web Site' -PhysicalPath "+dst+"\\"+service[0]+" -ApplicationPool "+service[1]
+                         commcmd=" add app /site.name:\"Default Web Site\""+" /path:/"+service[1]+" /physicalPath:"+dst+"\\"+service[1]
+                         commps=" New-WebApplication -Name "+service[1]+" -Site 'Default Web Site' -PhysicalPath "+dst+"\\"+service[1]+" -ApplicationPool "+service[2]
                          IISManager.ProcessSite(commcmd,commps,optype)
        @staticmethod
        def CreateWebApp(SettingsObj):  
@@ -93,13 +92,7 @@ class IISManager(object):
     #                           print ("at last successfuly add web-site")
     #                    else:
     #                           print ("well - it seems add impossible")
-      
-
-
-
-
-
-                          
+                                
 
 if __name__ == "__main__":
     from DataAdaptor import Model as XA

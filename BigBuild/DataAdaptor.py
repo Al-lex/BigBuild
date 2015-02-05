@@ -20,8 +20,7 @@ class Model(object):
         return root
     def GetBuildPaths(self):
         """Gets branches with names list from MW.config"""
-        #for child in self.GetConfigTree():
-        #     print (child.tag, child.attrib)
+ 
         files=[]
         for branch in self.GetConfigTree().findall("branch"):
                  servicedetails=[]
@@ -29,31 +28,26 @@ class Model(object):
                  for services in brservices:
                               #print(services.findall("Service")[0].get("name"))
                               for service in services.findall("Service"):
-                                  servicedetails.append([service.get("name"),service.get("apppool"),service.get("getlocal")])
+                                  servicedetails.append([service.get("name"),service.get("localname"),service.get("apppool"),service.get("getlocal")])
                  #print(servicedetails)              
                  name = branch.get("name")
                  pathToLatest = branch.find("pathToLatest").text
-
                  pathToLocal=branch.find("pathToLocal").text
 
-#add connections for the branch
-                 connectionData={}
-                
+                 #add connections for the branch
+                 connectionData={}                
                  connectionData["remotedbname"]=branch.find("dbconnection").get("remotedbname")
                  connectionData["SERVER"]=branch.find("dbconnection").get("SERVER")
                  connectionData["DATABASE"]=branch.find("dbconnection").get("DATABASE")
                  connectionData["UserID"]=branch.find("dbconnection").get("UserID")
-                 connectionData["Password"]=branch.find("dbconnection").get("Password")                 #connectionData["sapassword"]=branch.find("dbconnection").get("sapassword")
+                 connectionData["Password"]=branch.find("dbconnection").get("Password")                 
                  connectionData["pathToBak"]=branch.find("dbconnection").get("pathToBak")
                  connectionData["isRestore"]=branch.find("dbconnection").get("isRestore")
 
-                 #add plugins from global plugin list - mast be set getLocal=true 
-        #print (name, pathToLatest,pathToLocal,connectionData)
                  Plugins=[]
                  
                  for pluginName in self.GetPlugins():
                       Plugins.append(pluginName)
-                      #print (pathToLatest+self.GetLastBuildNumber(pathToLatest)+pluginName)
 
                  iisData={}
                  iisData["appName"]=branch.find("iisAppSettings").get("appName")
@@ -65,17 +59,10 @@ class Model(object):
                  MTData["saPassword"]=branch.find("MT").get("saPassword")
                  MTData["MTUserID"]=branch.find("MT").get("MTUserID")
                  MTData["MTPassword"]=branch.find("MT").get("MTPassword")
-
                  MTData["Release"]=branch.find("MT").get("Release")
                  isLastBuild = branch.find("isLastBuild").text
 
-               
-
                  files.append((name, pathToLatest,pathToLocal,connectionData, Plugins, iisData,MTData,isLastBuild,servicedetails))
-
-                 
-
-               
 
         return files
 
@@ -85,20 +72,8 @@ class Model(object):
        for plugin in self.GetConfigTree().findall("Plugins")[0].findall("plugin"):
 
            if (plugin.get("getlocal")):
-
-            files.append(plugin.get("name"))
-           
+            files.append(plugin.get("name"))           
        return files
-    def GetServices(self):
-       """Gets services list from MW.config"""
-       services=[]
-       for service in self.GetConfigTree().findall("branch").findall("Services").findall("Service"):
-           services.append((service.get("name"),service.get("apppool"), service.get("getlocal")))
-           name=service.get("name")
-           apppool=service.get("apppool")
-           getlocal=service.get("getlocal")
-           print(name,apppool,getlocal) 
-       return services  
    
      
     def GetFiles(self):
@@ -129,50 +104,28 @@ class Model(object):
 
    
           
-            
-           
-           
+                       
            
 class Controller():
        """Class for copy operations with different objects of XA type"""
        from DataAdaptor import Model as XA
-       #@staticmethod     
-       #def GetFilesToTempSubfolder(SettingsObj):
-       #    """Static method to get web service files from static location """
-       #    for name,src,dst,conn,plugs,iis,mtdata,isLastBuild in SettingsObj.GetBuildPaths():
-       #      # if(SettingsObj.GetDirectories[0][1]=="true"):
-       #           dirpath=SettingsObj.GetDirectories()[0][0]
-       #           #create tempdir in branch
-       #           tempdir=dst+"\\Tmp"
-       #           if not os.path.exists(tempdir):
-       #              os.mkdir(tempdir)
-       #           shutil.copy2(dirpath,tempdir)
-
 
        @staticmethod
        def CopyFilesBuild(SettingsObj):
           """Static method to get incremental update from last release to last build"""
-          #if(isinstance(SettingsObj,XA)):
-          
-          
-           # try:
+
           for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails in SettingsObj.GetBuildPaths():
                           if os.path.exists(dst):
                                     shutil.rmtree(dst)
                           os.mkdir(dst)
                           print("Branch named "+name+" will be copyed")
-                          dirname=SettingsObj.GetLastBuildNumber(src)
-                         
+                          dirname=SettingsObj.GetLastBuildNumber(src)                         
                           src2=src+"\\"+dirname+"\\Release\\Full\\_Zips\\mw-"+dirname[9:]+".zip"
-
                           if (os.path.exists(src2)):
                               shutil.copy2(src2,dst)
-
                               lst=os.listdir(dst)
                               zip=zipfile.ZipFile(dst+"//"+lst[0])
-                              zip.extractall(dst)
-
-                              
+                              zip.extractall(dst)                              
                               print("Success with copy of "+dirname+"!")
                               return False
                           else:
@@ -193,15 +146,7 @@ class Controller():
 
                                       print("Success with last good(not latest)-it was"+dirname+"!")
                                       return True
-#if getstatic turned true in config get in Tmp folder static files
-                         # if(SettingsObj.GetDirectories[0][1]=="true"):
-                       
-            #except:
-                #print("Problem with copy, check "+src+"  if file in place")
-                          
-          #else:
-             # raise Exception("Not valid config object")
-      
+
        @staticmethod 
        def StopPaymentService():    
              comm1=r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe get-service \"Служба подписи путевок и платежей\">tmp.txt"
@@ -210,12 +155,6 @@ class Controller():
                             path=os.getcwd()+"\\tmp.txt"
                             #print (path)
                             file=open(path,"r")
-
-                            
-
-                           
-                            #print(file.readlines())
-                            #if any(word.find("Running") for word in file.readlines()):
                             for line in file.readlines():
                                 print(line)
                                 if line.find("Running"):
@@ -242,8 +181,7 @@ class Controller():
                                     print("Payment service is not running - will be tried install")
                                     file.close()
                                     os.remove(os.getcwd()+"\\tmp.txt")
-                                    return False
-                            
+                                    return False                            
              else:
                   print("Somthing wrong with check service running")
        @staticmethod
@@ -254,8 +192,7 @@ class Controller():
                        print ("successfuly start payment service")
             else:
                        print ("failure with start payment service")           
-            
-       
+                   
        @staticmethod
        def InstallPaymentService(SettingsObj):
            for name,src,dst,conn,plugs,iis,mtdata,isLastBuild in SettingsObj.GetBuildPaths():
@@ -280,20 +217,7 @@ class Controller():
                                  zip=zipfile.ZipFile(tmp+"//"+lst[0])
                                  zip.extractall(tmp)
                                  print("Copy payments service from static location finished")
-                               
-
-       @staticmethod
-       def CopyFilesRelease(SettingsObj):
-           """Static method to get in case of need files from release"""
-           pass
-       #@staticmethod
-       #def UnzipFilesBuild(SettingsObj):
-       #    """Static method to unzip getted files"""
-       #    for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails in SettingsObj.GetBuildPaths():
-       #           lst=os.listdir(dst)
-       #           zip=zipfile.ZipFile(dst+"//"+lst[0])
-       #           zip.extractall(dst)
-
+                              
        @staticmethod
        def CopyFilesPlugins(SettingsObj):
            for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails in SettingsObj.GetBuildPaths():
@@ -304,6 +228,7 @@ class Controller():
                        zip=zipfile.ZipFile(plugSrcZip)
                        zip.extractall(dst)
                   #unzip zip in dst
+
        @staticmethod
        def CopyFilesExtraForMW(SettingsObj):
           for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails in SettingsObj.GetBuildPaths():
@@ -330,23 +255,22 @@ class Controller():
                                                print("Build was broken - it will be found last good build")
                                                break
 
-        
+              #print (servicedetails)
               for root, dirs, files in os.walk(src):
                       for file in files:
                           for service in servicedetails: 
-                              if (service[2]):
+                              if (service[3]):
                                   if service[0] in file:
                                       print (service[0])
                                       src2=src+file
                                       zip=zipfile.ZipFile(src2)
-                                      dst2=dst+"\\"+service[0]
+                                      dst2=dst+"\\"+service[1]
                                       if not (os.path.exists(dst2)):
                                                        os.mkdir(dst2)
                                       zip.extractall(dst2)
-                                      servicePool=service[1]
+                                      servicePool=service[2]
                                       services.append([dst2,servicePool])
-
-           
+          
               print(services) 
               return services
 
@@ -412,9 +336,9 @@ class ConfigFactory():
                       for service in servicedetails:
                            #connStringEth="Data Source=DataSource; Initial Catalog=InitialCatalog;User Id=UserId;Password=Password"
                            connString="Data Source="+conn["SERVER"]+"; Initial Catalog="+conn["DATABASE"]+";User Id="+conn["UserID"]+";Password="+ conn["Password"]+"\" />"
-                           filepath=dst+"\\"+service[0]+"\\"+FileType
-
+                           filepath=dst+"\\"+service[1]+"\\"+FileType
                            the_file1=open(filepath,"r",encoding='UTF8')
+
                            for line1 in the_file1.readlines():
                                connStringEth=re.search("Data Source=(.*)/>",line1)
                                if not (connStringEth==None):
@@ -423,14 +347,12 @@ class ConfigFactory():
                                   break
                            the_file1.close()
 
-
-
                            the_file=open(filepath,"r+",encoding='UTF8')
                            the_file2=open(filepath+".new","w",encoding='UTF8')
                                                           
-                           for line in the_file.readlines():  
-                                                            
-                               print (line.replace(connStringEth,connString),end="",file=the_file2)                 
+                           for line in the_file.readlines():                                                             
+                               print (line.replace(connStringEth,connString),end="",file=the_file2)  
+                                              
                            the_file.close()
                            the_file2.close()
                            os.remove(filepath);
@@ -441,7 +363,7 @@ if __name__ == "__main__":
     from DataAdaptor import Model as XA
     conf=XA("MW.config")
  
-    ConfigFactory.ChangeConnectString(conf,"web.config",True)
+    
   
 
 
