@@ -5,14 +5,18 @@ from DataAdaptor import Controller
 from DataAdaptor import ConfigFactory
 from IISManager import IISManager
 from DBManager import DBUpdater
+import os
 
 
 
 class View():
     @staticmethod
     def Go():
+
         logging.info("Started update session")
         conf=XA("MW.config")
+        print("Kill IE seesion")
+        os.system("taskkill /im iexplore.exe")
 
         print("Begin work with database")
         #logging.info('Begin update DB')

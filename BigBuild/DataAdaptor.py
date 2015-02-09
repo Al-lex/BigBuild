@@ -47,6 +47,7 @@ class Model(object):
                  Plugins=[]
                  
                  for pluginName in self.GetPlugins():
+                      #print (pluginName)
                       Plugins.append(pluginName)
 
                  iisData={}
@@ -70,9 +71,10 @@ class Model(object):
        """Gets plugins list from MW.config. Added only those with True for GetLocal"""
        files=[]
        for plugin in self.GetConfigTree().findall("Plugins")[0].findall("plugin"):
-
-           if (plugin.get("getlocal")):
-            files.append(plugin.get("name"))           
+           if (plugin.get("getlocal")=="true"):
+               #print(plugin.get("getlocal"))
+               files.append(plugin.get("name"))   
+       #print (files)                
        return files
    
      
@@ -259,7 +261,7 @@ class Controller():
               for root, dirs, files in os.walk(src):
                       for file in files:
                           for service in servicedetails: 
-                              if (service[3]):
+                              if (service[3]=="true"):
                                   if service[0] in file:
                                       print (service[0])
                                       src2=src+file
@@ -271,7 +273,7 @@ class Controller():
                                       servicePool=service[2]
                                       services.append([dst2,servicePool])
           
-              print(services) 
+              print("Services that will be installed: "+services) 
               return services
 
 
@@ -357,11 +359,13 @@ class ConfigFactory():
                            the_file2.close()
                            os.remove(filepath);
                            os.rename(filepath+".new",filepath)
+  
 
                
 if __name__ == "__main__":
     from DataAdaptor import Model as XA
     conf=XA("MW.config")
+    Controller.CopyFilesPlugins(conf)
  
     
   

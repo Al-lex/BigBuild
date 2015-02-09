@@ -92,7 +92,7 @@ class DBUpdater(object):
                     upddstring2=" -I -R >> \""+os.getcwd()+"\\"+foldername+"\\resultrestor.txt\" -f i:65001"
 
                     l7=[]
-                    if(isRestore):
+                    if(isRestore=="true"):
                         updstring="\"C:\\Program Files\\Microsoft SQL Server\\110\\Tools\\Binn\SQLCMD.EXE\" -S "+server+" -d master -U "+sauserid+" -P "+sapassword+" -i "+os.getcwd()+"\\Clear_connect.sql -v dbname='"+database+"'"
                         updstring0="\"C:\\Program Files\\Microsoft SQL Server\\110\\Tools\\Binn\\SQLCMD.EXE\" -S "+server+" -d master -U sa -P "+sapassword+ " -Q \""+"RESTORE DATABASE ["+database+"] FROM  DISK = N\'"+pathToBak+"\' WITH  FILE = 1,  NOUNLOAD,  STATS = 5\"" #-I -R >> \""+os.getcwd()+"\\"+foldername+"\\resultrestor.txt\" -f i:65001"
                         l7.append(updstring)
@@ -109,7 +109,7 @@ class DBUpdater(object):
                     ##
                     ##print(l5)
                     print("following servicepack scripts will be included in update:")
-                    if(isRestore):
+                    if(isRestore=="true"):
                         print(l7[2:])
                     else:
                         print(l7)
@@ -119,7 +119,7 @@ class DBUpdater(object):
                             finalfile.writelines("\n")
                             finalfile.writelines("timeout 3")
                             finalfile.writelines("\n")
-                    if (isupdatelast):
+                    if (isupdatelast=="true"):
                       line2="\\\\bg\\builds\\Master-Tour\\"+foldername+"_MasterTour\\LastBuild\\Scripts\\ReleaseScript.sql"
                       updstring3="\"C:\\Program Files\\Microsoft SQL Server\\110\\Tools\\Binn\SQLCMD.EXE\" -S "+server+" -d "+database+" -U "+sauserid+" -P "+sapassword+" -i "                      
                       finalfile.writelines( updstring3+line2+upddstring2)
@@ -137,6 +137,8 @@ class DBUpdater(object):
                        os.system(DBUpdater.CreateScriptsForDBUpdateServicePack(mtdata["MTpathToLatest"],name,conn["SERVER"],conn["DATABASE"],"sa",mtdata["saPassword"],conn["pathToBak"],conn["isRestore"],mtdata["Release"],isLastBuild))
                     
                        print("See details on dbupdate in "+os.getcwd()+"\\"+name+"\\"+"resultrestor.txt")
+
+    
 
 if __name__ == "__main__":
     from DataAdaptor import Model as XA
