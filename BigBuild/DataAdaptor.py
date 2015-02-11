@@ -273,7 +273,7 @@ class Controller():
                                       servicePool=service[2]
                                       services.append([dst2,servicePool])
           
-              print("Services that will be installed: "+services) 
+              print("Services that will be installed") 
               return services
 
 
@@ -296,15 +296,20 @@ class ConfigFactory():
                   if FileType=="sql.ini":
                       #connStringEth=r"remotedbname=IL2009,DRIVER=SQL Server;SERVER=s15\interlook08;DATABASE=IL2009;Trusted_Connection=no;APP=Master-Tour"
                       connString="remotedbname="+ conn["remotedbname"]+",DRIVER=SQL Server;SERVER="+conn["SERVER"]+";DATABASE="+conn["DATABASE"]+";Trusted_Connection=no;APP=Master-Tour" 
-                      filepath=   dst+"\\MT\\"+FileType                                
+                      filepath=dst+"\\MT\\"+FileType                                
                       the_file=open(filepath,"r+",encoding='UTF8')
                       the_file2=open(dst+filepath+".new","w",encoding='UTF8') 
                                                                  
                   elif FileType=="web.config":
                       #connStringEth="Data Source=ip-адрес сервера; Initial Catalog=название базы;User Id=логин пользователя;Password=пароль"
                       connString="Data Source="+conn["SERVER"]+"; Initial Catalog="+conn["DATABASE"]+";User Id="+conn["UserID"]+";Password="+ conn["Password"]+"\" />"
-                
+                                     
+                      for conf in os.listdir(dst):
+                         if (conf.upper()=="WEB.CONFIG"):
+                             FileType=conf
                       filepath=dst+"\\"+FileType
+                     
+
                       the_file=open(filepath,"r+",encoding='UTF8')
                       the_file2=open(filepath+".new","w",encoding='UTF8')
                  
@@ -336,8 +341,13 @@ class ConfigFactory():
                   os.rename(filepath+".new",filepath)
              else:
                       for service in servicedetails:
+                        if(service[3]=="true"):
                            #connStringEth="Data Source=DataSource; Initial Catalog=InitialCatalog;User Id=UserId;Password=Password"
                            connString="Data Source="+conn["SERVER"]+"; Initial Catalog="+conn["DATABASE"]+";User Id="+conn["UserID"]+";Password="+ conn["Password"]+"\" />"
+                           for conf in os.listdir(dst+"\\"+service[1]):
+                               if (conf.upper()=="WEB.CONFIG"):
+                                   FileType=conf
+                  
                            filepath=dst+"\\"+service[1]+"\\"+FileType
                            the_file1=open(filepath,"r",encoding='UTF8')
 

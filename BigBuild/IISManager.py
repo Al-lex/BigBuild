@@ -6,7 +6,7 @@ class IISManager(object):
        def CreateWebServices(SettingsObj):    
              for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails in SettingsObj.GetBuildPaths():
                  for service in servicedetails:
-                     if (service[3]):
+                     if (service[3]=="true"):
                          optype="webservice"
                          #del
                          commcmd=" delete app \"Default Web Site/"+service[1]+"\""
@@ -37,18 +37,18 @@ class IISManager(object):
        def ProcessSite(commcmd,commps,optype):
             appcmd="C:\\Windows\\System32\\inetsrv\\appcmd.exe"
             powershell="C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" 
-            retcode=subprocess.call(powershell+commps, shell=True)
+            retcode=subprocess.call(powershell+commps, shell=False,stderr=subprocess.PIPE)
             if retcode == 0:
                    print ("successfuly "+optype+" web-app")
             else:
                    print ("failure with web app "+optype+" -lets try app cmd:")                              
            
                    print("execute:"+appcmd+commcmd)
-                   retcode=subprocess.call(appcmd+commcmd, shell=True)
+                   retcode=subprocess.call(appcmd+commcmd, shell=False,stderr=subprocess.PIPE)
                    if retcode == 0:
                           print ("at last successfuly "+optype+" web-app")
                    else:
-                          print ("well failue"+optype+"- it seems to be impossible")
+                          print ("well failue "+optype+"- it seems to be impossible eather in ps or in appcmd - try add site manually")
 
     #@staticmethod
     #def CreateSite(SettingsObj):
