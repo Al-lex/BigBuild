@@ -83,12 +83,12 @@ class View():
 
         print("All is finished!!!")
 
-        #print("Start test procedures")
-        #print ("Check Finance web-service")
-        #os.system("\"C:\Program Files (x86)\SmartBear\SoapUI-5.0.0\bin\testrunner.bat\" -r E:\SoapUI\FinanceService-soapui-project.xml")
-        #for line in os.listdir("E:\SoapUI"):
-        #    if (line[-3:]=="txt"):
-        #        print("Some tests are failed - see details in E:\SoapUI"
+        print("Start test procedures")
+        print ("Check Finance web-service")
+        os.system("\"C:\Program Files (x86)\SmartBear\SoapUI-5.0.0\bin\testrunner.bat\" -r E:\SoapUI\FinanceService-soapui-project.xml")
+        for line in os.listdir("E:\SoapUI"):
+            if (line[-3:]=="txt"):
+                print("Some tests are failed - see details in E:\SoapUI"
 
 
 
