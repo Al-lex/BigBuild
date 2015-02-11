@@ -6,7 +6,7 @@ from DataAdaptor import ConfigFactory
 from IISManager import IISManager
 from DBManager import DBUpdater
 import os
-
+import shutil
 
 
 class View():
@@ -84,21 +84,31 @@ class View():
         print("All is finished!!!")
 
         print("Start test procedures")
-        print ("Check Finance web-service")
-        os.system("\"C:\Program Files (x86)\SmartBear\SoapUI-5.0.0\bin\testrunner.bat\" -r E:\SoapUI\FinanceService-soapui-project.xml")
-        for line in os.listdir("E:\SoapUI"):
+        #clean up old error msgs
+        for line in os.listdir("E:\\SoapUI"):
             if (line[-3:]=="txt"):
-                print("Some tests are failed - see details in E:\SoapUI"
+                os.remove("E:\\SoapUI\\"+line)
 
+        services_under_test=[]
+        services_under_test.append("FinanceService-soapui-project")
+        services_under_test.append("FilterBindingService-soapui-project")
 
+        for serv in services_under_test:
 
+             print ("Check "+serv+" web-service")
+        os.system("\"C:\\Program Files (x86)\\SmartBear\\SoapUI-5.0.0\\bin\\testrunner.bat\" -r E:\\SoapUI\\"+serv+".xml")
 
+      
+        #check if err report has been created
+        for line in os.listdir("E:\\SoapUI"):
+            if (line[-3:]=="txt"):
+                print("Some tests are failed - see details in E:\SoapUI")
 
 
 
 
 if __name__ == "__main__":
-     View().Go()
+    View().Go()
     
 
     
