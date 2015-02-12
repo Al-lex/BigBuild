@@ -90,13 +90,29 @@ class View():
                 os.remove("E:\\SoapUI\\"+line)
 
         services_under_test=[]
+        ##Finance
         services_under_test.append("FinanceService-soapui-project")
+        ##FilterBinding
         services_under_test.append("FilterBindingService-soapui-project")
+        ##megatecwebservices
+        #search
+        services_under_test.append("Search-soapui-project")
+        #rates
+        services_under_test.append("Rates-soapui-project")
+        #Booking manager
+        services_under_test.append("BookingManager-soapui-project")
+        ##authservice
+        services_under_test.append("Auth-soapui-project")
+        ##aviasearch
+        services_under_test.append("TicketSearchService-soapui-project")
+        ##checkquotes
+        services_under_test.append("CheckQuotesService-soapui-project")
+
 
         for serv in services_under_test:
 
              print ("Check "+serv+" web-service")
-        os.system("\"C:\\Program Files (x86)\\SmartBear\\SoapUI-5.0.0\\bin\\testrunner.bat\" -r E:\\SoapUI\\"+serv+".xml")
+             os.system("\"C:\\Program Files (x86)\\SmartBear\\SoapUI-5.0.0\\bin\\testrunner.bat\" -r E:\\SoapUI\\"+serv+".xml")
 
       
         #check if err report has been created
