@@ -35,6 +35,9 @@
     <Compile Include="CreateServiceAndPlugLists.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Test.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

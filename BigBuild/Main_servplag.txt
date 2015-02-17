@@ -1,0 +1,79 @@
+<Services>
+<Service name="" localname="" apppool="DefaultAppPool" getlocal="true"/>
+<Service name="annulation" localname="annulation" apppool="DefaultAppPool" getlocal="true"/>
+<Service name="encryptionservice" localname="encryptionservice" apppool="DefaultAppPool" getlocal="true"/>
+<Service name="filterbinding" localname="filterbinding" apppool="DefaultAppPool" getlocal="true"/>
+<Service name="Finance" localname="Finance" apppool="DefaultAppPool" getlocal="true"/>
+<Service name="megatecwebservices" localname="megatecwebservices" apppool="DefaultAppPool" getlocal="true"/>
+<Service name="paymentSystem-entryPoin" localname="paymentSystem-entryPoin" apppool="DefaultAppPool" getlocal="true"/>
+<Service name="tourMinPricesControl" localname="tourMinPricesControl" apppool="DefaultAppPool" getlocal="true"/>
+<Service name="authorization" localname="authorization" apppool="DefaultAppPool" getlocal="true"/>
+<Service name="authservice" localname="authservice" apppool="DefaultAppPool" getlocal="true"/>
+<Service name="aviasearch" localname="aviasearch" apppool="DefaultAppPool" getlocal="true"/>
+<Service name="checkquotes" localname="checkquotes" apppool="DefaultAppPool" getlocal="true"/>
+<Service name="complextour" localname="complextour" apppool="DefaultAppPool" getlocal="true"/>
+<Service name="hotelinfo" localname="hotelinfo" apppool="DefaultAppPool" getlocal="true"/>
+<Service name="jssearch" localname="jssearch" apppool="DefaultAppPool" getlocal="true"/>
+<Service name="printdocumentstatus" localname="printdocumentstatus" apppool="DefaultAppPool" getlocal="true"/>
+<Service name="reservation" localname="reservation" apppool="DefaultAppPool" getlocal="true"/>
+<Service name="tourinfo" localname="tourinfo" apppool="DefaultAppPool" getlocal="true"/>
+<Service name="payments-assist" localname="payments-assist" apppool="DefaultAppPool" getlocal="true"/>
+<Service name="payments-chronopay" localname="payments-chronopay" apppool="DefaultAppPool" getlocal="true"/>
+<Service name="payments-payonline" localname="payments-payonline" apppool="DefaultAppPool" getlocal="true"/>
+<Service name="searchHistory" localname="searchHistory" apppool="DefaultAppPool" getlocal="true"/>
+<Service name="touristInfoService" localname="touristInfoService" apppool="DefaultAppPool" getlocal="true"/>
+<Service name="tourminprices" localname="tourminprices" apppool="DefaultAppPool" getlocal="true"/>
+</Services>
+<Plugins>
+<plugin name="advancedbasket" getlocal="true"/>
+<plugin name="autobusquotes" getlocal="true"/>
+<plugin name="aviabooking" getlocal="true"/>
+<plugin name="aviaquotes" getlocal="true"/>
+<plugin name="aviatimelist" getlocal="true"/>
+<plugin name="basketTUI" getlocal="true"/>
+<plugin name="bonusRulesPlugin" getlocal="true"/>
+<plugin name="botprotection" getlocal="true"/>
+<plugin name="BusSeatingPlan" getlocal="true"/>
+<plugin name="cityhotels" getlocal="true"/>
+<plugin name="complextour" getlocal="true"/>
+<plugin name="distributedsearch" getlocal="true"/>
+<plugin name="documentsschedule" getlocal="true"/>
+<plugin name="dogovornumbergenerator" getlocal="true"/>
+<plugin name="dynamicoffers3" getlocal="true"/>
+<plugin name="empty" getlocal="true"/>
+<plugin name="eurosetauthentication" getlocal="true"/>
+<plugin name="extraServiceBooking" getlocal="true"/>
+<plugin name="flightstatus" getlocal="true"/>
+<plugin name="getpersonaldogovor" getlocal="true"/>
+<plugin name="happynewyearservices" getlocal="true"/>
+<plugin name="hotelquotes" getlocal="true"/>
+<plugin name="hotelranking" getlocal="true"/>
+<plugin name="InsurancePolicyWebPlugin" getlocal="true"/>
+<plugin name="jssearch" getlocal="true"/>
+<plugin name="nodepartureinsurance" getlocal="true"/>
+<plugin name="numberprotection" getlocal="true"/>
+<plugin name="optionalServiceBooking" getlocal="true"/>
+<plugin name="orderbonusinfo" getlocal="true"/>
+<plugin name="orderstatus" getlocal="true"/>
+<plugin name="penalties" getlocal="true"/>
+<plugin name="personalbooking" getlocal="true"/>
+<plugin name="priceadmin" getlocal="true"/>
+<plugin name="priceRemover" getlocal="true"/>
+<plugin name="prtregs" getlocal="true"/>
+<plugin name="questionnairesWeb" getlocal="true"/>
+<plugin name="quotablocks" getlocal="true"/>
+<plugin name="quoteddynamiccustom" getlocal="true"/>
+<plugin name="servicestatus" getlocal="true"/>
+<plugin name="simplebasket2" getlocal="true"/>
+<plugin name="smtptester" getlocal="true"/>
+<plugin name="specialoffers" getlocal="true"/>
+<plugin name="specialorder" getlocal="true"/>
+<plugin name="sponavigator" getlocal="true"/>
+<plugin name="stopsale" getlocal="true"/>
+<plugin name="tourlist" getlocal="true"/>
+<plugin name="tourmonthes" getlocal="true"/>
+<plugin name="tourpricelist" getlocal="true"/>
+<plugin name="tourquotes" getlocal="true"/>
+<plugin name="visaform" getlocal="true"/>
+<plugin name="visastatus" getlocal="true"/>
+</Plugins>
