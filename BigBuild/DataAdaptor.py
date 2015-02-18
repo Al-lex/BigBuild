@@ -276,7 +276,12 @@ class Controller():
               print("Services that will be installed") 
               return services
 
-
+ #confpatterns=[]#pairs of Search-Replacement
+ #           confpatterns.append(["[ ]Data Source=.*?;","Data Source="+conn["SERVER"]+";"])
+ #           confpatterns.append(["[ ]Initial Catalog=.*?;", "Initial Catalog="+conn["DATABASE"]+";"])
+ #           confpatterns.append(["[ ]User Id=.*?;", "User Id="+conn["UserID"]+";"])
+ #           confpatterns.append(["[ ]Password=.*?;", "Password=="+conn["Password"]+";"])
+ #           for confpattern in confpatterns:
 
 class ConfigFactory():
     """Class to configure configs - web.config sql.ini etc""" 
@@ -284,98 +289,109 @@ class ConfigFactory():
     @staticmethod
     def ChangeConnectString(SettingsObj,FileType,IsService):
    
-          """Static method to change conn string in ini or web.config file"""
-
-          #find pathes to all branches and concatenate
+                      """Static method to change conn string in ini or web.config file"""
+       
+                      #find pathes to all branches and concatenate
         
 
-          for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails  in SettingsObj.GetBuildPaths():
+                      for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails  in SettingsObj.GetBuildPaths():
+
+                            confpatterns=[]#pairs of Search-Replacement
+                            confpatterns.append(["[ ]*Data Source=.*?;","Data Source="+conn["SERVER"]+";"])
+                            confpatterns.append(["[ ]*Initial Catalog=.*?;", "Initial Catalog="+conn["DATABASE"]+";"])
+                            confpatterns.append(["[ ]*User Id=.*?;", "User Id="+conn["UserID"]+";"])
+                            confpatterns.append(["[ ]*Password=.*?>", "Password="+conn["Password"]+"\"/>"])
+                            for confpattern in confpatterns:
+                                             #print(confpattern[0]+"             "+confpattern[1])
              
-             if not (IsService): 
+                                             if not (IsService): 
               
-                  if FileType=="sql.ini":
-                      #connStringEth=r"remotedbname=IL2009,DRIVER=SQL Server;SERVER=s15\interlook08;DATABASE=IL2009;Trusted_Connection=no;APP=Master-Tour"
-                      connString="remotedbname="+ conn["remotedbname"]+",DRIVER=SQL Server;SERVER="+conn["SERVER"]+";DATABASE="+conn["DATABASE"]+";Trusted_Connection=no;APP=Master-Tour" 
-                      filepath=dst+"\\MT\\"+FileType                                
-                      the_file=open(filepath,"r+",encoding='UTF8')
-                      the_file2=open(dst+filepath+".new","w",encoding='UTF8') 
+                                                  if FileType=="sql.ini":
+                                                      #connStringEth=r"remotedbname=IL2009,DRIVER=SQL Server;SERVER=s15\interlook08;DATABASE=IL2009;Trusted_Connection=no;APP=Master-Tour"
+                                                      #connString="remotedbname="+ conn["remotedbname"]+",DRIVER=SQL Server;SERVER="+conn["SERVER"]+";DATABASE="+conn["DATABASE"]+";Trusted_Connection=no;APP=Master-Tour" 
+                                                      filepath=dst+"\\MT\\"+FileType                                
+                                                      the_file=open(filepath,"r+",encoding='UTF8')
+                                                      the_file2=open(dst+filepath+".new","w",encoding='UTF8') 
                                                                  
-                  elif FileType=="web.config":
-                      #connStringEth="Data Source=ip-адрес сервера; Initial Catalog=название базы;User Id=логин пользователя;Password=пароль"
-                      connString="Data Source="+conn["SERVER"]+"; Initial Catalog="+conn["DATABASE"]+";User Id="+conn["UserID"]+";Password="+ conn["Password"]+"\" />"
+                                                  elif FileType=="web.config":
+                                                      #connStringEth="Data Source=ip-адрес сервера; Initial Catalog=название базы;User Id=логин пользователя;Password=пароль"
+                                                      #connString="Data Source="+conn["SERVER"]+"; Initial Catalog="+conn["DATABASE"]+";User Id="+conn["UserID"]+";Password="+ conn["Password"]+"\" />"
                                      
-                      for conf in os.listdir(dst):
-                         if (conf.upper()=="WEB.CONFIG"):
-                             FileType=conf
-                      filepath=dst+"\\"+FileType
+                                                      for conf in os.listdir(dst):
+                                                         if (conf.upper()=="WEB.CONFIG"):
+                                                             FileType=conf
+                                                      filepath=dst+"\\"+FileType
                      
 
-                      the_file=open(filepath,"r+",encoding='UTF8')
-                      the_file2=open(filepath+".new","w",encoding='UTF8')
+                                                      the_file=open(filepath,"r+",encoding='UTF8')
+                                                      the_file2=open(filepath+".new","w",encoding='UTF8')
                  
-                  elif FileType=="Megatec.PaymentSignatureServiceHost.exe.config":
-                      #connStringEth="Data Source=DataSource; Initial Catalog=InitialCatalog;User Id=UserId;Password=Password"
-                      connString="Data Source="+conn["SERVER"]+"; Initial Catalog="+conn["DATABASE"]+";User Id="+conn["UserID"]+";Password="+ conn["Password"]+"\" />"
-                      #different path -needs add Tmp subfolder
-                      filepath=dst+"\\Tmp\\"+FileType
-                      the_file=open(filepath,"r+",encoding='UTF8')
-                      the_file2=open(filepath+".new","w",encoding='UTF8')
+                                                  elif FileType=="Megatec.PaymentSignatureServiceHost.exe.config":
+                                                      #connStringEth="Data Source=DataSource; Initial Catalog=InitialCatalog;User Id=UserId;Password=Password"
+                                                      #connString="Data Source="+conn["SERVER"]+"; Initial Catalog="+conn["DATABASE"]+";User Id="+conn["UserID"]+";Password="+ conn["Password"]+"\" />"
+                                                      #different path -needs add Tmp subfolder
+                                                      filepath=dst+"\\Tmp\\"+FileType
+                                                      the_file=open(filepath,"r+",encoding='UTF8')
+                                                      the_file2=open(filepath+".new","w",encoding='UTF8')
 
-                  the_file1=open(filepath,"r",encoding='UTF8')
-                  for line1 in the_file1.readlines():
-                        connStringEth=re.search("Data Source=(.*)/>",line1)
-                        if not (connStringEth==None):
-                                  connStringEth=connStringEth.group(0)
-                                  #print(connStringEth)
-                                  break
-                  the_file1.close()
+                                                  the_file1=open(filepath,"r",encoding='UTF8')
+                                                  for line1 in the_file1.readlines():
+                                                        connStringEth=re.search(confpattern[0],line1)
+                                                        if not (connStringEth==None):
+                                                                  connStringEth=connStringEth.group(0)
+                                                                  print(confpattern[0])
+                                                                  print(connStringEth)
+                                                                  break
+                                                  the_file1.close()
 
     
-                  for line in the_file.readlines():
-                       print (line.replace(connStringEth,connString),end="",file=the_file2)
+                                                  for line in the_file.readlines():
+                                                       print (line.replace(connStringEth,confpattern[1]),end="",file=the_file2)
 
   
-                  the_file.close()
-                  the_file2.close()
-                  os.remove(filepath);
-                  os.rename(filepath+".new",filepath)
-             else:
-                      for service in servicedetails:
-                        if(service[3]=="true"):
-                           #connStringEth="Data Source=DataSource; Initial Catalog=InitialCatalog;User Id=UserId;Password=Password"
-                           connString="Data Source="+conn["SERVER"]+"; Initial Catalog="+conn["DATABASE"]+";User Id="+conn["UserID"]+";Password="+ conn["Password"]+"\" />"
-                           for conf in os.listdir(dst+"\\"+service[1]):
-                               if (conf.upper()=="WEB.CONFIG"):
-                                   FileType=conf
+                                                  the_file.close()
+                                                  the_file2.close()
+                                                  os.remove(filepath);
+                                                  os.rename(filepath+".new",filepath)
+                                             else:
+                                                      for service in servicedetails:
+                                                        if(service[3]=="true"):
+                                                           #connStringEth="Data Source=DataSource; Initial Catalog=InitialCatalog;User Id=UserId;Password=Password"
+                                                           #connString="Data Source="+conn["SERVER"]+"; Initial Catalog="+conn["DATABASE"]+";User Id="+conn["UserID"]+";Password="+ conn["Password"]+"\" />"
+                                                           for conf in os.listdir(dst+"\\"+service[1]):
+                                                               if (conf.upper()=="WEB.CONFIG"):
+                                                                   FileType=conf
                   
-                           filepath=dst+"\\"+service[1]+"\\"+FileType
-                           the_file1=open(filepath,"r",encoding='UTF8')
+                                                           filepath=dst+"\\"+service[1]+"\\"+FileType
+                                                           the_file1=open(filepath,"r",encoding='UTF8')
 
-                           for line1 in the_file1.readlines():
-                               connStringEth=re.search("Data Source=(.*)/>",line1)
-                               if not (connStringEth==None):
-                                  connStringEth=connStringEth.group(0)
-                                  #print(connStringEth)
-                                  break
-                           the_file1.close()
+                                                           for line1 in the_file1.readlines():
+                                                               connStringEth=re.search(confpattern[0],line1)
+                                                               if not (connStringEth==None):
+                                                                  connStringEth=connStringEth.group(0)
+                                                                  #print(confpattern[0])
+                                                                  #print(connStringEth)
+                                                                  break
+                                                           the_file1.close()
 
-                           the_file=open(filepath,"r+",encoding='UTF8')
-                           the_file2=open(filepath+".new","w",encoding='UTF8')
+                                                           the_file=open(filepath,"r+",encoding='UTF8')
+                                                           the_file2=open(filepath+".new","w",encoding='UTF8')
                                                           
-                           for line in the_file.readlines():                                                             
-                               print (line.replace(connStringEth,connString),end="",file=the_file2)  
+                                                           for line in the_file.readlines():                                                             
+                                                               print (line.replace(connStringEth,confpattern[1]),end="",file=the_file2)  
                                               
-                           the_file.close()
-                           the_file2.close()
-                           os.remove(filepath);
-                           os.rename(filepath+".new",filepath)
+                                                           the_file.close()
+                                                           the_file2.close()
+                                                           os.remove(filepath);
+                                                           os.rename(filepath+".new",filepath)
+
   
 
                
 if __name__ == "__main__":
     from DataAdaptor import Model as XA
     conf=XA("MW.config")
-    Controller.CopyFilesPlugins(conf)
+    ConfigFactory.ChangeConnectString(conf,"web.config",False)
  
     
   

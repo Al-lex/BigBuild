@@ -1,29 +1,13 @@
-2015-02-11 17:56:32,021 INFO  [DefaultSoapUICore] initialized soapui-settings from [C:\Users\chernyshov\soapui-settings.xml]
-2015-02-11 17:56:33,274 INFO  [WsdlProject] Loaded project from [file:/E:/SoapUI/FinanceService-soapui-project.xml]
-2015-02-11 17:56:33,527 INFO  [SoapUITestCaseRunner] Running SoapUI tests in project [FinanceService]
-2015-02-11 17:56:33,528 INFO  [SoapUITestCaseRunner] Running Project [FinanceService], runType = SEQUENTIAL
-2015-02-11 17:56:33,539 INFO  [SoapUITestCaseRunner] Running SoapUI testcase [TestCase 1]
-2015-02-11 17:56:33,544 INFO  [SoapUITestCaseRunner] running step [CheckReservation - Request 1]
-2015-02-11 17:56:46,325 INFO  [SoapUITestCaseRunner] Assertion [SOAP Response] has status VALID
-2015-02-11 17:56:46,325 INFO  [SoapUITestCaseRunner] running step [CreatePayment - Request 1]
-2015-02-11 17:56:46,347 INFO  [SoapUITestCaseRunner] Assertion [SOAP Response] has status VALID
-2015-02-11 17:56:46,348 INFO  [SoapUITestCaseRunner] running step [GetPaymentInformation - Request 1]
-2015-02-11 17:56:46,390 INFO  [SoapUITestCaseRunner] Assertion [SOAP Response] has status VALID
-2015-02-11 17:56:46,390 INFO  [SoapUITestCaseRunner] running step [GetReservationInfo - Request 1]
-2015-02-11 17:56:46,417 INFO  [SoapUITestCaseRunner] Assertion [SOAP Response] has status VALID
-2015-02-11 17:56:46,417 INFO  [SoapUITestCaseRunner] running step [GetUserToken - Request 1]
-2015-02-11 17:56:46,998 INFO  [SoapUITestCaseRunner] Assertion [SOAP Response] has status VALID
-2015-02-11 17:56:46,999 INFO  [SoapUITestCaseRunner] Finished running SoapUI testcase [TestCase 1], time taken: 13442ms, status: FINISHED
-2015-02-11 17:56:46,999 INFO  [SoapUITestCaseRunner] Running SoapUI testcase [TestCase 2]
-2015-02-11 17:56:47,000 INFO  [SoapUITestCaseRunner] running step [CheckReservation - Request 1]
-2015-02-11 17:56:47,033 INFO  [SoapUITestCaseRunner] Assertion [SOAP Response] has status VALID
-2015-02-11 17:56:47,034 INFO  [SoapUITestCaseRunner] running step [CreatePayment - Request 1]
-2015-02-11 17:56:47,041 INFO  [SoapUITestCaseRunner] Assertion [SOAP Response] has status VALID
-2015-02-11 17:56:47,042 INFO  [SoapUITestCaseRunner] running step [GetPaymentInformation - Request 1]
-2015-02-11 17:56:47,071 INFO  [SoapUITestCaseRunner] Assertion [SOAP Response] has status VALID
-2015-02-11 17:56:47,072 INFO  [SoapUITestCaseRunner] running step [GetReservationInfo - Request 1]
-2015-02-11 17:56:47,079 INFO  [SoapUITestCaseRunner] Assertion [SOAP Response] has status VALID
-2015-02-11 17:56:47,079 INFO  [SoapUITestCaseRunner] running step [GetUserToken - Request 1]
-2015-02-11 17:56:47,113 INFO  [SoapUITestCaseRunner] Assertion [SOAP Response] has status VALID
-2015-02-11 17:56:47,114 INFO  [SoapUITestCaseRunner] Finished running SoapUI testcase [TestCase 2], time taken: 109ms, status: FINISHED
-2015-02-11 17:56:47,114 INFO  [SoapUITestCaseRunner] Project [FinanceService] finished with status [FINISHED] in 13582ms
+2015-02-18 14:55:12,810 INFO  [DefaultSoapUICore] initialized soapui-settings from [C:\Users\chernyshov\soapui-settings.xml]
+2015-02-18 14:55:14,014 INFO  [WsdlProject] Loaded project from [file:/E:/SoapUI/CheckQuotesService-soapui-project.xml]
+2015-02-18 14:55:14,310 INFO  [SoapUITestCaseRunner] Running SoapUI tests in project [CheckQuotesService]
+2015-02-18 14:55:14,310 INFO  [SoapUITestCaseRunner] Running Project [CheckQuotesService], runType = SEQUENTIAL
+2015-02-18 14:55:14,310 INFO  [SoapUITestCaseRunner] Running SoapUI testcase [TestCase 1]
+2015-02-18 14:55:14,326 INFO  [SoapUITestCaseRunner] running step [CheckQuotes - Request 1]
+2015-02-18 14:55:28,903 INFO  [SoapUITestCaseRunner] Assertion [SOAP Response] has status VALID
+2015-02-18 14:55:28,903 INFO  [SoapUITestCaseRunner] Finished running SoapUI testcase [TestCase 1], time taken: 14578ms, status: FINISHED
+2015-02-18 14:55:28,903 INFO  [SoapUITestCaseRunner] Running SoapUI testcase [TestCase 1]
+2015-02-18 14:55:28,903 INFO  [SoapUITestCaseRunner] running step [CheckQuotes - Request 1]
+2015-02-18 14:55:28,934 INFO  [SoapUITestCaseRunner] Assertion [SOAP Response] has status VALID
+2015-02-18 14:55:28,934 INFO  [SoapUITestCaseRunner] Finished running SoapUI testcase [TestCase 1], time taken: 25ms, status: FINISHED
+2015-02-18 14:55:28,934 INFO  [SoapUITestCaseRunner] Project [CheckQuotesService] finished with status [FINISHED] in 14624ms
