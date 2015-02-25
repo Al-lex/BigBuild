@@ -36,10 +36,20 @@ class DBUpdater(object):
                      returns path to the bat file with update"""
                    # pathbase = r"\\bg\Builds\Master-Tour\Release"                   
                    #search 
+                   
                     l=listdir(pathbase)
+                    #l_new=[]
+                    #for i in l:
+                    #    if i[:16][-1]=="(":
+                    #             i=i[:14]+"0"+i[14]
+                    #             l2.append (i[:16])
+                                
+                    #    else:
+                    #             l2.append (i[:16])
+
                     l2=[]
                     for i in l:
-                        if "Release9.2.20." in i:
+                        if release[-6:] in i:
                             if i[:16][-1]=="(":
                                  i=i[:14]+"0"+i[14]
                                  l2.append (i[:16])
@@ -47,10 +57,21 @@ class DBUpdater(object):
                             else:
                                  l2.append (i[:16])
                     l2.sort()
-                    for i2 in l:
-                        if l2[-1] in i2:
-                           # pathtozips=r'\\bg\\Builds\\Master-Tour\\Release\\'+i2
-                           pathtozips=pathbase+i2
+                    #print (l2[-1])
+                    #for i2 in l2:
+                    #    if l[-1] in i2:
+                    l_new=[]
+                    part_of_name_folder=l2[-1]
+                    if  part_of_name_folder[-2]=="0":
+                        part_of_name_folder=part_of_name_folder[:-3]+"."+part_of_name_folder[-1:]
+                    #print(part_of_name_folder)
+
+                    for i in l:                                                           
+                        if part_of_name_folder in i:
+                            l_new.append(i)
+                    print(l_new)
+                    pathtozips=pathbase+l_new[0]#i2
+
                     #path to zip
                     l3=listdir(pathtozips)
                     for i3 in l3:
