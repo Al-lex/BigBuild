@@ -5,9 +5,10 @@ from os.path import join as joinpath
 import shutil
 import zipfile
 import pymssql
+import unittest
 
 
-class DBUpdater(object):
+class DBUpdater(unittest.TestCase):
     """Class to update db up to the chosen version"""
     
     @staticmethod   
@@ -27,6 +28,13 @@ class DBUpdater(object):
             print("Current db version is "+version)
               
         return version
+    def test_GetCurrentDBVersion(self):
+        from DataAdaptor import Model as XA
+        conf=XA("MW.config")
+        #TBD take settings from XA and validate version format in DB
+        for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails in conf.GetBuildPaths():
+            version=self.GetCurrentDBVersion(conn["SERVER"],conn["UserID"],conn["Password"],conn["DATABASE"])
+            self.assertEqual(mtdata["Release"][-6:],version[0:6],"Check database version of Main_del - must be release 9.2.21")
        
     @staticmethod
     def CreateScriptsForDBUpdateServicePack(pathbase,foldername,server,database,sauserid,sapassword,pathToBak,isRestore,release,isupdatelast):
@@ -145,6 +153,7 @@ class DBUpdater(object):
                       updstring3="\"C:\\Program Files\\Microsoft SQL Server\\110\\Tools\\Binn\SQLCMD.EXE\" -S "+server+" -d "+database+" -U "+sauserid+" -P "+sapassword+" -i "                      
                       finalfile.writelines( updstring3+line2+upddstring2)
                     finalfile.close() 
+                
                    #returns path to executable for update of sql
                     return os.getcwd()+"\\"+foldername+"\\ready.bat" 
                      
@@ -158,11 +167,15 @@ class DBUpdater(object):
                        os.system(DBUpdater.CreateScriptsForDBUpdateServicePack(mtdata["MTpathToLatest"],name,conn["SERVER"],conn["DATABASE"],"sa",mtdata["saPassword"],conn["pathToBak"],conn["isRestore"],mtdata["Release"],isLastBuild))
                     
                        print("See details on dbupdate in "+os.getcwd()+"\\"+name+"\\"+"resultrestor.txt")
+                       logfile=open(os.getcwd()+"\\"+name+"\\resultrestor.txt","r") 
+                       for line in logfile.readlines():
+                                    print(line)
+                       logfile.close()
 
     
 
 if __name__ == "__main__":
-    from DataAdaptor import Model as XA
-    conf=XA("MW.config")
-
+    #from DataAdaptor import Model as XA
+    #conf=XA("MW.config")
+    unittest.main()
     #DBUpdater.GetCurrentDBVersion('localhost','sa','sa','avalon')

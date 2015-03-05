@@ -8,7 +8,11 @@ import glob
 import subprocess
 import re
 #https://docs.python.org/2/library/xml.etree.elementtree.html
-class Model(object):
+import unittest
+
+
+
+class Model(unittest.TestCase):
     """Class is used as middle layer for working with external config"""
     pathToFile=""
 
@@ -108,7 +112,7 @@ class Model(object):
           
                        
            
-class Controller():
+class Controller(unittest.TestCase):
        """Class for copy operations with different objects of XA type"""
        from DataAdaptor import Model as XA
 
@@ -283,17 +287,17 @@ class Controller():
  #           confpatterns.append(["[ ]Password=.*?;", "Password=="+conn["Password"]+";"])
  #           for confpattern in confpatterns:
 
-class ConfigFactory():
+class ConfigFactory(unittest.TestCase):
     """Class to configure configs - web.config sql.ini etc""" 
-             
+      
     @staticmethod
     def ChangeConnectString(SettingsObj,FileType,IsService):
-   
+                      
                       """Static method to change conn string in ini or web.config file"""
-       
+                         
                       #find pathes to all branches and concatenate
+                      returned_collection=[] #collection to use in unittest
         
-
                       for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails  in SettingsObj.GetBuildPaths():
 
                             confpatterns=[]#pairs of Search-Replacement
@@ -339,8 +343,8 @@ class ConfigFactory():
                                                         connStringEth=re.search(confpattern[0],line1)
                                                         if not (connStringEth==None):
                                                                   connStringEth=connStringEth.group(0)
-                                                                  print(confpattern[0])
-                                                                  print(connStringEth)
+                                                                  #print(confpattern[0])
+                                                                  #print(connStringEth)
                                                                   break
                                                   the_file1.close()
 
@@ -353,6 +357,7 @@ class ConfigFactory():
                                                   the_file2.close()
                                                   os.remove(filepath);
                                                   os.rename(filepath+".new",filepath)
+                                                  returned_collection.append(confpattern[1])
                                              else:
                                                       for service in servicedetails:
                                                         if(service[3]=="true"):
@@ -384,14 +389,22 @@ class ConfigFactory():
                                                            the_file2.close()
                                                            os.remove(filepath);
                                                            os.rename(filepath+".new",filepath)
+                                                           returned_collection.append(confpattern[1])
+                      return  returned_collection                                                       
 
-  
-
+    def test_ChangeConnectString(self):
+           from DataAdaptor import Model as XA
+           conf=XA("MW.config")
+           for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails  in conf.GetBuildPaths():
+                                          self.assertListEqual(self.ChangeConnectString(conf,"web.config",False),["Data Source="+conn["SERVER"]+";","Initial Catalog="+conn["DATABASE"]+";","User Id="+conn["UserID"]+";","Password="+conn["Password"]+"\"/>"])
+                      
                
 if __name__ == "__main__":
-    from DataAdaptor import Model as XA
-    conf=XA("MW.config")
-    ConfigFactory.ChangeConnectString(conf,"web.config",False)
+    unittest.main()
+    #from DataAdaptor import Model as XA
+    #conf=XA("MW.config")
+    #print (ConfigFactory.ChangeConnectString(conf,"web.config",False))
+   
  
     
   

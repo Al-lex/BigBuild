@@ -8,80 +8,96 @@ from DBManager import DBUpdater
 import os
 import shutil
 
+import sys
 
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+##http://kawaikunee.blogspot.ru/2013/04/python.html
 class View():
     @staticmethod
-    def Go():
-
+    def Go(args):
         logging.info("Started update session")
         conf=XA("MW.config")
-        #print("Kill IE seesion")
-        #os.system("taskkill /im iexplore.exe")
+        if '1' in args:
+       
+          
+            #print("Kill IE seesion")
+            #os.system("taskkill /im iexplore.exe")
+       
+            print ('\033[36mCYANCOLOR\033[0m')
+            print(bcolors.WARNING + "Begin work with database"+ bcolors.ENDC)
+            #logging.info('Begin update DB')
+            DBUpdater.execUpdateFilesForBranches(conf)
 
-        print("Begin work with database")
-        #logging.info('Begin update DB')
-        DBUpdater.execUpdateFilesForBranches(conf)
-        #logging.info('DB update finished - see details in log.txt')
+            
+            #logging.info('DB update finished - see details in log.txt')
    
+        if '2' in args:
+            #logging.info('Begin file copy')
+            #some temporary nail in the ass - need refactoring after payment service will be in build
+            print("Begin remove payment service")
+            is_stop=Controller.StopPaymentService()
 
-        #logging.info('Begin file copy')
-        #some temporary nail in the ass - need refactoring after payment service will be in build
-        print("Begin remove payment service")
-        is_stop=Controller.StopPaymentService()
 
+            print("Begin work with web files")
+            Controller.CopyFilesBuild(conf)
+            #logging.info('Begin unzip files')
+            #Controller.UnzipFilesBuild(conf)
+            print("Begin work with static files")
+            Controller.CopyStaticDir(conf)
 
-        print("Begin work with web files")
-        Controller.CopyFilesBuild(conf)
-        #logging.info('Begin unzip files')
-        #Controller.UnzipFilesBuild(conf)
-        print("Begin work with static files")
-        Controller.CopyStaticDir(conf)
+            print("Begin work with payment config")
 
-        print("Begin work with payment config")
-
-        ConfigFactory.ChangeConnectString(conf,"Megatec.PaymentSignatureServiceHost.exe.config",False)
-        #another temp nail in the ass - need refactoring after payment service will be in build
-        print("Begin install and start payment service")
-        if not(is_stop):       
-            Controller.InstallPaymentService(conf)
-        else:
-            Controller.StartPaymentService()
-    
-        print("Begin work with config for web")
-
-        #logging.info('Begin update web.config')
-        ConfigFactory.ChangeConnectString(conf,"web.config",False)
-        #logging.info('Finish update web.config')
+            ConfigFactory.ChangeConnectString(conf,"Megatec.PaymentSignatureServiceHost.exe.config",False)
+            #another temp nail in the ass - need refactoring after payment service will be in build
+            print("Begin install and start payment service")
+            if not(is_stop):       
+                Controller.InstallPaymentService(conf)
+            else:
+                Controller.StartPaymentService()
         
-        print("Begin work with plugins")
-        #logging.info('Begin get plugins')
-        Controller.CopyFilesPlugins(conf)
-        #logging.info('Finish get plugins')
+            print("Begin work with config for web")
 
-        print("Begin work with extra files")
-        #logging.info('Begin get extra files')
-        Controller.CopyFilesExtraForMW(conf)
-        #logging.info('Finish get extra files')
+            #logging.info('Begin update web.config')
+            ConfigFactory.ChangeConnectString(conf,"web.config",False)
+            #logging.info('Finish update web.config')
+        if '3' in args:
+            print("Begin work with plugins")
+            #logging.info('Begin get plugins')
+            Controller.CopyFilesPlugins(conf)
+            #logging.info('Finish get plugins')
+        if '4' in args:
+            print("Begin work with extra files")
+            #logging.info('Begin get extra files')
+            Controller.CopyFilesExtraForMW(conf)
+            #logging.info('Finish get extra files')
 
-        #logging.info('Set up site on IIS')
-
-        print("Begin install web app on IIS")
-        #IISManager.CreateSite(conf)
-        IISManager.CreateWebApp(conf)
+            #logging.info('Set up site on IIS')
+        if '5' in args:
+            print("Begin install web app on IIS")
+            #IISManager.CreateSite(conf)
+            IISManager.CreateWebApp(conf)
         
-        #logging.info('Finish set up site on IIS')
+            #logging.info('Finish set up site on IIS')
+        if '6' in args:
+            #logging.info('Set up web-services')
+            print("Begin install web services on IIS")
+            Controller.ProcessFilesServices(conf)
+            IISManager.CreateWebServices(conf)
+            print("Begin work with  web services configs")
+            ConfigFactory.ChangeConnectString(conf,"web.config",True)
+            #logging.info('Finished web services')
 
-        #logging.info('Set up web-services')
-        print("Begin install web services on IIS")
-        Controller.ProcessFilesServices(conf)
-        IISManager.CreateWebServices(conf)
-        print("Begin work with  web services configs")
-        ConfigFactory.ChangeConnectString(conf,"web.config",True)
-        #logging.info('Finished web services')
+            logging.info('Finished update session')
 
-        logging.info('Finished update session')
-
-        print("All is finished!!!")
+            print("All is finished!!!")
 
         print("Start test procedures")
         #clean up old error msgs
@@ -124,7 +140,13 @@ class View():
 
 
 if __name__ == "__main__":
-    View().Go()
+    if len (sys.argv) > 1:
+         print ("Will be exexuted following steps: {}!".format (sys.argv) )
+         View().Go(sys.argv)
+    else:
+         print ("All steps will be executed")
+         View().Go(['1','2','3','4','5','6'])
+
     
 
     
