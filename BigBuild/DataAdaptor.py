@@ -152,7 +152,41 @@ class Controller(unittest.TestCase):
 
                                       print("Success with last good(not latest)-it was"+dirname+"!")
                                       return True
+       def test_CopyFilesBuild(self):
+           from DataAdaptor import Model as XA
+           conf=XA("MW.config")
+           for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails  in conf.GetBuildPaths():
+               build_num=conf.GetLastBuildNumber(src)
+               #src=src+"\\"+build_num+"\\Release\\Full\\_Zips\\"
+               srcfull=src+"\\"+build_num+"\\Release\\Full\\_Zips\\mw-"+build_num[9:]+".zip"
+              #if build is not made then we search last goo and take its number
+               if not(os.path.exists(srcfull)):
+                  relFolders=os.listdir(src)
+                  relFolders.sort()
+                  for dirname in relFolders:                                 
+                            
+                                               build_num=dirname
+                                               srcfull=src+"\\"+build_num+"\\Release\\Full\\_Zips\\mw-"+build_num[9:]+".zip"
+                                               if (os.path.exists(srcfull)):
+                                                    break
 
+               #check if directory finds correct zip
+               
+               self.assertEqual(srcfull[-4:], ".zip")
+          
+             
+
+
+
+
+
+
+                
+               
+
+
+           #check if directory structure is consistent
+              #pass
        @staticmethod 
        def StopPaymentService():    
              comm1=r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe get-service \"Служба подписи путевок и платежей\">tmp.txt"
@@ -248,27 +282,28 @@ class Controller(unittest.TestCase):
               buildNum=SettingsObj.GetLastBuildNumber(src)
             
               services=[]
-              src=src+"\\"+buildNum+"\\Release\\Full\\_Zips\\"
+              src1=src+"\\"+buildNum+"\\Release\\Full\\_Zips\\"
               srcfull=src+"\\"+buildNum+"\\Release\\Full\\_Zips\\mw-"+buildNum[9:]+".zip"
               #if build is not made then we search last goo and take its number
               if not(os.path.exists(srcfull)):
                   relFolders=os.listdir(src)
                   relFolders.sort()
-                  for dirname in relFolders:
-                                 
+                  for dirname in relFolders:                             
+                             srcfull=src+"\\"+buildNum+"\\Release\\Full\\_Zips\\mw-"+buildNum[9:]+".zip"
                              if (os.path.exists(srcfull)):
-                                               buildNum=dirname
-                                               print("Build was broken - it will be found last good build")
-                                               break
+                                    buildNum=dirname
+                                    src1=src+"\\"+buildNum+"\\Release\\Full\\_Zips\\"
+                                    print("Build was broken - it will be found last good build "+buildNum)
+                                    break
 
               #print (servicedetails)
-              for root, dirs, files in os.walk(src):
+              for root, dirs, files in os.walk(src1):
                       for file in files:
                           for service in servicedetails: 
                               if (service[3]=="true"):
                                   if service[0] in file:
                                       print (service[0])
-                                      src2=src+file
+                                      src2=src1+file
                                       zip=zipfile.ZipFile(src2)
                                       dst2=dst+"\\"+service[1]
                                       if not (os.path.exists(dst2)):

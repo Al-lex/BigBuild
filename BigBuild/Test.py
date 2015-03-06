@@ -3,6 +3,7 @@
 import unittest
 from DataAdaptor import ConfigFactory
 from DBManager import DBUpdater
+from DataAdaptor import Controller
 class AllOfTheTests(unittest.TestSuite):
     def suite():
          
@@ -10,6 +11,7 @@ class AllOfTheTests(unittest.TestSuite):
          
          suite.addTests (unittest.makeSuite (ConfigFactory))#addtests from ConfigFactory
          suite.addTests (unittest.makeSuite (DBUpdater))#addtests from ConfigFactory
+         suite.addTests (unittest.makeSuite(Controller))
 
          return suite
 
