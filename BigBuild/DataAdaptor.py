@@ -116,6 +116,44 @@ class Controller(unittest.TestCase):
        """Class for copy operations with different objects of XA type"""
        from DataAdaptor import Model as XA
 
+       #@staticmethod
+       #def CopyFilesBuild(SettingsObj):
+       #   """Static method to get incremental update from last release to last build"""
+
+       #   for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails in SettingsObj.GetBuildPaths():
+       #                   if os.path.exists(dst):
+       #                             shutil.rmtree(dst)
+       #                   os.mkdir(dst)
+       #                   print("Branch named "+name+" will be copyed")
+       #                   dirname=SettingsObj.GetLastBuildNumber(src)                         
+       #                   src2=src+"\\"+dirname+"\\Release\\Full\\_Zips\\mw-"+dirname[9:]+".zip"
+       #                   if (os.path.exists(src2)):
+       #                       shutil.copy2(src2,dst)
+       #                       lst=os.listdir(dst)
+       #                       zip=zipfile.ZipFile(dst+"//"+lst[0])
+       #                       zip.extractall(dst)                              
+       #                       print("Success with copy of "+dirname+"!")
+       #                       return False
+       #                   else:
+       #                      print ("Problem with copy last build from, "+src+"  it will be taken last good build")
+       #                      relFolders=os.listdir(src)
+       #                      relFolders.sort()
+       #                      for dirname in relFolders:
+       #                          if (os.path.exists(src+"\\"+dirname+"\\Release")):
+
+                                   
+       #                               src2=src+"\\"+dirname+"\\Release\\Full\\_Zips\\mw-"+dirname[9:]+".zip"
+       #                               if (os.path.exists(src2)):
+       #                                  shutil.copy2(src2,dst)
+       #                               lst=os.listdir(dst)
+       #                               zip=zipfile.ZipFile(dst+"//"+lst[0])
+       #                               zip.extractall(dst)
+
+
+       #                               print("Success with last good(not latest)-it was"+dirname+"!")
+       #                               return True
+
+
        @staticmethod
        def CopyFilesBuild(SettingsObj):
           """Static method to get incremental update from last release to last build"""
@@ -125,33 +163,41 @@ class Controller(unittest.TestCase):
                                     shutil.rmtree(dst)
                           os.mkdir(dst)
                           print("Branch named "+name+" will be copyed")
-                          dirname=SettingsObj.GetLastBuildNumber(src)                         
-                          src2=src+"\\"+dirname+"\\Release\\Full\\_Zips\\mw-"+dirname[9:]+".zip"
-                          if (os.path.exists(src2)):
-                              shutil.copy2(src2,dst)
-                              lst=os.listdir(dst)
-                              zip=zipfile.ZipFile(dst+"//"+lst[0])
-                              zip.extractall(dst)                              
-                              print("Success with copy of "+dirname+"!")
-                              return False
-                          else:
-                             print ("Problem with copy last build from, "+src+"  it will be taken last good build")
-                             relFolders=os.listdir(src)
-                             relFolders.sort()
-                             for dirname in relFolders:
-                                 if (os.path.exists(src+"\\"+dirname+"\\Release")):
+                          build_num=SettingsObj.GetLastBuildNumber(src)                         
+                          srcfull=src+"\\"+build_num+"\\Release\\Full\\_Zips\\mw-"+build_num[9:]+".zip"
+                          if not(os.path.exists(srcfull)):
+                              print("Build not exists - try search last previous good build")
+                              relFolders=os.listdir(src)
+                              relFolders.sort()
+                              for dirname in relFolders:                                                            
+                                               build_num=dirname
+                                               srcfull=src+"\\"+build_num+"\\Release\\Full\\_Zips\\mw-"+build_num[9:]+".zip"
+                                               if (os.path.exists(srcfull)):
+                                                    break
+                          shutil.copy2(srcfull,dst)
+                          lst=os.listdir(dst)
+                          zip=zipfile.ZipFile(dst+"//"+lst[0])
+                          zip.extractall(dst)                              
+                          print("Success with copy of "+build_num+"!")
+                              #return False
+                          #else:
+                          #   print ("Problem with copy last build from, "+src+"  it will be taken last good build")
+                          #   relFolders=os.listdir(src)
+                          #   relFolders.sort()
+                          #   for dirname in relFolders:
+                          #       if (os.path.exists(src+"\\"+dirname+"\\Release")):
 
                                    
-                                      src2=src+"\\"+dirname+"\\Release\\Full\\_Zips\\mw-"+dirname[9:]+".zip"
-                                      if (os.path.exists(src2)):
-                                         shutil.copy2(src2,dst)
-                                      lst=os.listdir(dst)
-                                      zip=zipfile.ZipFile(dst+"//"+lst[0])
-                                      zip.extractall(dst)
+                          #            src2=src+"\\"+dirname+"\\Release\\Full\\_Zips\\mw-"+dirname[9:]+".zip"
+                          #            if (os.path.exists(src2)):
+                          #               shutil.copy2(src2,dst)
+                          #            lst=os.listdir(dst)
+                          #            zip=zipfile.ZipFile(dst+"//"+lst[0])
+                          #            zip.extractall(dst)
 
 
-                                      print("Success with last good(not latest)-it was"+dirname+"!")
-                                      return True
+                          #            print("Success with last good(not latest)-it was"+dirname+"!")
+                          #            return True
        def test_CopyFilesBuild(self):
            from DataAdaptor import Model as XA
            conf=XA("MW.config")
@@ -174,16 +220,6 @@ class Controller(unittest.TestCase):
                
                self.assertEqual(srcfull[-4:], ".zip")
           
-             
-
-
-
-
-
-
-                
-               
-
 
            #check if directory structure is consistent
               #pass
@@ -234,8 +270,15 @@ class Controller(unittest.TestCase):
                        print ("failure with start payment service")           
                    
        @staticmethod
-       def InstallPaymentService(SettingsObj):
-           for name,src,dst,conn,plugs,iis,mtdata,isLastBuild in SettingsObj.GetBuildPaths():
+       def InstallPaymentService(SettingsObj):         
+           for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails in SettingsObj.GetBuildPaths():
+                  #print(name)
+                  #print(src)
+                  #print(conn)
+                  #print(plugs)
+                  #print(iis)
+                  #print(mtdata)
+                  #print(isLastBuild)
                   if(SettingsObj.GetDirectories()[0][1]=="true"):
                                  tmp=dst+"\\Tmp"
                                  comm3=tmp+"\\_Install.bat"

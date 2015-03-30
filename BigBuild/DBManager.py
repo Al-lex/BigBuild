@@ -149,7 +149,8 @@ class DBUpdater(unittest.TestCase):
                             finalfile.writelines("timeout 3")
                             finalfile.writelines("\n")
                     if (isupdatelast=="true"):
-                      line2="\\\\bg\\builds\\Master-Tour\\"+foldername+"_MasterTour\\LastBuild\\Scripts\\ReleaseScript.sql"
+                      #line2="\\\\bg\\builds\\Master-Tour\\"+foldername+"_MasterTour\\LastBuild\\Scripts\\ReleaseScript.sql"
+                      line2=pathbase[:-9]+"\\"+foldername+"_MasterTour\\LastBuild\\Scripts\\ReleaseScript.sql"
                       updstring3="\"C:\\Program Files\\Microsoft SQL Server\\110\\Tools\\Binn\SQLCMD.EXE\" -S "+server+" -d "+database+" -U "+sauserid+" -P "+sapassword+" -i "                      
                       finalfile.writelines( updstring3+line2+upddstring2)
                     finalfile.close() 

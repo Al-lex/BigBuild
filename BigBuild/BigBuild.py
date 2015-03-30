@@ -7,8 +7,8 @@ from IISManager import IISManager
 from DBManager import DBUpdater
 import os
 import shutil
-
 import sys
+#import subprocess
 
 class bcolors:
     HEADER = '\033[95m'
@@ -26,12 +26,11 @@ class View():
         logging.info("Started update session")
         conf=XA("MW.config")
         if '1' in args:
-       
-          
+         
             #print("Kill IE seesion")
             #os.system("taskkill /im iexplore.exe")
        
-            print ('\033[36mCYANCOLOR\033[0m')
+            #print ('\033[36mCYANCOLOR\033[0m')
             print(bcolors.WARNING + "Begin work with database"+ bcolors.ENDC)
             #logging.info('Begin update DB')
             DBUpdater.execUpdateFilesForBranches(conf)
@@ -98,48 +97,55 @@ class View():
             logging.info('Finished update session')
 
             print("All is finished!!!")
+        if 't' in args:
+            print("Start test procedures")
+            #clean up old error msgs
+            for line in os.listdir("E:\\SoapUI"):
+                if (line[-3:]=="txt"):
+                    os.remove("E:\\SoapUI\\"+line)
 
-        print("Start test procedures")
-        #clean up old error msgs
-        for line in os.listdir("E:\\SoapUI"):
-            if (line[-3:]=="txt"):
-                os.remove("E:\\SoapUI\\"+line)
-
-        services_under_test=[]
-        ##Finance
-        services_under_test.append("FinanceService-soapui-project")
-        ##FilterBinding
-        services_under_test.append("FilterBindingService-soapui-project")
-        ##megatecwebservices
-        #search
-        services_under_test.append("Search-soapui-project")
-        #rates
-        services_under_test.append("Rates-soapui-project")
-        #Booking manager
-        services_under_test.append("BookingManager-soapui-project")
-        ##authservice
-        services_under_test.append("Auth-soapui-project")
-        ##aviasearch
-        services_under_test.append("TicketSearchService-soapui-project")
-        ##checkquotes
-        services_under_test.append("CheckQuotesService-soapui-project")
+            services_under_test=[]
+            ##Finance
+            services_under_test.append("FinanceService-soapui-project")
+            ##FilterBinding
+            services_under_test.append("FilterBindingService-soapui-project")
+            ##megatecwebservices
+            #search
+            services_under_test.append("Search-soapui-project")
+            #rates
+            services_under_test.append("Rates-soapui-project")
+            #Booking manager
+            services_under_test.append("BookingManager-soapui-project")
+            ##authservice
+            services_under_test.append("Auth-soapui-project")
+            ##aviasearch
+            services_under_test.append("TicketSearchService-soapui-project")
+            ##checkquotes
+            services_under_test.append("CheckQuotesService-soapui-project")
 
 
-        for serv in services_under_test:
+            for serv in services_under_test:
 
-             print ("Check "+serv+" web-service")
-             os.system("\"C:\\Program Files (x86)\\SmartBear\\SoapUI-5.0.0\\bin\\testrunner.bat\" -r E:\\SoapUI\\"+serv+".xml")
+                 print ("Check "+serv+" web-service")
+                 os.system("\"C:\\Program Files (x86)\\SmartBear\\SoapUI-5.0.0\\bin\\testrunner.bat\" -r E:\\SoapUI\\"+serv+".xml")
 
       
-        #check if err report has been created
-        for line in os.listdir("E:\\SoapUI"):
-            if (line[-3:]=="txt"):
-                print("Some tests are failed - see details in E:\SoapUI")
+            #check if err report has been created
+            for line in os.listdir("E:\\SoapUI"):
+                if (line[-3:]=="txt"):
+                    print("Some tests are failed - see details in E:\SoapUI")
 
 
 
 
 if __name__ == "__main__":
+    #change codepage for cyrillic complience
+    #retcode=subprocess.call("chcp 857", shell=False,stderr=subprocess.PIPE)
+    #if retcode == 0:
+    #    print ("Successfuly changed encoding")
+    #else:
+    #    print ("Failure change encoding") 
+    os.system("chcp 857")
     if len (sys.argv) > 1:
          print ("Will be exexuted following steps: {}!".format (sys.argv) )
          View().Go(sys.argv)
