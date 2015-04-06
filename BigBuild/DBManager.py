@@ -34,7 +34,9 @@ class DBUpdater(unittest.TestCase):
         #TBD take settings from XA and validate version format in DB
         for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails in conf.GetBuildPaths():
             version=self.GetCurrentDBVersion(conn["SERVER"],conn["UserID"],conn["Password"],conn["DATABASE"])
-            self.assertEqual(mtdata["Release"][-6:],version[0:6],"Check database version of Main_del - must be release 9.2.21")
+            self.assertEqual(mtdata["Release"][-6:],version[0:6],"Check database version of Main_del - must be release "+mtdata["Release"][-6:])
+
+
        
     @staticmethod
     def CreateScriptsForDBUpdateServicePack(pathbase,foldername,server,database,sauserid,sapassword,pathToBak,isRestore,release,isupdatelast):

@@ -8,6 +8,7 @@ from DBManager import DBUpdater
 import os
 import shutil
 import sys
+import subprocess
 #import subprocess
 
 class bcolors:
@@ -97,6 +98,13 @@ class View():
             logging.info('Finished update session')
 
             print("All is finished!!!")
+        if 'a' in args:
+            #run selenium autotests
+            retcode=subprocess.call(os.getcwd()+"\\run_functional_avtotests.bat", shell=True)
+            if retcode == 0:
+                 print ("successfuly func launch autotests")
+            else:
+                 print ("failure launch func autotests")   
         if 't' in args:
             print("Start test procedures")
             #clean up old error msgs

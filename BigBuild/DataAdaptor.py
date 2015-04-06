@@ -177,7 +177,11 @@ class Controller(unittest.TestCase):
                           shutil.copy2(srcfull,dst)
                           lst=os.listdir(dst)
                           zip=zipfile.ZipFile(dst+"//"+lst[0])
-                          zip.extractall(dst)                              
+                          zip.extractall(dst)   
+                          
+                          #zip=zipfile.ZipFile("E:\\MW_main\\mw-9.2.21.61032.zip")
+                          #zip.extractall("E:\\MW_main") 
+                                                     
                           print("Success with copy of "+build_num+"!")
                               #return False
                           #else:
