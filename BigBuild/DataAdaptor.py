@@ -13,7 +13,7 @@ import unittest
 
 
 class Model(unittest.TestCase):
-    """Class is used as middle layer for working with external config"""
+    """Class is used as middle layer for working with external config MW.config"""
     pathToFile=""
 
     def __init__(self,pathToFile):
@@ -157,7 +157,6 @@ class Controller(unittest.TestCase):
        @staticmethod
        def CopyFilesBuild(SettingsObj):
           """Static method to get incremental update from last release to last build"""
-
           for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails in SettingsObj.GetBuildPaths():
                           if os.path.exists(dst):
                                     shutil.rmtree(dst)
@@ -203,6 +202,7 @@ class Controller(unittest.TestCase):
                           #            print("Success with last good(not latest)-it was"+dirname+"!")
                           #            return True
        def test_CopyFilesBuild(self):
+           """Unit test to check if directory structure on build server is correct"""
            from DataAdaptor import Model as XA
            conf=XA("MW.config")
            for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails  in conf.GetBuildPaths():
@@ -228,7 +228,8 @@ class Controller(unittest.TestCase):
            #check if directory structure is consistent
               #pass
        @staticmethod 
-       def StopPaymentService():    
+       def StopPaymentService(): 
+             """Payment service stopper"""   
              comm1=r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe get-service \"Служба подписи путевок и платежей\">tmp.txt"
              retcode=subprocess.call(comm1, shell=True)
              if retcode == 0:
@@ -266,6 +267,7 @@ class Controller(unittest.TestCase):
                   print("Somthing wrong with check service running")
        @staticmethod
        def StartPaymentService():
+            """Payment service starter"""
             comm=(r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe start-service \"Служба подписи путевок и платежей\"")
             retcode=subprocess.call(comm, shell=True)
             if retcode == 0:
@@ -294,6 +296,7 @@ class Controller(unittest.TestCase):
                        
        @staticmethod
        def CopyStaticDir(SettingsObj):
+              """Special method to copy from static location - currently is used from payment service because it development is in limbo"""
               pathtofilestatic=SettingsObj.GetDirectories()[0][0] 
               for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails in SettingsObj.GetBuildPaths():
                   if(SettingsObj.GetDirectories()[0][1]=="true"):
@@ -307,6 +310,7 @@ class Controller(unittest.TestCase):
                               
        @staticmethod
        def CopyFilesPlugins(SettingsObj):
+           """Method to copy plugin files from build server to local path"""
            for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails in SettingsObj.GetBuildPaths():
                     buildNum=SettingsObj.GetLastBuildNumber(src)
                     for plug in plugs:
@@ -318,12 +322,14 @@ class Controller(unittest.TestCase):
 
        @staticmethod
        def CopyFilesExtraForMW(SettingsObj):
+          """Method to get additional files - licence, configs etc"""
           for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails in SettingsObj.GetBuildPaths():
               if(SettingsObj.GetFiles()[0][1]=="true"):
                   filename=SettingsObj.GetFiles()[0][0]
                   shutil.copy2(os.getcwd()+"\\Extra\\"+filename,dst)
        @staticmethod
        def ProcessFilesServices(SettingsObj):
+          """Get files of services from build server to local"""
           for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails in SettingsObj.GetBuildPaths():
               
               buildNum=SettingsObj.GetLastBuildNumber(src)
@@ -475,6 +481,7 @@ class ConfigFactory(unittest.TestCase):
                       return  returned_collection                                                       
 
     def test_ChangeConnectString(self):
+           """Unit test if connect ctring has correct format"""
            from DataAdaptor import Model as XA
            conf=XA("MW.config")
            for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails  in conf.GetBuildPaths():
@@ -482,7 +489,8 @@ class ConfigFactory(unittest.TestCase):
                       
                
 if __name__ == "__main__":
-    unittest.main()
+    help(Model)
+    #unittest.main()
     #from DataAdaptor import Model as XA
     #conf=XA("MW.config")
     #print (ConfigFactory.ChangeConnectString(conf,"web.config",False))

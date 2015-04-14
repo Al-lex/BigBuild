@@ -22,8 +22,10 @@ class bcolors:
     UNDERLINE = '\033[4m'
 ##http://kawaikunee.blogspot.ru/2013/04/python.html
 class View():
+    """Class representing top level calls for inner functionality"""
     @staticmethod
     def Go(args):
+        """Method to build up sequence of operations"""
         logging.info("Started update session")
         conf=XA("MW.config")
         if '1' in args:
@@ -107,7 +109,7 @@ class View():
                  print ("failure launch func autotests")   
         if 't' in args:
             print("Start test procedures")
-            #clean up old error msgs
+            #run SoapUI tests
             for line in os.listdir("E:\\SoapUI"):
                 if (line[-3:]=="txt"):
                     os.remove("E:\\SoapUI\\"+line)

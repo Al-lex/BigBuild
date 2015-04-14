@@ -35,7 +35,42 @@ class DBUpdater(unittest.TestCase):
         for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails in conf.GetBuildPaths():
             version=self.GetCurrentDBVersion(conn["SERVER"],conn["UserID"],conn["Password"],conn["DATABASE"])
             self.assertEqual(mtdata["Release"][-6:],version[0:6],"Check database version of Main_del - must be release "+mtdata["Release"][-6:])
+    
+    @staticmethod
+    def create_scripts_between_releases(conf):
+        """Method need to find out intermediate release scripts
+        """
+        release_scripts={}
+        for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails in conf.GetBuildPaths():
+                version=DBUpdater.GetCurrentDBVersion(conn["SERVER"],conn["UserID"],conn["Password"],conn["DATABASE"]) #get current db version and compare with those in settings file
+            #if (mtdata["Release"][-6:]!=version[0:6]):#means that database is behind of current release
+                #\\bg\Builds\Master-Tour\Release\Release9.2.20.26(150303)\MasterTour9.2.20.60486-scripts.zip
+                #need to find all releases except version
+                releases=os.listdir("\\\\bg\\Builds\\Master-Tour\\Release")
+                releasescorrected=[]
+                #correct names if one digit number i.e. if 1 then 01
+                for line in releases:
+                  if line[0:8]=="Release9":#take 9.2 releases only
+                    if line[-10]==".":
+                        releasescorrected.append(line[0:-9]+"0"+line[-9:])
+                        print (line[0:-9]+"0"+line[-9:])
+                    else:
+                        releasescorrected.append(line)
 
+                releasescorrected.sort()
+                templine=""
+                #find splititem
+                for line in releasescorrected:
+                    if version in line:
+                        templine=line
+                        break
+                split_index=releasescorrected.index(templine)
+
+
+                release_scripts[name]=releasescorrected[split_index:]
+                print (release_scripts)
+        
+        return release_scripts
 
        
     @staticmethod
@@ -178,7 +213,9 @@ class DBUpdater(unittest.TestCase):
     
 
 if __name__ == "__main__":
-    #from DataAdaptor import Model as XA
-    #conf=XA("MW.config")
-    unittest.main()
+    from DataAdaptor import Model as XA
+    conf=XA("MW.config")
+
+    DBUpdater.create_scripts_between_releases(conf)
+    #unittest.main()
     #DBUpdater.GetCurrentDBVersion('localhost','sa','sa','avalon')
