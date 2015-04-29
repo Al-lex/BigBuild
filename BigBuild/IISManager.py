@@ -1,9 +1,15 @@
 import os
 import subprocess
+
+
 class IISManager(object):
        """Class to manage sites on IIS"""
        @staticmethod
-       def CreateWebServices(SettingsObj):    
+       def CreateWebServices(SettingsObj):   
+             """Method to add web-service on IIS
+             -it creates strings to exec via cmd or ps
+             
+             """ 
              for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails in SettingsObj.GetBuildPaths():
                  for service in servicedetails:
                      if (service[3]=="true"):
@@ -19,7 +25,10 @@ class IISManager(object):
                          commps=" New-WebApplication -Name "+service[1]+" -Site 'Default Web Site' -PhysicalPath "+dst+"\\"+service[1]+" -ApplicationPool "+service[2]
                          IISManager.ProcessSite(commcmd,commps,optype)
        @staticmethod
-       def CreateWebApp(SettingsObj):  
+       def CreateWebApp(SettingsObj): 
+               """Method to add web-site on IIS
+               -it creates strings to exec via cmd or ps
+               """ 
                for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails in SettingsObj.GetBuildPaths():
                          optype="webapp"
                          #del
@@ -35,6 +44,9 @@ class IISManager(object):
                          IISManager.ProcessSite(commcmd,commps,optype)
        
        def ProcessSite(commcmd,commps,optype):
+            """Method to process prepared command strings 
+            -it try to exec via appcmd in case of failue it runs via ps 
+            """
             appcmd="C:\\Windows\\System32\\inetsrv\\appcmd.exe"
             powershell="C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" 
             retcode=subprocess.call(powershell+commps, shell=False,stderr=subprocess.PIPE)
@@ -50,49 +62,7 @@ class IISManager(object):
                    else:
                           print ("well failue "+optype+"- it seems to be impossible eather in ps or in appcmd - try add site manually")
 
-    #@staticmethod
-    #def CreateSite(SettingsObj):
-
-
-    #     for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails in SettingsObj.GetBuildPaths():
-       
-    #             appcmd="C:\\Windows\\System32\\inetsrv\\appcmd.exe"   
-             
-    #             comm=r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe Remove-WebApplication -Name "+iis["appName"]+" -Site 'Default Web Site'"
-    #             retcode=subprocess.call(comm, shell=True)
-    #             if retcode == 0:
-    #                    print ("successfuly removed web-site")
-    #             else:
-    #                    print ("failure with web site remove -lets try app cmd:")
-    #                    #comm=appcmd+" delete app /site.name:\"Default Web Site\""+"\\"+iis["appName"]
-    #                    #C:\Windows\System32\inetsrv\appcmd.exe delete app "Default Web Site/test1"    delete app "Default Web Site/
-    #                    comm=appcmd+" delete app \"Default Web Site/"+iis["appName"]+"\""
-    #                    print("execute:"+comm)
-    #                    retcode=subprocess.call(comm, shell=True)
-    #                    if retcode == 0:
-    #                           print ("at last successfuly removed web-site")
-    #                    else:
-    #                           print ("well - it seems to be impossible")
-
-                  
-
-               
-    #             comm=r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe New-WebApplication -Name "+iis["appName"]+" -Site 'Default Web Site' -PhysicalPath "+dst+" -ApplicationPool "+iis["appPool"]
-                
-                   
-    #             retcode=subprocess.call(comm, shell=True)
-    #             if retcode == 0:
-    #                    print ("successfuly installed web-site")
-    #             else:
-    #                    print ("failure with web site install -lets try app cmd:")
-    #                    comm=appcmd+" add app /site.name:\"Default Web Site\""+" /path:/"+iis["appName"]+" /physicalPath:"+dst
-    #                    print("execute:"+comm)
-    #                    retcode=subprocess.call(comm, shell=True)
-    #                    if retcode == 0:
-    #                           print ("at last successfuly add web-site")
-    #                    else:
-    #                           print ("well - it seems add impossible")
-                                
+   
 
 if __name__ == "__main__":
     from DataAdaptor import Model as XA

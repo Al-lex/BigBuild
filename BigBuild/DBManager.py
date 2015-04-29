@@ -69,28 +69,38 @@ class DBUpdater(unittest.TestCase):
 
                 release_scripts[name]=releasescorrected[split_index:]
                 print (release_scripts)
-        
+        #need to find out the right way - in the current state it does not work
         return release_scripts
+    @staticmethod
+    def CreateScriptToRestoreDB(pathbase,foldername,server,database,sauserid,sapassword,pathToBak,isRestore,release,isupdatelast):
+        if isRestore=="true":
+            line_kill_conn="\"C:\\Program Files\\Microsoft SQL Server\\110\\Tools\\Binn\SQLCMD.EXE\" -S "+server+" -d master -U "+sauserid+" -P "+sapassword+" -i "+os.getcwd()+"\\Clear_connect.sql -v dbname='"+database+"'"
+            line="\"C:\\Program Files\\Microsoft SQL Server\\110\\Tools\\Binn\\SQLCMD.EXE\" -S "+server+" -d master -U sa -P "+sapassword+ " -Q \""+"RESTORE DATABASE ["+database+"] FROM  DISK = N\'"+pathToBak+"\' WITH  FILE = 1,  NOUNLOAD,  STATS = 5\"" #-I -R >> \""+os.getcwd()+"\\"+foldername+"\\resultrestor.txt\" -f i:65001"
+            
+            finalfile=open(os.getcwd()+"\\"+foldername+"\\readyDB.bat","w") 
+            finalfile.writelines(line_kill_conn)
+            finalfile.writelines("\n")
+            finalfile.writelines("timeout 3")
+            finalfile.writelines("\n")
+            finalfile.writelines(line)
+            finalfile.writelines("\n")
+            finalfile.writelines("timeout 3")
+            finalfile.writelines("\n")
+            finalfile.close()           
+        else:
+            finalfile=open(os.getcwd()+"\\"+foldername+"\\readyDB.bat","w")
+            lune="echo It was false setting for DB Restore - restore is aborted"
+            finalfile.writelines(line)
+        return os.getcwd()+"\\"+foldername+"\\readyDB.bat"
 
-       
     @staticmethod
     def CreateScriptsForDBUpdateServicePack(pathbase,foldername,server,database,sauserid,sapassword,pathToBak,isRestore,release,isupdatelast):
                     """Method to update local DB with scripts from servicepack 
                      -pathbase -path to the branch
                      -pathtempscripts - path to the local folder for scripts
                      returns path to the bat file with update"""
-                   # pathbase = r"\\bg\Builds\Master-Tour\Release"                   
-                   #search 
-                   
+                                                                  
                     l=listdir(pathbase)
-                    #l_new=[]
-                    #for i in l:
-                    #    if i[:16][-1]=="(":
-                    #             i=i[:14]+"0"+i[14]
-                    #             l2.append (i[:16])
-                                
-                    #    else:
-                    #             l2.append (i[:16])
 
                     l2=[]
                     for i in l:
@@ -102,14 +112,11 @@ class DBUpdater(unittest.TestCase):
                             else:
                                  l2.append (i[:16])
                     l2.sort()
-                    #print (l2[-1])
-                    #for i2 in l2:
-                    #    if l[-1] in i2:
+        
                     l_new=[]
                     part_of_name_folder=l2[-1]
                     if  part_of_name_folder[-2]=="0":
-                        part_of_name_folder=part_of_name_folder[:-3]+"."+part_of_name_folder[-1:]
-                    #print(part_of_name_folder)
+                        part_of_name_folder=part_of_name_folder[:-3]+"."+part_of_name_folder[-1:]                
 
                     for i in l:                                                           
                         if part_of_name_folder in i:
@@ -120,13 +127,13 @@ class DBUpdater(unittest.TestCase):
                     #path to zip
                     l3=listdir(pathtozips)
                     for i3 in l3:
-                       if "scripts" in i3:
-                           fullpathtozip=pathtozips+r"\\"+i3
+                        if "scripts" in i3:
+                            fullpathtozip=pathtozips+r"\\"+i3
                     #unzip 
                     #tempscrpts='E:\TEMPSCRPTS'
                     pathtempscripts=os.getcwd()+"\\"+foldername+"scripts"
                     if os.path.exists( pathtempscripts):
-                     shutil.rmtree(pathtempscripts)
+                        shutil.rmtree(pathtempscripts)
                     os.mkdir(pathtempscripts)
                     zip=zipfile.ZipFile(fullpathtozip)
                     zip.extractall(pathtempscripts)
@@ -142,7 +149,9 @@ class DBUpdater(unittest.TestCase):
 
                     #l6=[ln2 for ln2 in l5 if ln2[-6:-4]>"21"]#take only scripts to update from current db
                     currentServicePackVersion=DBUpdater.GetCurrentDBVersion(server,sauserid,sapassword,database)[-2:]
-                    #print(currentServicePackVersion)
+
+
+                    print("Current db:"+currentServicePackVersion)
                     #insert only version numbers higher then current
                     l6=[ln2 for ln2 in l5 if int(ln2[-6:-4])>int(currentServicePackVersion)]
                     l6.sort(reverse=False)
@@ -158,11 +167,11 @@ class DBUpdater(unittest.TestCase):
                     upddstring2=" -I -R >> \""+os.getcwd()+"\\"+foldername+"\\resultrestor.txt\" -f i:65001"
 
                     l7=[]
-                    if(isRestore=="true"):
-                        updstring="\"C:\\Program Files\\Microsoft SQL Server\\110\\Tools\\Binn\SQLCMD.EXE\" -S "+server+" -d master -U "+sauserid+" -P "+sapassword+" -i "+os.getcwd()+"\\Clear_connect.sql -v dbname='"+database+"'"
-                        updstring0="\"C:\\Program Files\\Microsoft SQL Server\\110\\Tools\\Binn\\SQLCMD.EXE\" -S "+server+" -d master -U sa -P "+sapassword+ " -Q \""+"RESTORE DATABASE ["+database+"] FROM  DISK = N\'"+pathToBak+"\' WITH  FILE = 1,  NOUNLOAD,  STATS = 5\"" #-I -R >> \""+os.getcwd()+"\\"+foldername+"\\resultrestor.txt\" -f i:65001"
-                        l7.append(updstring)
-                        l7.append(updstring0)
+                    #if(isRestore=="true"):
+                    updstring="\"C:\\Program Files\\Microsoft SQL Server\\110\\Tools\\Binn\SQLCMD.EXE\" -S "+server+" -d master -U "+sauserid+" -P "+sapassword+" -i "+os.getcwd()+"\\Clear_connect.sql -v dbname='"+database+"'"
+                        #updstring0="\"C:\\Program Files\\Microsoft SQL Server\\110\\Tools\\Binn\\SQLCMD.EXE\" -S "+server+" -d master -U sa -P "+sapassword+ " -Q \""+"RESTORE DATABASE ["+database+"] FROM  DISK = N\'"+pathToBak+"\' WITH  FILE = 1,  NOUNLOAD,  STATS = 5\"" #-I -R >> \""+os.getcwd()+"\\"+foldername+"\\resultrestor.txt\" -f i:65001"
+                    l7.append(updstring)
+                        #l7.append(updstring0)
 
                     for line in l6:
                        #if release script number ends on 01 02 03 etc then change 1 2 3 etc 
@@ -175,10 +184,10 @@ class DBUpdater(unittest.TestCase):
                     ##
                     ##print(l5)
                     print("following servicepack scripts will be included in update:")
-                    if(isRestore=="true"):
-                        print(l7[2:])
-                    else:
-                        print(l7)
+                    #if(isRestore=="true"):
+                    #    print(l7[2:])
+                    #else:
+                    print(l7)
                     finalfile=open(os.getcwd()+"\\"+foldername+"\\ready.bat","w")                    
                     for line in l7:
                             finalfile.writelines(line)
@@ -202,6 +211,7 @@ class DBUpdater(unittest.TestCase):
                        #print(src)
                        #if (conn["isRestore"]):
                        #    DBUpdater.RestoreDB(conn["SERVER"],conn["sapassword"],conn["DATABASE"],conn["pathToBak"])
+                       os.system(DBUpdater.CreateScriptToRestoreDB(mtdata["MTpathToLatest"],name,conn["SERVER"],conn["DATABASE"],"sa",mtdata["saPassword"],conn["pathToBak"],conn["isRestore"],mtdata["Release"],isLastBuild))
                        os.system(DBUpdater.CreateScriptsForDBUpdateServicePack(mtdata["MTpathToLatest"],name,conn["SERVER"],conn["DATABASE"],"sa",mtdata["saPassword"],conn["pathToBak"],conn["isRestore"],mtdata["Release"],isLastBuild))
                     
                        print("See details on dbupdate in "+os.getcwd()+"\\"+name+"\\"+"resultrestor.txt")

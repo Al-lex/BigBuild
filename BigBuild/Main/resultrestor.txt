@@ -1,0 +1,1 @@
+Caution: Changing any part of an object name could break scripts and stored procedures.

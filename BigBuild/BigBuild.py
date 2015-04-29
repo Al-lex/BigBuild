@@ -9,17 +9,16 @@ import os
 import shutil
 import sys
 import subprocess
-#import subprocess
 
-class bcolors:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
+#class bcolors:
+#    HEADER = '\033[95m'
+#    OKBLUE = '\033[94m'
+#    OKGREEN = '\033[92m'
+#    WARNING = '\033[93m'
+#    FAIL = '\033[91m'
+#    ENDC = '\033[0m'
+#    BOLD = '\033[1m'
+#    UNDERLINE = '\033[4m'
 ##http://kawaikunee.blogspot.ru/2013/04/python.html
 class View():
     """Class representing top level calls for inner functionality"""
@@ -34,7 +33,8 @@ class View():
             #os.system("taskkill /im iexplore.exe")
        
             #print ('\033[36mCYANCOLOR\033[0m')
-            print(bcolors.WARNING + "Begin work with database"+ bcolors.ENDC)
+            #print(bcolors.WARNING + "Begin work with database"+ bcolors.ENDC)
+            print("Begin work with database")
             #logging.info('Begin update DB')
             DBUpdater.execUpdateFilesForBranches(conf)
 

@@ -4,7 +4,7 @@ from os import listdir
 import shutil 
 import os
 import zipfile
-import glob
+#import glob
 import subprocess
 import re
 #https://docs.python.org/2/library/xml.etree.elementtree.html
@@ -158,6 +158,7 @@ class Controller(unittest.TestCase):
        def CopyFilesBuild(SettingsObj):
           """Static method to get incremental update from last release to last build"""
           for name,src,dst,conn,plugs,iis,mtdata,isLastBuild,servicedetails in SettingsObj.GetBuildPaths():
+                          print (dst)
                           if os.path.exists(dst):
                                     shutil.rmtree(dst)
                           os.mkdir(dst)
@@ -327,6 +328,7 @@ class Controller(unittest.TestCase):
               if(SettingsObj.GetFiles()[0][1]=="true"):
                   filename=SettingsObj.GetFiles()[0][0]
                   shutil.copy2(os.getcwd()+"\\Extra\\"+filename,dst)
+
        @staticmethod
        def ProcessFilesServices(SettingsObj):
           """Get files of services from build server to local"""
