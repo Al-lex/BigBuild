@@ -22,7 +22,20 @@ import subprocess
 ##http://kawaikunee.blogspot.ru/2013/04/python.html
 class View():
     """Class representing top level calls for inner functionality"""
+    #decorator vor more verbouse output to screen
+    def document_it(func):
+        def new_function(*args, **kwargs):
+            print('Running function:', func.__name__)
+            print('Positional arguments:', args)
+            print('Keyword arguments:', kwargs)
+            result = func(*args, **kwargs)
+            print('Result:', result)
+            return result
+        return new_function
+
+    
     @staticmethod
+    @document_it
     def Go(args):
         """Method to build up sequence of operations"""
         logging.info("Started update session")

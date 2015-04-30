@@ -22,6 +22,19 @@ class Model(unittest.TestCase):
         tree = ET.parse(self.pathToFile)
         root = tree.getroot()
         return root
+
+    #decorator vor more verbouse output to screen
+    def document_it(func):
+        def new_function(*args, **kwargs):
+            print('Running function:', func.__name__)
+            #print('Positional arguments:', args)
+            #print('Keyword arguments:', kwargs)
+            result = func(*args, **kwargs)
+            print('Result:', result)
+            return result
+        return new_function
+
+    
     def GetBuildPaths(self):
         """Gets branches with names list from MW.config"""
  
@@ -70,6 +83,7 @@ class Model(unittest.TestCase):
                  files.append((name, pathToLatest,pathToLocal,connectionData, Plugins, iisData,MTData,isLastBuild,servicedetails))
 
         return files
+   
 
     def GetPlugins(self):
        """Gets plugins list from MW.config. Added only those with True for GetLocal"""
@@ -81,7 +95,7 @@ class Model(unittest.TestCase):
        #print (files)                
        return files
    
-     
+    
     def GetFiles(self):
        """Gets files list-i.e. MTData sql.ini etc- from MW.config"""
        files=[]
@@ -91,6 +105,8 @@ class Model(unittest.TestCase):
            #getlocal=fl.get("getlocal")
            #print(name,getlocal) 
        return files
+
+    
     def GetDirectories(self):
        """Gets static directories -may be used for temporary pathches using permanent location of files- for example Release folder"""
        directories=[]
@@ -101,7 +117,7 @@ class Model(unittest.TestCase):
            #print(name,getlocal) 
        return directories
 
-
+  
     def GetLastBuildNumber(self,path):
        """Method to find name of the last zip build in the branch specified"""
        l=listdir(path)

@@ -91,6 +91,7 @@ class DBUpdater(unittest.TestCase):
             finalfile=open(os.getcwd()+"\\"+foldername+"\\readyDB.bat","w")
             lune="echo It was false setting for DB Restore - restore is aborted"
             finalfile.writelines(line)
+            finalfile.close()  
         return os.getcwd()+"\\"+foldername+"\\readyDB.bat"
 
     @staticmethod
